@@ -1,0 +1,45 @@
+<div class="nzg-page">
+  <app-page-header title="Voice Reports" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Voice Reports' }]" />
+
+  <mat-card class="sync-card">
+    <div class="sync-card-header">
+      <div>
+        <div class="sync-title">Sync Voice Records</div>
+        <div class="sync-subtitle">Fetch call records from the provider for a given date range</div>
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="sync()" class="sync-form">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>From</mat-label>
+        <input matInput [matDatepicker]="fromPicker" formControlName="from" />
+        <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>To</mat-label>
+        <input matInput [matDatepicker]="toPicker" formControlName="to" />
+        <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
+        <mat-datepicker #toPicker></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading()" class="sync-btn">
+        <mat-icon>sync</mat-icon> Sync Reports
+      </button>
+    </form>
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" class="sync-progress"></mat-progress-bar>
+    }
+  </mat-card>
+
+  @if (hasSynced()) {
+    <app-data-table
+      [columns]="columns"
+      [data]="records()"
+      [loading]="loading()"
+      [serverSide]="false"
+      emptyIcon="phone_in_talk"
+      emptyTitle="No voice records"
+      emptySubtitle="No calls found for the selected range." />
+  }
+</div>

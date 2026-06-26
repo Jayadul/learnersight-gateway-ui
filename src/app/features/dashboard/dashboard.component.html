@@ -1,0 +1,36 @@
+<div class="nzg-page dashboard">
+  <app-page-header title="Dashboard" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Dashboard' }]">
+    <div class="refresh-indicator">
+      <span class="refresh-label">Refreshes in</span>
+      <span class="refresh-count">{{ countdown() }}s</span>
+    </div>
+  </app-page-header>
+
+  @if (loading() && !summary()) {
+    <div class="skeleton-dashboard">
+      <div class="skel-cards">
+        @for (i of skeletonCardCount; track i) {
+          <div class="skel-card"><div class="skel-pulse"></div><div class="skel-pulse skel-sm"></div></div>
+        }
+      </div>
+      <div class="skel-charts">
+        <div class="skel-chart-block"><div class="skel-pulse skel-full"></div></div>
+        <div class="skel-chart-block"><div class="skel-pulse skel-full"></div></div>
+      </div>
+    </div>
+  }
+
+  @if (summary()) {
+    <app-summary-cards [summary]="summary()!" />
+
+    <div class="chart-row">
+      <app-timeline-chart [points]="timeline()" />
+      <app-channel-breakdown-chart [breakdown]="breakdown()" />
+    </div>
+
+    <div class="chart-row">
+      <app-failure-reasons-chart [reasons]="failureReasons()" />
+      <app-recent-activity [items]="recent()" />
+    </div>
+  }
+</div>

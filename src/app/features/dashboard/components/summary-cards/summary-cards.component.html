@@ -1,0 +1,13 @@
+<div class="cards-grid">
+  @for (card of cards(); track card.label) {
+    <mat-card class="summary-card">
+      <div class="icon" [style.background]="card.accent + '1a'" [style.color]="card.accent">
+        <mat-icon>{{ card.icon }}</mat-icon>
+      </div>
+      <div class="text">
+        <div class="value">{{ card.value }}</div>
+        <div class="label">{{ card.label }}</div>
+      </div>
+    </mat-card>
+  }
+</div>

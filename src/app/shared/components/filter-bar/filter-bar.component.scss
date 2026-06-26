@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+
+// Compact density for all form fields inside the filter bar
+:host {
+  @include mat.form-field-density(-3);
+  @include mat.select-density(-3);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--nzg-surface);
+  border: 1px solid var(--nzg-border);
+  border-radius: var(--nzg-radius);
+  margin-bottom: 16px;
+}
+
+.field      { width: 190px; }
+.date-field { width: 250px; }
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    height: 44px;
+    padding: 0 18px;
+  }
+}

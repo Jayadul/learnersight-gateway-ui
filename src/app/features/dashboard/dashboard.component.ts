@@ -1,0 +1,78 @@
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { forkJoin, interval } from 'rxjs';
+import { DashboardService } from './dashboard.service';
+import { MessageLogsService } from '../message-logs/message-logs.service';
+import {
+  ChannelBreakdownDto, DashboardSummaryDto, FailureReasonDto, TimelinePointDto,
+} from '../../core/models/dashboard.model';
+import { MessageRequestDto } from '../../core/models/message-request.model';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
+import { SummaryCardsComponent } from './components/summary-cards/summary-cards.component';
+import { TimelineChartComponent } from './components/timeline-chart/timeline-chart.component';
+import { ChannelBreakdownChartComponent } from './components/channel-breakdown-chart/channel-breakdown-chart.component';
+import { FailureReasonsChartComponent } from './components/failure-reasons-chart/failure-reasons-chart.component';
+import { RecentActivityComponent } from './components/recent-activity/recent-activity.component';
+
+const REFRESH_INTERVAL = 60;
+
+@Component({
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [
+    PageHeaderComponent, SummaryCardsComponent, TimelineChartComponent,
+    ChannelBreakdownChartComponent, FailureReasonsChartComponent, RecentActivityComponent,
+  ],
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DashboardComponent implements OnInit {
+  private readonly dashboardService = inject(DashboardService);
+  private readonly messageLogsService = inject(MessageLogsService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  readonly loading = signal(true);
+  readonly summary = signal<DashboardSummaryDto | null>(null);
+  readonly skeletonCardCount = Array.from({ length: 7 }, (_, i) => i);
+  readonly timeline = signal<TimelinePointDto[]>([]);
+  readonly breakdown = signal<ChannelBreakdownDto[]>([]);
+  readonly failureReasons = signal<FailureReasonDto[]>([]);
+  readonly recent = signal<MessageRequestDto[]>([]);
+  readonly countdown = signal(REFRESH_INTERVAL);
+
+  ngOnInit(): void {
+    this.fetchAll();
+
+    interval(1000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      const next = this.countdown() - 1;
+      if (next <= 0) {
+        this.countdown.set(REFRESH_INTERVAL);
+        this.fetchAll();
+      } else {
+        this.countdown.set(next);
+      }
+    });
+  }
+
+  private fetchAll(): void {
+    this.loading.set(true);
+    forkJoin({
+      summary: this.dashboardService.getSummary(),
+      timeline: this.dashboardService.getTimeline(7),
+      breakdown: this.dashboardService.getChannelBreakdown(),
+      failureReasons: this.dashboardService.getFailureReasons(5),
+      recent: this.messageLogsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
+    }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (res) => {
+        this.summary.set(res.summary);
+        this.timeline.set(res.timeline);
+        this.breakdown.set(res.breakdown);
+        this.failureReasons.set(res.failureReasons);
+        this.recent.set(res.recent.items);
+        this.loading.set(false);
+      },
+      error: () => this.loading.set(false),
+    });
+  }
+}

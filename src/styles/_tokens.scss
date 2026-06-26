@@ -1,0 +1,44 @@
+// Design tokens — ClickUp-inspired palette, single source of truth
+:root {
+  // Sidebar
+  --nzg-sidebar-bg: #1B2036;
+  --nzg-sidebar-hover: #232840;
+  --nzg-sidebar-active-bg: rgba(123, 104, 238, 0.15);
+  --nzg-sidebar-active-text: #7B68EE;
+  --nzg-sidebar-text: #a8b8cb;
+  --nzg-sidebar-group: #5e7490;
+  --nzg-sidebar-border: rgba(255, 255, 255, 0.06);
+
+  // Content
+  --nzg-bg: #F7F8FA;
+  --nzg-surface: #FFFFFF;
+  --nzg-border: #E8E9EC;
+  --nzg-text: #1A1A2E;
+  --nzg-text-muted: #6B7280;
+
+  // Brand / accent
+  --nzg-primary: #7B68EE;
+  --nzg-primary-dark: #6355cc;
+  --nzg-accent: #3B82F6;
+
+  // Semantic colors
+  --nzg-success: #10B981;
+  --nzg-success-bg: #d1fae5;
+  --nzg-error: #EF4444;
+  --nzg-error-bg: #fee2e2;
+  --nzg-warn: #F59E0B;
+  --nzg-warn-bg: #fef3c7;
+  --nzg-info: #3B82F6;
+  --nzg-info-bg: #dbeafe;
+  --nzg-pending: #F59E0B;
+  --nzg-pending-bg: #fef3c7;
+
+  // Layout
+  --nzg-sidebar-width: 260px;
+  --nzg-sidebar-collapsed-width: 64px;
+  --nzg-topbar-height: 64px;
+  --nzg-radius: 10px;
+  --nzg-gap: 16px;
+  --nzg-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --nzg-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

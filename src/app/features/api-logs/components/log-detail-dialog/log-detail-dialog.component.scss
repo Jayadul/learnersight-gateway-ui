@@ -1,0 +1,8 @@
+.meta { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; font-size: 13px; color: var(--nzg-text-muted); }
+.panes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 768px) { .panes { grid-template-columns: 1fr; } }
+.pane h4 { margin: 0 0 8px; }
+pre {
+  background: #0f172a; color: #e2e8f0; padding: 12px; border-radius: 8px;
+  font-size: 12px; overflow: auto; max-height: 360px; white-space: pre-wrap; word-break: break-word;
+}

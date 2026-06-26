@@ -1,0 +1,31 @@
+<div class="nzg-page">
+  <app-page-header title="Channel Configs" [breadcrumbs]="[{ label: 'Configuration' }, { label: 'Channel Configs' }]" />
+
+  <mat-tab-group [selectedIndex]="activeTab()" (selectedIndexChange)="onTabChange($event)">
+    @for (tab of tabs; track tab.channelType) {
+      <mat-tab [label]="tab.label"></mat-tab>
+    }
+  </mat-tab-group>
+
+  <div class="tab-body">
+    <app-loading-spinner [loading]="loading()" />
+
+    @if (!loading()) {
+      @if (configs().length === 0) {
+        <app-empty-state icon="settings_input_antenna" title="No configs for this channel"
+                         subtitle="Add a configuration using the button below." />
+      } @else {
+        <div class="cards-grid">
+          @for (config of configs(); track config.id) {
+            <app-config-card [config]="config"
+                             (edit)="onEdit($event)" (activate)="onActivate($event)" (delete)="onDelete($event)" />
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <button mat-fab color="primary" class="fab" (click)="openCreate()" matTooltip="Add config">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

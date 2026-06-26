@@ -1,0 +1,70 @@
+<mat-sidenav-container class="layout">
+  <mat-sidenav class="sidenav" [mode]="sidenavMode()" [opened]="opened()"
+               (closedStart)="closeIfOver()" [fixedInViewport]="sidenavMode() === 'over'">
+    <div class="brand">
+      <mat-icon>hub</mat-icon>
+      <span>NetZeroGateway</span>
+    </div>
+
+    <mat-nav-list>
+      @for (group of groups; track group.title) {
+        <div class="group-title">{{ group.title }}</div>
+        @for (item of group.items; track item.route) {
+          @if (item.superAdminOnly) {
+            <a mat-list-item *appHasRole="['SuperAdmin']" [routerLink]="item.route"
+               routerLinkActive="active-link" (click)="closeIfOver()">
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          } @else {
+            <a mat-list-item [routerLink]="item.route" routerLinkActive="active-link" (click)="closeIfOver()">
+              <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        }
+      }
+    </mat-nav-list>
+
+    <div class="sidenav-footer">
+      @if (user()) {
+        <div style="font-size:12px; color: var(--nzg-sidebar-group); padding: 0 10px 8px;">
+          {{ user()!.name }} &bull; {{ user()!.role }}
+        </div>
+      }
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="topbar-wrap">
+      <mat-toolbar class="toolbar">
+        <button mat-icon-button (click)="toggle()" aria-label="Toggle menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="page-title">{{ pageTitle() }}</span>
+        @if (mockMode) {
+          <mat-chip class="mock-chip" [disableRipple]="true">
+            <mat-icon>science</mat-icon> MOCK
+          </mat-chip>
+        }
+        <span class="spacer"></span>
+        @if (user()) {
+          <span class="user-info">
+            <span class="username">{{ user()!.name }}</span>
+            <mat-chip class="role-chip" [disableRipple]="true">{{ user()!.role }}</mat-chip>
+          </span>
+        }
+        <button mat-icon-button (click)="logout()" matTooltip="Sign out" aria-label="Sign out">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </mat-toolbar>
+      @if (loading.active()) {
+        <div class="loading-bar"></div>
+      }
+    </div>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

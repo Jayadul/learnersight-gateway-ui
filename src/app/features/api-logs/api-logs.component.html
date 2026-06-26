@@ -1,0 +1,19 @@
+<div class="nzg-page">
+  <app-page-header title="API Logs" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'API Logs' }]" />
+
+  <app-filter-bar [controls]="filters" (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
+
+  <app-data-table
+    [columns]="columns"
+    [data]="state.data()"
+    [totalCount]="state.totalCount()"
+    [loading]="state.loading()"
+    [pageIndex]="state.pageIndex()"
+    [pageSize]="state.pageSize()"
+    [rowActions]="rowActions"
+    emptyIcon="receipt_long"
+    emptyTitle="No API logs"
+    (pageChange)="state.setPage($event)"
+    (sortChange)="state.setSort($event)"
+    (actionClick)="onAction($event)" />
+</div>

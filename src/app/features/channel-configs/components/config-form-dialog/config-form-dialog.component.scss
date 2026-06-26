@@ -1,0 +1,3 @@
+.config-form { display: flex; flex-direction: column; padding-top: 8px; min-width: 420px; }
+.full { width: 100%; }
+@media (max-width: 600px) { .config-form { min-width: auto; } }

@@ -1,0 +1,11 @@
+.badge {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  min-height: 24px !important;
+  --mdc-chip-container-height: 24px;
+}
+.badge-green  { --mdc-chip-elevated-container-color: var(--nzg-success-bg); --mdc-chip-label-text-color: var(--nzg-success); }
+.badge-red    { --mdc-chip-elevated-container-color: var(--nzg-error-bg);   --mdc-chip-label-text-color: var(--nzg-error); }
+.badge-orange { --mdc-chip-elevated-container-color: var(--nzg-pending-bg); --mdc-chip-label-text-color: var(--nzg-pending); }
+.badge-amber  { --mdc-chip-elevated-container-color: var(--nzg-warn-bg);    --mdc-chip-label-text-color: var(--nzg-warn); }
+.badge-grey   { --mdc-chip-elevated-container-color: #e2e8f0;               --mdc-chip-label-text-color: #475569; }

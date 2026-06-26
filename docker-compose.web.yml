@@ -1,0 +1,10 @@
+# Add this `web` service to your existing docker-compose.yml.
+# It builds the NetZeroGateway frontend and serves it on port 4200.
+services:
+  web:
+    build: ./net-zero-gateway
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    restart: unless-stopped

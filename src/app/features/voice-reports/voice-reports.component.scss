@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+
+.sync-card {
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.sync-card-header {
+  margin-bottom: 16px;
+}
+
+.sync-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--nzg-text);
+  margin-bottom: 4px;
+}
+
+.sync-subtitle {
+  font-size: 13px;
+  color: var(--nzg-text-muted);
+}
+
+.sync-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  // Compact density matching filter-bar
+  @include mat.form-field-density(-3);
+
+  mat-form-field { width: 200px; }
+}
+
+.sync-btn {
+  height: 44px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sync-progress {
+  margin-top: 16px;
+  border-radius: 4px;
+}

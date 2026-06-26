@@ -1,0 +1,141 @@
+.layout { height: 100vh; }
+
+// ─── Sidebar ──────────────────────────────────────────────
+.sidenav {
+  width: var(--nzg-sidebar-width);
+  background: var(--nzg-sidebar-bg);
+  color: var(--nzg-sidebar-text);
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  border-bottom: 1px solid var(--nzg-sidebar-border);
+  flex-shrink: 0;
+
+  mat-icon { color: var(--nzg-sidebar-active-text); font-size: 28px; width: 28px; height: 28px; }
+}
+
+.group-title {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nzg-sidebar-group);
+  padding: 20px 20px 6px;
+  font-weight: 600;
+}
+
+:host ::ng-deep .sidenav {
+  .mat-mdc-list-item {
+    border-radius: 8px;
+    margin: 2px 10px;
+    width: calc(100% - 20px);
+
+    &:hover { background: var(--nzg-sidebar-hover); }
+
+    // Inactive: text and icon share the same color
+    .mdc-list-item__primary-text {
+      color: var(--nzg-sidebar-text) !important;
+      font-size: 13.5px;
+      font-weight: 500;
+    }
+    .mat-icon { color: var(--nzg-sidebar-text); font-size: 20px; }
+  }
+
+  // Active link overrides
+  .active-link {
+    background: var(--nzg-sidebar-active-bg) !important;
+
+    .mdc-list-item__primary-text {
+      color: #fff !important;
+      font-weight: 600;
+    }
+    .mat-icon { color: var(--nzg-sidebar-active-text) !important; }
+  }
+}
+
+.sidenav-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid var(--nzg-sidebar-border);
+  flex-shrink: 0;
+}
+
+// ─── Topbar ───────────────────────────────────────────────
+.topbar-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.toolbar {
+  background: var(--nzg-surface);
+  border-bottom: 1px solid var(--nzg-border);
+  color: var(--nzg-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--nzg-topbar-height);
+  padding: 0 16px;
+}
+
+.page-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--nzg-text);
+}
+
+.spacer { flex: 1 1 auto; }
+
+.mock-chip {
+  background: var(--nzg-warn) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  margin-left: 4px;
+  mat-icon { font-size: 14px; height: 14px; width: 14px; color: #fff !important; }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 4px;
+  .username { font-size: 13px; font-weight: 500; color: var(--nzg-text); }
+}
+
+.role-chip {
+  background: rgba(123, 104, 238, 0.12) !important;
+  color: var(--nzg-primary) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+
+// Loading progress bar (below toolbar)
+.loading-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--nzg-primary) 0%, var(--nzg-accent) 100%);
+  animation: loading-slide 1.2s ease-in-out infinite;
+  transform-origin: left;
+}
+
+@keyframes loading-slide {
+  0%   { transform: scaleX(0); opacity: 1; }
+  60%  { transform: scaleX(0.85); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+
+// ─── Content ──────────────────────────────────────────────
+.content {
+  min-height: calc(100vh - var(--nzg-topbar-height));
+  background: var(--nzg-bg);
+}

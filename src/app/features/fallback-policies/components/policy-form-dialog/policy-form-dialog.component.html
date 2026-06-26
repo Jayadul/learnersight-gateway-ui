@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Fallback Policy</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="policy-form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <app-form-field-errors [control]="form.controls.name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Trigger Channel</mat-label>
+      <mat-select formControlName="triggerChannel">
+        @for (c of channels; track c.value) { <mat-option [value]="c.value">{{ c.label }}</mat-option> }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Fallback Channel</mat-label>
+      <mat-select formControlName="fallbackChannel">
+        @for (c of channels; track c.value) { <mat-option [value]="c.value">{{ c.label }}</mat-option> }
+      </mat-select>
+    </mat-form-field>
+
+    @if (form.errors?.['sameChannel'] && form.touched) {
+      <div class="form-error">Trigger and fallback channels must be different.</div>
+    }
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="2"></textarea>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isGlobal">Global policy (applies to all channels)</mat-checkbox>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

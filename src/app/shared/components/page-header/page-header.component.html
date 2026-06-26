@@ -1,0 +1,17 @@
+<div class="page-header">
+  <div class="left">
+    <h1>{{ title() }}</h1>
+    @if (breadcrumbs().length) {
+      <nav class="crumbs">
+        @for (crumb of breadcrumbs(); track crumb.label; let last = $last) {
+          @if (crumb.route && !last) {
+            <a [routerLink]="crumb.route">{{ crumb.label }}</a><span class="sep">/</span>
+          } @else {
+            <span class="current">{{ crumb.label }}</span>
+          }
+        }
+      </nav>
+    }
+  </div>
+  <div class="actions"><ng-content></ng-content></div>
+</div>

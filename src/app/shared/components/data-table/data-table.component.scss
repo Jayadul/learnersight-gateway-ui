@@ -1,0 +1,72 @@
+.table-wrap {
+  position: relative;
+  background: var(--nzg-surface);
+  border: 1px solid var(--nzg-border);
+  border-radius: var(--nzg-radius);
+  overflow: hidden;
+}
+
+.nzg-table { width: 100%; }
+table { background: transparent; }
+
+tr.clickable { cursor: pointer; }
+tr.clickable:hover { background: #f8fafc; }
+
+th.mat-mdc-header-cell {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--nzg-text-muted);
+  background: #f8fafc;
+  white-space: nowrap;
+}
+
+td.mat-mdc-cell {
+  color: var(--nzg-text);
+  font-size: 13.5px;
+}
+
+// Actions column — always one line, right-aligned
+.actions-header {
+  text-align: right !important;
+  white-space: nowrap;
+  width: 1%;
+}
+
+.actions-cell {
+  text-align: right !important;
+  white-space: nowrap;
+  padding-right: 4px !important;
+
+  // Stack buttons side by side without wrapping
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+// Skeleton loader rows
+.skeleton-rows { padding: 0; }
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--nzg-border);
+
+  &:first-child { border-top: 48px solid #f8fafc; }
+}
+.skeleton-cell { flex: 1; }
+.skeleton-pulse {
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #e8e9ec 25%, #f1f2f4 50%, #e8e9ec 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  max-width: 85%;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

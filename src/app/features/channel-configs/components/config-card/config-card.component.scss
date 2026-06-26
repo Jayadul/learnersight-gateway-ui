@@ -1,0 +1,9 @@
+.config-card { padding: 16px; position: relative; }
+.config-card.active { border-left: 4px solid var(--nzg-success); }
+.head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.title { display: flex; flex-direction: column; gap: 6px; }
+h4 { margin: 0; font-size: 16px; }
+.provider-chip { font-size: 11px !important; width: fit-content; }
+.active-chip { background: var(--nzg-success-bg) !important; color: var(--nzg-success) !important; font-weight: 700 !important; font-size: 11px !important; }
+.created { font-size: 12px; color: var(--nzg-text-muted); margin: 12px 0 8px; }
+.actions { display: flex; gap: 4px; justify-content: flex-end; }

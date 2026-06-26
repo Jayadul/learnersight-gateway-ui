@@ -1,0 +1,12 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  color: var(--nzg-text-muted);
+  text-align: center;
+  mat-icon { font-size: 48px; width: 48px; height: 48px; opacity: 0.5; margin-bottom: 8px; }
+  h3 { margin: 0 0 4px; font-weight: 500; }
+  p { margin: 0; font-size: 14px; }
+}

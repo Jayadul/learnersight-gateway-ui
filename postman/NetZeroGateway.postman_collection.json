@@ -1,0 +1,932 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-0000-0000-0000-000000000002",
+    "name": "NetZeroGateway API",
+    "description": "Multi-channel messaging gateway — SMS, WhatsApp, Voice with automatic fallback.\n\n**Setup:** Import the environment file, run \"Login (admin)\" first — it auto-saves tokens.\n\n**No auth on /sendtext** — the gateway endpoint is open (consumed by internal services).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('accessToken', json.accessToken);",
+                  "    pm.environment.set('refreshToken', json.refreshToken);",
+                  "    pm.test('Login successful — tokens saved', function () {",
+                  "        pm.expect(json.accessToken).to.be.a('string');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login (operator)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('accessToken', json.accessToken);",
+                  "    pm.environment.set('refreshToken', json.refreshToken);",
+                  "    pm.test('Login successful — tokens saved', function () {",
+                  "        pm.expect(json.accessToken).to.be.a('string');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"operator\",\n  \"password\": \"Operator@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('accessToken', json.accessToken);",
+                  "    pm.environment.set('refreshToken', json.refreshToken);",
+                  "    pm.test('Tokens refreshed', function () {",
+                  "        pm.expect(json.accessToken).to.be.a('string');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "refresh"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gateway",
+      "description": "POST /sendtext — no auth required. Parses channel tags from messageContent and dispatches to SMS, WhatsApp, Voice with automatic fallback.",
+      "item": [
+        {
+          "name": "SendText — All Channels (full test)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.Message_ID) {",
+                  "    pm.environment.set('messageRequestId', json.Message_ID);",
+                  "}",
+                  "pm.test('Status is ACCEPTD', function () {",
+                  "    pm.expect(json.Status).to.eql('0');",
+                  "    pm.expect(json.Text).to.eql('ACCEPTD');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "[sms::Your OTP is 123456. It expires in 10 minutes.]  [wp::Hello John, your appointment is confirmed for tomorrow at 3:00 PM.]  [smswp::Book direct and save on every reservation. Visit https://hotel.example.com]  [wpmedia::Please review the attached invoice.||https://example.com/files/invoice.pdf]  [call::due-bill-api]", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        },
+        {
+          "name": "SendText — SMS only",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.Message_ID) {",
+                  "    pm.environment.set('messageRequestId', json.Message_ID);",
+                  "}",
+                  "pm.test('Status is ACCEPTD', function () {",
+                  "    pm.expect(json.Status).to.eql('0');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "[sms::Hello from NetZeroGateway test]", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        },
+        {
+          "name": "SendText — WhatsApp Text only",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var json = pm.response.json();",
+                  "if (json.Message_ID) {",
+                  "    pm.environment.set('messageRequestId', json.Message_ID);",
+                  "}",
+                  "pm.test('Status is ACCEPTD', function () {",
+                  "    pm.expect(json.Status).to.eql('0');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "[wp::Hello via WhatsApp from NetZeroGateway]", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        },
+        {
+          "name": "SendText — WhatsApp Media",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "[wpmedia::Please review the attached invoice.||https://example.com/files/invoice.pdf]", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        },
+        {
+          "name": "SendText — Voice",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "[call::due-bill-api]", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        },
+        {
+          "name": "SendText — SMS + WhatsApp combo",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "[smswp::Sent to both SMS and WhatsApp channels]", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        },
+        {
+          "name": "SendText — Plain (no tag, fallback SMS)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "callerID", "value": "123", "type": "text" },
+                { "key": "toUser", "value": "8801748848039", "type": "text" },
+                { "key": "messageContent", "value": "Plain text without tags — defaults to SMS", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sendtext",
+              "host": ["{{baseUrl}}"],
+              "path": ["sendtext"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Users (SuperAdmin only)",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{adminUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users", "{{adminUserId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('adminUserId', json.id);",
+                  "    pm.test('User created', function () {",
+                  "        pm.expect(json.username).to.eql('testuser');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"Test@1234\",\n  \"email\": \"test@netzero.com\",\n  \"role\": \"Admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"updated@netzero.com\",\n  \"role\": \"Admin\",\n  \"isActive\": true,\n  \"newPassword\": null\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{adminUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users", "{{adminUserId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{adminUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users", "{{adminUserId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Channel Configs",
+      "item": [
+        {
+          "name": "Get All Configs",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs"]
+            }
+          }
+        },
+        {
+          "name": "Get All by Channel Type",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs?channelType=SMS",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs"],
+              "query": [
+                { "key": "channelType", "value": "SMS" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Config by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs/{{channelConfigId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs", "{{channelConfigId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Config",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('channelConfigId', json.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channelType\": \"SMS\",\n  \"providerName\": \"SMS Provider Alt\",\n  \"label\": \"SMS Backup\",\n  \"configJson\": \"{\\\"apikey\\\":\\\"test_key\\\",\\\"secretkey\\\":\\\"test_secret\\\",\\\"callerID\\\":\\\"456\\\",\\\"baseUrl\\\":\\\"http://smpp.revesms.com:7788\\\"}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs"]
+            }
+          }
+        },
+        {
+          "name": "Update Config",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerName\": \"SMS Provider Updated\",\n  \"label\": \"SMS Backup Updated\",\n  \"configJson\": \"{\\\"apikey\\\":\\\"updated_key\\\",\\\"secretkey\\\":\\\"updated_secret\\\",\\\"callerID\\\":\\\"789\\\",\\\"baseUrl\\\":\\\"http://smpp.revesms.com:7788\\\"}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs/{{channelConfigId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs", "{{channelConfigId}}"]
+            }
+          }
+        },
+        {
+          "name": "Activate Config",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs/{{channelConfigId}}/activate",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs", "{{channelConfigId}}", "activate"]
+            }
+          }
+        },
+        {
+          "name": "Delete Config",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/channel-configs/{{channelConfigId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "channel-configs", "{{channelConfigId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fallback Policies",
+      "item": [
+        {
+          "name": "Get All Policies",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/fallback-policies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fallback-policies"]
+            }
+          }
+        },
+        {
+          "name": "Get Policy by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/fallback-policies/{{fallbackPolicyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fallback-policies", "{{fallbackPolicyId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Policy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('fallbackPolicyId', json.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"WhatsApp Media fails to WhatsApp Text\",\n  \"triggerChannel\": \"WP_Media\",\n  \"fallbackChannel\": \"WP_Text\",\n  \"isGlobal\": true,\n  \"description\": \"Fallback to WhatsApp text when media delivery fails\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/fallback-policies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fallback-policies"]
+            }
+          }
+        },
+        {
+          "name": "Update Policy",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"WhatsApp Media fails to SMS\",\n  \"triggerChannel\": \"WP_Media\",\n  \"fallbackChannel\": \"SMS\",\n  \"isGlobal\": true,\n  \"isActive\": true,\n  \"description\": \"Updated: fallback to SMS instead\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/fallback-policies/{{fallbackPolicyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fallback-policies", "{{fallbackPolicyId}}"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Active",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/fallback-policies/{{fallbackPolicyId}}/toggle-active",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fallback-policies", "{{fallbackPolicyId}}", "toggle-active"]
+            }
+          }
+        },
+        {
+          "name": "Delete Policy",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/fallback-policies/{{fallbackPolicyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "fallback-policies", "{{fallbackPolicyId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Message Requests",
+      "item": [
+        {
+          "name": "Get All (paged)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/message-requests?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "message-requests"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" },
+                { "key": "dateFrom", "value": "", "disabled": true },
+                { "key": "dateTo", "value": "", "disabled": true },
+                { "key": "toUser", "value": "", "disabled": true },
+                { "key": "status", "value": "Pending", "disabled": true },
+                { "key": "source", "value": "Api", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get by ID (with jobs)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/message-requests/{{messageRequestId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "message-requests", "{{messageRequestId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dispatch Logs",
+      "item": [
+        {
+          "name": "Get All (paged)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/dispatch-logs?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dispatch-logs"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" },
+                { "key": "dateFrom", "value": "", "disabled": true },
+                { "key": "dateTo", "value": "", "disabled": true },
+                { "key": "channelType", "value": "SMS", "disabled": true },
+                { "key": "status", "value": "Sent", "disabled": true },
+                { "key": "toNumber", "value": "", "disabled": true }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "API Logs",
+      "item": [
+        {
+          "name": "Get All (paged)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/api-logs?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "api-logs"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" },
+                { "key": "dateFrom", "value": "", "disabled": true },
+                { "key": "dateTo", "value": "", "disabled": true },
+                { "key": "responseStatus", "value": "200", "disabled": true }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "summary"]
+            }
+          }
+        },
+        {
+          "name": "Timeline",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/timeline?days=7",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "timeline"],
+              "query": [
+                { "key": "days", "value": "7" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Channel Breakdown",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/channel-breakdown",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "channel-breakdown"]
+            }
+          }
+        },
+        {
+          "name": "Top Failure Reasons",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/failure-reasons?top=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "failure-reasons"],
+              "query": [
+                { "key": "top", "value": "5" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Manual Send",
+      "item": [
+        {
+          "name": "Send SMS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 202) {",
+                  "    var json = pm.response.json();",
+                  "    pm.environment.set('messageRequestId', json.messageRequestId);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channelType\": \"SMS\",\n  \"toNumbers\": \"8801748848039\",\n  \"message\": \"Manual SMS from admin panel\",\n  \"callerID\": \"123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/manual-send",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manual-send"]
+            }
+          }
+        },
+        {
+          "name": "Send WhatsApp Text",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channelType\": \"WP_Text\",\n  \"toNumbers\": \"8801748848039\",\n  \"message\": \"Manual WhatsApp text from admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/manual-send",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manual-send"]
+            }
+          }
+        },
+        {
+          "name": "Send WhatsApp Media",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channelType\": \"WP_Media\",\n  \"toNumbers\": \"8801748848039\",\n  \"message\": \"Check this attachment\",\n  \"mediaUrl\": \"https://example.com/image.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/manual-send",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manual-send"]
+            }
+          }
+        },
+        {
+          "name": "Send Voice",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channelType\": \"Voice\",\n  \"toNumbers\": \"8801748848039\",\n  \"message\": \"Voice campaign message\",\n  \"campaignId\": \"due-bill-api\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/manual-send",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "manual-send"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Voice Reports",
+      "item": [
+        {
+          "name": "Sync Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": \"2024-01-01T00:00:00Z\",\n  \"to\": \"2024-12-31T23:59:59Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/voice-reports/sync",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "voice-reports", "sync"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

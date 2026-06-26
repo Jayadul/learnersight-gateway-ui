@@ -1,0 +1,156 @@
+<div class="nzg-page">
+  <app-page-header title="Send Message" [breadcrumbs]="[{ label: 'Messaging' }, { label: 'Send Message' }]" />
+
+  <div class="send-layout">
+
+    <!-- ── Left: Compose form ── -->
+    <mat-card class="form-card">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <!-- Channel selector -->
+        <p class="field-label">Channel</p>
+        <mat-button-toggle-group formControlName="channelType" class="channel-toggle">
+          <mat-button-toggle [value]="ChannelType.SMS">
+            <mat-icon>sms</mat-icon> SMS
+          </mat-button-toggle>
+          <mat-button-toggle [value]="ChannelType.WP_Text">
+            <mat-icon>chat</mat-icon> WhatsApp
+          </mat-button-toggle>
+          <mat-button-toggle [value]="ChannelType.WP_Media">
+            <mat-icon>perm_media</mat-icon> WA Media
+          </mat-button-toggle>
+          <mat-button-toggle [value]="ChannelType.Voice">
+            <mat-icon>record_voice_over</mat-icon> Voice
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <!-- Recipients -->
+        <p class="field-label">
+          Recipients
+          @if (parsedCount() > 0) {
+            <span class="count-pill">{{ parsedCount() }}</span>
+          }
+        </p>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Phone Numbers</mat-label>
+          <textarea matInput formControlName="toNumbers" rows="3"
+                    placeholder="+8801700000001, +8801700000002"></textarea>
+          <mat-hint>Comma-separated · E.164 format (include country code)</mat-hint>
+          <app-form-field-errors [control]="form.controls.toNumbers" />
+        </mat-form-field>
+
+        <!-- Message / Script -->
+        <p class="field-label">{{ isVoice() ? 'Campaign Script' : 'Message' }}</p>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>{{ isVoice() ? 'Script / Campaign ID' : 'Message Text' }}</mat-label>
+          <textarea matInput formControlName="message" rows="5"
+                    [placeholder]="isVoice() ? 'e.g. payment-reminder-v2' : 'Type your message here…'"></textarea>
+          <app-form-field-errors [control]="form.controls.message" />
+        </mat-form-field>
+
+        <!-- Conditional fields -->
+        @if (isMedia()) {
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Media URL</mat-label>
+            <mat-icon matIconPrefix>link</mat-icon>
+            <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
+            <mat-hint>Must be publicly accessible (no authentication required)</mat-hint>
+            <app-form-field-errors [control]="form.controls.mediaUrl" />
+          </mat-form-field>
+        }
+
+        @if (isVoice()) {
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Campaign ID</mat-label>
+            <mat-icon matIconPrefix>campaign</mat-icon>
+            <input matInput formControlName="campaignId" placeholder="e.g. due-bill-reminder" />
+            <app-form-field-errors [control]="form.controls.campaignId" />
+          </mat-form-field>
+        }
+
+        @if (isSms()) {
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Caller ID <span class="opt-label">optional</span></mat-label>
+            <mat-icon matIconPrefix>badge</mat-icon>
+            <input matInput formControlName="callerID" placeholder="e.g. NETZEROGW" />
+            <mat-hint>Overrides the default sender ID shown on the recipient's device</mat-hint>
+          </mat-form-field>
+        }
+
+        <div class="form-footer">
+          <button mat-flat-button color="primary" type="submit" [disabled]="loading()" class="send-btn">
+            @if (loading()) {
+              <ng-container>
+                <mat-spinner diameter="18"></mat-spinner>
+                <span>Sending…</span>
+              </ng-container>
+            } @else {
+              <ng-container>
+                <mat-icon>send</mat-icon>
+                <span>Send Message</span>
+              </ng-container>
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card>
+
+    <!-- ── Right: Info panels ── -->
+    <aside class="guide-col">
+
+      <mat-card class="counter-card">
+        <div class="counter-label"><mat-icon>group</mat-icon> Recipients</div>
+        <div class="counter-value">{{ parsedCount() }}</div>
+        <div class="counter-sub">number(s) ready</div>
+      </mat-card>
+
+      <mat-card class="guide-card">
+        <div class="guide-heading">
+          <mat-icon class="guide-icon">info</mat-icon>
+          <span>Channel Guide</span>
+        </div>
+        @if (isSms()) {
+          <ul class="guide-list">
+            <li>Numbers in E.164 format — e.g. <code>+8801700000001</code></li>
+            <li>Caller ID is optional; defaults to your account's registered sender ID</li>
+            <li>Long messages split into 160-character segments automatically</li>
+          </ul>
+        }
+        @if (isWpText()) {
+          <ul class="guide-list">
+            <li>Recipients must be active WhatsApp users</li>
+            <li>Messages must comply with WhatsApp Business policies</li>
+            <li>Emojis and Unicode characters are fully supported</li>
+          </ul>
+        }
+        @if (isMedia()) {
+          <ul class="guide-list">
+            <li>Media URL must be publicly accessible without authentication</li>
+            <li>Supported: JPG, PNG, PDF, MP4, DOCX</li>
+            <li>Image max 5 MB · Video max 16 MB · Document max 100 MB</li>
+          </ul>
+        }
+        @if (isVoice()) {
+          <ul class="guide-list">
+            <li>Campaign ID must match a pre-configured voice script in the provider</li>
+            <li>Recipients receive an automated call in the order numbers appear</li>
+            <li>Calls are placed during business hours by default</li>
+          </ul>
+        }
+      </mat-card>
+
+      <mat-card class="reminder-card">
+        <div class="reminder-row">
+          <mat-icon class="reminder-icon">schedule</mat-icon>
+          <div>
+            <div class="reminder-title">Async Processing</div>
+            <div class="reminder-text">Messages are queued and dispatched asynchronously. Track status in Message Logs.</div>
+          </div>
+        </div>
+      </mat-card>
+
+    </aside>
+  </div>
+</div>

@@ -1,0 +1,2750 @@
+{
+  "auth": {
+    "login": {
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1LTAwMDEiLCJuYW1lIjoiRGVtbyBBZG1pbiIsImVtYWlsIjoiYWRtaW5AbmV0emVyb2dhdGV3YXkuaW8iLCJyb2xlIjoiU3VwZXJBZG1pbiIsImV4cCI6MTkzOTcwMDQ1N30.bnpnLW1vY2stc2lnbmF0dXJl",
+      "refreshToken": "nzg-mock-refresh-token-abc123",
+      "expiresIn": 3600
+    }
+  },
+  "dashboard": {
+    "summary": {
+      "totalToday": 1284,
+      "totalWeek": 8472,
+      "smsSentToday": 742,
+      "wpSentToday": 389,
+      "voiceSentToday": 153,
+      "failedToday": 47,
+      "successRatePercent": 96.3
+    },
+    "timeline": [
+      {
+        "date": "2026-06-15T00:00:00Z",
+        "count": 1121
+      },
+      {
+        "date": "2026-06-16T00:00:00Z",
+        "count": 916
+      },
+      {
+        "date": "2026-06-17T00:00:00Z",
+        "count": 1041
+      },
+      {
+        "date": "2026-06-18T00:00:00Z",
+        "count": 1297
+      },
+      {
+        "date": "2026-06-19T00:00:00Z",
+        "count": 1045
+      },
+      {
+        "date": "2026-06-20T00:00:00Z",
+        "count": 1218
+      },
+      {
+        "date": "2026-06-21T00:00:00Z",
+        "count": 1185
+      }
+    ],
+    "channelBreakdown": [
+      {
+        "channelType": "SMS",
+        "sentCount": 4200,
+        "failedCount": 180
+      },
+      {
+        "channelType": "WhatsApp",
+        "sentCount": 2600,
+        "failedCount": 95
+      },
+      {
+        "channelType": "WhatsApp Media",
+        "sentCount": 820,
+        "failedCount": 40
+      },
+      {
+        "channelType": "Voice",
+        "sentCount": 1100,
+        "failedCount": 210
+      }
+    ],
+    "failureReasons": [
+      {
+        "reason": "Invalid number",
+        "count": 92
+      },
+      {
+        "reason": "Provider timeout",
+        "count": 64
+      },
+      {
+        "reason": "Insufficient balance",
+        "count": 41
+      },
+      {
+        "reason": "Blocked recipient",
+        "count": 28
+      },
+      {
+        "reason": "Media URL unreachable",
+        "count": 17
+      }
+    ]
+  },
+  "messageRequests": [
+    {
+      "id": "mr-1000",
+      "toUser": "+8801756050561",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T08:21:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T08:21:57Z"
+    },
+    {
+      "id": "mr-1001",
+      "toUser": "+8801725637035",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-20T05:07:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T05:07:57Z"
+    },
+    {
+      "id": "mr-1002",
+      "toUser": "+8801734793303",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T07:44:57Z",
+      "source": 1,
+      "createdAt": "2026-06-17T07:44:57Z"
+    },
+    {
+      "id": "mr-1003",
+      "toUser": "+8801738146508",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T03:22:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T03:22:57Z"
+    },
+    {
+      "id": "mr-1004",
+      "toUser": "+8801783651822",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-19T12:08:57Z",
+      "source": 0,
+      "createdAt": "2026-06-19T12:08:57Z"
+    },
+    {
+      "id": "mr-1005",
+      "toUser": "+8801758657471",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-19T00:11:57Z",
+      "source": 0,
+      "createdAt": "2026-06-19T00:11:57Z"
+    },
+    {
+      "id": "mr-1006",
+      "toUser": "+8801748549237",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T21:26:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T21:26:57Z"
+    },
+    {
+      "id": "mr-1007",
+      "toUser": "+8801749650280",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T09:05:57Z",
+      "source": 0,
+      "createdAt": "2026-06-17T09:05:57Z"
+    },
+    {
+      "id": "mr-1008",
+      "toUser": "+8801731169118",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-20T00:20:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T00:20:57Z"
+    },
+    {
+      "id": "mr-1009",
+      "toUser": "+8801770740499",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-18T05:44:57Z",
+      "source": 1,
+      "createdAt": "2026-06-18T05:44:57Z"
+    },
+    {
+      "id": "mr-1010",
+      "toUser": "+8801759437662",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T08:13:57Z",
+      "source": 1,
+      "createdAt": "2026-06-17T08:13:57Z"
+    },
+    {
+      "id": "mr-1011",
+      "toUser": "+8801723193774",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-19T19:59:57Z",
+      "source": 1,
+      "createdAt": "2026-06-19T19:59:57Z"
+    },
+    {
+      "id": "mr-1012",
+      "toUser": "+8801759350601",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-19T12:55:57Z",
+      "source": 1,
+      "createdAt": "2026-06-19T12:55:57Z"
+    },
+    {
+      "id": "mr-1013",
+      "toUser": "+8801761665492",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 0,
+      "receivedAt": "2026-06-18T18:29:57Z",
+      "source": 1,
+      "createdAt": "2026-06-18T18:29:57Z"
+    },
+    {
+      "id": "mr-1014",
+      "toUser": "+8801783878975",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T19:40:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T19:40:57Z"
+    },
+    {
+      "id": "mr-1015",
+      "toUser": "+8801777368458",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 1,
+      "receivedAt": "2026-06-21T02:41:57Z",
+      "source": 1,
+      "createdAt": "2026-06-21T02:41:57Z"
+    },
+    {
+      "id": "mr-1016",
+      "toUser": "+8801768150861",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-17T20:42:57Z",
+      "source": 1,
+      "createdAt": "2026-06-17T20:42:57Z"
+    },
+    {
+      "id": "mr-1017",
+      "toUser": "+8801722503256",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-20T01:13:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T01:13:57Z"
+    },
+    {
+      "id": "mr-1018",
+      "toUser": "+8801733545527",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 1,
+      "receivedAt": "2026-06-17T17:31:57Z",
+      "source": 0,
+      "createdAt": "2026-06-17T17:31:57Z"
+    },
+    {
+      "id": "mr-1019",
+      "toUser": "+8801738003797",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-21T00:32:57Z",
+      "source": 1,
+      "createdAt": "2026-06-21T00:32:57Z"
+    },
+    {
+      "id": "mr-1020",
+      "toUser": "+8801715883373",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T15:28:57Z",
+      "source": 0,
+      "createdAt": "2026-06-17T15:28:57Z"
+    },
+    {
+      "id": "mr-1021",
+      "toUser": "+8801792934409",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-19T07:06:57Z",
+      "source": 1,
+      "createdAt": "2026-06-19T07:06:57Z"
+    },
+    {
+      "id": "mr-1022",
+      "toUser": "+8801788749845",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T11:17:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T11:17:57Z"
+    },
+    {
+      "id": "mr-1023",
+      "toUser": "+8801725092791",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-21T04:03:57Z",
+      "source": 1,
+      "createdAt": "2026-06-21T04:03:57Z"
+    },
+    {
+      "id": "mr-1024",
+      "toUser": "+8801754447018",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-20T00:04:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T00:04:57Z"
+    }
+  ],
+  "messageRequestDetails": {
+    "mr-1000": {
+      "id": "mr-1000",
+      "toUser": "+8801756050561",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T08:21:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T08:21:57Z",
+      "jobs": [
+        {
+          "id": "mr-1000-job0",
+          "channelType": 3,
+          "toNumber": "+8801756050561",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD821250",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9361}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-18T08:21:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1000-job0",
+          "createdAt": "2026-06-18T08:21:57Z"
+        }
+      ]
+    },
+    "mr-1001": {
+      "id": "mr-1001",
+      "toUser": "+8801725637035",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-20T05:07:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T05:07:57Z",
+      "jobs": [
+        {
+          "id": "mr-1001-job0",
+          "channelType": 3,
+          "toNumber": "+8801725637035",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD619916",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3856}",
+          "failureReason": null,
+          "sentAt": "2026-06-20T05:07:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-20T05:07:57Z"
+        }
+      ]
+    },
+    "mr-1002": {
+      "id": "mr-1002",
+      "toUser": "+8801734793303",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T07:44:57Z",
+      "source": 1,
+      "createdAt": "2026-06-17T07:44:57Z",
+      "jobs": [
+        {
+          "id": "mr-1002-job0",
+          "channelType": 0,
+          "toNumber": "+8801734793303",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD887818",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 8312}",
+          "failureReason": null,
+          "sentAt": "2026-06-17T07:44:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T07:44:57Z"
+        },
+        {
+          "id": "mr-1002-job1",
+          "channelType": 3,
+          "toNumber": "+8801734793303",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD779926",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1127}",
+          "failureReason": null,
+          "sentAt": "2026-06-17T07:44:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1002-job0",
+          "createdAt": "2026-06-17T07:44:57Z"
+        }
+      ]
+    },
+    "mr-1003": {
+      "id": "mr-1003",
+      "toUser": "+8801738146508",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T03:22:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T03:22:57Z",
+      "jobs": [
+        {
+          "id": "mr-1003-job0",
+          "channelType": 3,
+          "toNumber": "+8801738146508",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD167620",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 6241}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T03:22:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T03:22:57Z"
+        },
+        {
+          "id": "mr-1003-job1",
+          "channelType": 0,
+          "toNumber": "+8801738146508",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD541026",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 5002}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T03:22:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1003-job0",
+          "createdAt": "2026-06-18T03:22:57Z"
+        },
+        {
+          "id": "mr-1003-job2",
+          "channelType": 1,
+          "toNumber": "+8801738146508",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD375970",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 8370}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T03:22:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T03:22:57Z"
+        }
+      ]
+    },
+    "mr-1004": {
+      "id": "mr-1004",
+      "toUser": "+8801783651822",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-19T12:08:57Z",
+      "source": 0,
+      "createdAt": "2026-06-19T12:08:57Z",
+      "jobs": [
+        {
+          "id": "mr-1004-job0",
+          "channelType": 1,
+          "toNumber": "+8801783651822",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD143485",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1179}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T12:08:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-19T12:08:57Z"
+        },
+        {
+          "id": "mr-1004-job1",
+          "channelType": 3,
+          "toNumber": "+8801783651822",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD128490",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1999}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T12:08:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1004-job0",
+          "createdAt": "2026-06-19T12:08:57Z"
+        },
+        {
+          "id": "mr-1004-job2",
+          "channelType": 3,
+          "toNumber": "+8801783651822",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD357538",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 4704}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T12:08:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-19T12:08:57Z"
+        }
+      ]
+    },
+    "mr-1005": {
+      "id": "mr-1005",
+      "toUser": "+8801758657471",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-19T00:11:57Z",
+      "source": 0,
+      "createdAt": "2026-06-19T00:11:57Z",
+      "jobs": [
+        {
+          "id": "mr-1005-job0",
+          "channelType": 0,
+          "toNumber": "+8801758657471",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD338355",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7895}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T00:11:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-19T00:11:57Z"
+        },
+        {
+          "id": "mr-1005-job1",
+          "channelType": 3,
+          "toNumber": "+8801758657471",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 0,
+          "providerMessageId": null,
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 4037}",
+          "failureReason": null,
+          "sentAt": null,
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1005-job0",
+          "createdAt": "2026-06-19T00:11:57Z"
+        }
+      ]
+    },
+    "mr-1006": {
+      "id": "mr-1006",
+      "toUser": "+8801748549237",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T21:26:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T21:26:57Z",
+      "jobs": [
+        {
+          "id": "mr-1006-job0",
+          "channelType": 2,
+          "toNumber": "+8801748549237",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD481574",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1774}",
+          "failureReason": "Blocked recipient",
+          "sentAt": "2026-06-18T21:26:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T21:26:57Z"
+        },
+        {
+          "id": "mr-1006-job1",
+          "channelType": 1,
+          "toNumber": "+8801748549237",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD113389",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7600}",
+          "failureReason": "Provider timeout",
+          "sentAt": "2026-06-18T21:26:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T21:26:57Z"
+        },
+        {
+          "id": "mr-1006-job2",
+          "channelType": 1,
+          "toNumber": "+8801748549237",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD852450",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 841}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T21:26:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T21:26:57Z"
+        }
+      ]
+    },
+    "mr-1007": {
+      "id": "mr-1007",
+      "toUser": "+8801749650280",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T09:05:57Z",
+      "source": 0,
+      "createdAt": "2026-06-17T09:05:57Z",
+      "jobs": [
+        {
+          "id": "mr-1007-job0",
+          "channelType": 0,
+          "toNumber": "+8801749650280",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD486065",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 2659}",
+          "failureReason": null,
+          "sentAt": "2026-06-17T09:05:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T09:05:57Z"
+        }
+      ]
+    },
+    "mr-1008": {
+      "id": "mr-1008",
+      "toUser": "+8801731169118",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-20T00:20:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T00:20:57Z",
+      "jobs": [
+        {
+          "id": "mr-1008-job0",
+          "channelType": 0,
+          "toNumber": "+8801731169118",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 0,
+          "providerMessageId": null,
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9022}",
+          "failureReason": null,
+          "sentAt": null,
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-20T00:20:57Z"
+        },
+        {
+          "id": "mr-1008-job1",
+          "channelType": 2,
+          "toNumber": "+8801731169118",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD782468",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9708}",
+          "failureReason": "Blocked recipient",
+          "sentAt": "2026-06-20T00:20:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-20T00:20:57Z"
+        }
+      ]
+    },
+    "mr-1009": {
+      "id": "mr-1009",
+      "toUser": "+8801770740499",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-18T05:44:57Z",
+      "source": 1,
+      "createdAt": "2026-06-18T05:44:57Z",
+      "jobs": [
+        {
+          "id": "mr-1009-job0",
+          "channelType": 1,
+          "toNumber": "+8801770740499",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD940252",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 662}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-18T05:44:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T05:44:57Z"
+        },
+        {
+          "id": "mr-1009-job1",
+          "channelType": 1,
+          "toNumber": "+8801770740499",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD305003",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9687}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T05:44:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1009-job0",
+          "createdAt": "2026-06-18T05:44:57Z"
+        },
+        {
+          "id": "mr-1009-job2",
+          "channelType": 0,
+          "toNumber": "+8801770740499",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD798659",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 420}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T05:44:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T05:44:57Z"
+        }
+      ]
+    },
+    "mr-1010": {
+      "id": "mr-1010",
+      "toUser": "+8801759437662",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T08:13:57Z",
+      "source": 1,
+      "createdAt": "2026-06-17T08:13:57Z",
+      "jobs": [
+        {
+          "id": "mr-1010-job0",
+          "channelType": 3,
+          "toNumber": "+8801759437662",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 0,
+          "providerMessageId": null,
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1583}",
+          "failureReason": null,
+          "sentAt": null,
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T08:13:57Z"
+        },
+        {
+          "id": "mr-1010-job1",
+          "channelType": 2,
+          "toNumber": "+8801759437662",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD708063",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7307}",
+          "failureReason": "Blocked recipient",
+          "sentAt": "2026-06-17T08:13:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T08:13:57Z"
+        }
+      ]
+    },
+    "mr-1011": {
+      "id": "mr-1011",
+      "toUser": "+8801723193774",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-19T19:59:57Z",
+      "source": 1,
+      "createdAt": "2026-06-19T19:59:57Z",
+      "jobs": [
+        {
+          "id": "mr-1011-job0",
+          "channelType": 1,
+          "toNumber": "+8801723193774",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD742436",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3859}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T19:59:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-19T19:59:57Z"
+        },
+        {
+          "id": "mr-1011-job1",
+          "channelType": 2,
+          "toNumber": "+8801723193774",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD433678",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 2309}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T19:59:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1011-job0",
+          "createdAt": "2026-06-19T19:59:57Z"
+        }
+      ]
+    },
+    "mr-1012": {
+      "id": "mr-1012",
+      "toUser": "+8801759350601",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-19T12:55:57Z",
+      "source": 1,
+      "createdAt": "2026-06-19T12:55:57Z",
+      "jobs": [
+        {
+          "id": "mr-1012-job0",
+          "channelType": 2,
+          "toNumber": "+8801759350601",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD150805",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 2588}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T12:55:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-19T12:55:57Z"
+        },
+        {
+          "id": "mr-1012-job1",
+          "channelType": 3,
+          "toNumber": "+8801759350601",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 2,
+          "providerMessageId": "PRViD676885",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7116}",
+          "failureReason": "Blocked recipient",
+          "sentAt": "2026-06-19T12:55:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1012-job0",
+          "createdAt": "2026-06-19T12:55:57Z"
+        },
+        {
+          "id": "mr-1012-job2",
+          "channelType": 3,
+          "toNumber": "+8801759350601",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD745391",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 6709}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T12:55:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1012-job0",
+          "createdAt": "2026-06-19T12:55:57Z"
+        }
+      ]
+    },
+    "mr-1013": {
+      "id": "mr-1013",
+      "toUser": "+8801761665492",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 0,
+      "receivedAt": "2026-06-18T18:29:57Z",
+      "source": 1,
+      "createdAt": "2026-06-18T18:29:57Z",
+      "jobs": [
+        {
+          "id": "mr-1013-job0",
+          "channelType": 1,
+          "toNumber": "+8801761665492",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD512577",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9902}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T18:29:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T18:29:57Z"
+        },
+        {
+          "id": "mr-1013-job1",
+          "channelType": 0,
+          "toNumber": "+8801761665492",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD987344",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1123}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T18:29:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T18:29:57Z"
+        },
+        {
+          "id": "mr-1013-job2",
+          "channelType": 1,
+          "toNumber": "+8801761665492",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD897507",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 4127}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T18:29:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T18:29:57Z"
+        }
+      ]
+    },
+    "mr-1014": {
+      "id": "mr-1014",
+      "toUser": "+8801783878975",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T19:40:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T19:40:57Z",
+      "jobs": [
+        {
+          "id": "mr-1014-job0",
+          "channelType": 2,
+          "toNumber": "+8801783878975",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD408062",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1108}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-18T19:40:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T19:40:57Z"
+        },
+        {
+          "id": "mr-1014-job1",
+          "channelType": 2,
+          "toNumber": "+8801783878975",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 2,
+          "providerMessageId": "PRViD637748",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 6386}",
+          "failureReason": "Provider timeout",
+          "sentAt": "2026-06-18T19:40:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1014-job0",
+          "createdAt": "2026-06-18T19:40:57Z"
+        },
+        {
+          "id": "mr-1014-job2",
+          "channelType": 2,
+          "toNumber": "+8801783878975",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD393311",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 6009}",
+          "failureReason": "Blocked recipient",
+          "sentAt": "2026-06-18T19:40:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T19:40:57Z"
+        }
+      ]
+    },
+    "mr-1015": {
+      "id": "mr-1015",
+      "toUser": "+8801777368458",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 1,
+      "receivedAt": "2026-06-21T02:41:57Z",
+      "source": 1,
+      "createdAt": "2026-06-21T02:41:57Z",
+      "jobs": [
+        {
+          "id": "mr-1015-job0",
+          "channelType": 1,
+          "toNumber": "+8801777368458",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD194749",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 5102}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-21T02:41:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-21T02:41:57Z"
+        },
+        {
+          "id": "mr-1015-job1",
+          "channelType": 3,
+          "toNumber": "+8801777368458",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD957003",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 175}",
+          "failureReason": null,
+          "sentAt": "2026-06-21T02:41:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1015-job0",
+          "createdAt": "2026-06-21T02:41:57Z"
+        }
+      ]
+    },
+    "mr-1016": {
+      "id": "mr-1016",
+      "toUser": "+8801768150861",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-17T20:42:57Z",
+      "source": 1,
+      "createdAt": "2026-06-17T20:42:57Z",
+      "jobs": [
+        {
+          "id": "mr-1016-job0",
+          "channelType": 1,
+          "toNumber": "+8801768150861",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD831257",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3614}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-17T20:42:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T20:42:57Z"
+        },
+        {
+          "id": "mr-1016-job1",
+          "channelType": 1,
+          "toNumber": "+8801768150861",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 0,
+          "providerMessageId": null,
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7564}",
+          "failureReason": null,
+          "sentAt": null,
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T20:42:57Z"
+        },
+        {
+          "id": "mr-1016-job2",
+          "channelType": 2,
+          "toNumber": "+8801768150861",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD702708",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9751}",
+          "failureReason": null,
+          "sentAt": "2026-06-17T20:42:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1016-job0",
+          "createdAt": "2026-06-17T20:42:57Z"
+        }
+      ]
+    },
+    "mr-1017": {
+      "id": "mr-1017",
+      "toUser": "+8801722503256",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-20T01:13:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T01:13:57Z",
+      "jobs": [
+        {
+          "id": "mr-1017-job0",
+          "channelType": 2,
+          "toNumber": "+8801722503256",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD792485",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 8037}",
+          "failureReason": null,
+          "sentAt": "2026-06-20T01:13:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-20T01:13:57Z"
+        },
+        {
+          "id": "mr-1017-job1",
+          "channelType": 0,
+          "toNumber": "+8801722503256",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD923699",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 1206}",
+          "failureReason": null,
+          "sentAt": "2026-06-20T01:13:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1017-job0",
+          "createdAt": "2026-06-20T01:13:57Z"
+        },
+        {
+          "id": "mr-1017-job2",
+          "channelType": 2,
+          "toNumber": "+8801722503256",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD962226",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3872}",
+          "failureReason": null,
+          "sentAt": "2026-06-20T01:13:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1017-job0",
+          "createdAt": "2026-06-20T01:13:57Z"
+        }
+      ]
+    },
+    "mr-1018": {
+      "id": "mr-1018",
+      "toUser": "+8801733545527",
+      "parsedChannels": [
+        "sms",
+        "wp"
+      ],
+      "overallStatus": 1,
+      "receivedAt": "2026-06-17T17:31:57Z",
+      "source": 0,
+      "createdAt": "2026-06-17T17:31:57Z",
+      "jobs": [
+        {
+          "id": "mr-1018-job0",
+          "channelType": 0,
+          "toNumber": "+8801733545527",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 0,
+          "providerMessageId": null,
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 4502}",
+          "failureReason": null,
+          "sentAt": null,
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T17:31:57Z"
+        }
+      ]
+    },
+    "mr-1019": {
+      "id": "mr-1019",
+      "toUser": "+8801738003797",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-21T00:32:57Z",
+      "source": 1,
+      "createdAt": "2026-06-21T00:32:57Z",
+      "jobs": [
+        {
+          "id": "mr-1019-job0",
+          "channelType": 0,
+          "toNumber": "+8801738003797",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD594663",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7659}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-21T00:32:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-21T00:32:57Z"
+        },
+        {
+          "id": "mr-1019-job1",
+          "channelType": 2,
+          "toNumber": "+8801738003797",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD520543",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7297}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-21T00:32:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-21T00:32:57Z"
+        },
+        {
+          "id": "mr-1019-job2",
+          "channelType": 1,
+          "toNumber": "+8801738003797",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD610534",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7571}",
+          "failureReason": null,
+          "sentAt": "2026-06-21T00:32:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1019-job0",
+          "createdAt": "2026-06-21T00:32:57Z"
+        }
+      ]
+    },
+    "mr-1020": {
+      "id": "mr-1020",
+      "toUser": "+8801715883373",
+      "parsedChannels": [
+        "sms"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-17T15:28:57Z",
+      "source": 0,
+      "createdAt": "2026-06-17T15:28:57Z",
+      "jobs": [
+        {
+          "id": "mr-1020-job0",
+          "channelType": 0,
+          "toNumber": "+8801715883373",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD437156",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 5929}",
+          "failureReason": "Invalid number",
+          "sentAt": "2026-06-17T15:28:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-17T15:28:57Z"
+        },
+        {
+          "id": "mr-1020-job1",
+          "channelType": 3,
+          "toNumber": "+8801715883373",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 2,
+          "providerMessageId": "PRViD513331",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 9915}",
+          "failureReason": "Provider timeout",
+          "sentAt": "2026-06-17T15:28:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1020-job0",
+          "createdAt": "2026-06-17T15:28:57Z"
+        }
+      ]
+    },
+    "mr-1021": {
+      "id": "mr-1021",
+      "toUser": "+8801792934409",
+      "parsedChannels": [
+        "voice"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-19T07:06:57Z",
+      "source": 1,
+      "createdAt": "2026-06-19T07:06:57Z",
+      "jobs": [
+        {
+          "id": "mr-1021-job0",
+          "channelType": 0,
+          "toNumber": "+8801792934409",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD324744",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3693}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T07:06:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-19T07:06:57Z"
+        },
+        {
+          "id": "mr-1021-job1",
+          "channelType": 3,
+          "toNumber": "+8801792934409",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD147539",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 322}",
+          "failureReason": null,
+          "sentAt": "2026-06-19T07:06:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1021-job0",
+          "createdAt": "2026-06-19T07:06:57Z"
+        },
+        {
+          "id": "mr-1021-job2",
+          "channelType": 0,
+          "toNumber": "+8801792934409",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 2,
+          "providerMessageId": "PRViD302655",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 2879}",
+          "failureReason": "Provider timeout",
+          "sentAt": "2026-06-19T07:06:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1021-job0",
+          "createdAt": "2026-06-19T07:06:57Z"
+        }
+      ]
+    },
+    "mr-1022": {
+      "id": "mr-1022",
+      "toUser": "+8801788749845",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 2,
+      "receivedAt": "2026-06-18T11:17:57Z",
+      "source": 0,
+      "createdAt": "2026-06-18T11:17:57Z",
+      "jobs": [
+        {
+          "id": "mr-1022-job0",
+          "channelType": 0,
+          "toNumber": "+8801788749845",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD149696",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 107}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T11:17:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T11:17:57Z"
+        },
+        {
+          "id": "mr-1022-job1",
+          "channelType": 1,
+          "toNumber": "+8801788749845",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD794686",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 8843}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T11:17:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1022-job0",
+          "createdAt": "2026-06-18T11:17:57Z"
+        },
+        {
+          "id": "mr-1022-job2",
+          "channelType": 3,
+          "toNumber": "+8801788749845",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD948442",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 7907}",
+          "failureReason": null,
+          "sentAt": "2026-06-18T11:17:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-18T11:17:57Z"
+        }
+      ]
+    },
+    "mr-1023": {
+      "id": "mr-1023",
+      "toUser": "+8801725092791",
+      "parsedChannels": [
+        "smswp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-21T04:03:57Z",
+      "source": 1,
+      "createdAt": "2026-06-21T04:03:57Z",
+      "jobs": [
+        {
+          "id": "mr-1023-job0",
+          "channelType": 1,
+          "toNumber": "+8801725092791",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 2,
+          "providerMessageId": "PRViD392591",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3268}",
+          "failureReason": "Blocked recipient",
+          "sentAt": "2026-06-21T04:03:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-21T04:03:57Z"
+        }
+      ]
+    },
+    "mr-1024": {
+      "id": "mr-1024",
+      "toUser": "+8801754447018",
+      "parsedChannels": [
+        "wp"
+      ],
+      "overallStatus": 3,
+      "receivedAt": "2026-06-20T00:04:57Z",
+      "source": 0,
+      "createdAt": "2026-06-20T00:04:57Z",
+      "jobs": [
+        {
+          "id": "mr-1024-job0",
+          "channelType": 0,
+          "toNumber": "+8801754447018",
+          "messageContent": "Your OTP is 4821. Do not share it.",
+          "status": 1,
+          "providerMessageId": "PRViD773026",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 3689}",
+          "failureReason": null,
+          "sentAt": "2026-06-20T00:04:57Z",
+          "isFallback": false,
+          "fallbackFromJobId": null,
+          "createdAt": "2026-06-20T00:04:57Z"
+        },
+        {
+          "id": "mr-1024-job1",
+          "channelType": 1,
+          "toNumber": "+8801754447018",
+          "messageContent": "Fallback delivery attempt.",
+          "status": 1,
+          "providerMessageId": "PRViD580497",
+          "providerRawResponse": "{\"code\": \"0\", \"desc\": \"Accepted\", \"ref\": 5753}",
+          "failureReason": null,
+          "sentAt": "2026-06-20T00:04:57Z",
+          "isFallback": true,
+          "fallbackFromJobId": "mr-1024-job0",
+          "createdAt": "2026-06-20T00:04:57Z"
+        }
+      ]
+    }
+  },
+  "dispatchLogs": [
+    {
+      "id": "dj-2000",
+      "channelType": 0,
+      "toNumber": "+8801756050561",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD278804",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 5541}",
+      "failureReason": null,
+      "sentAt": "2026-06-18T11:55:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-1999",
+      "createdAt": "2026-06-18T11:55:57Z"
+    },
+    {
+      "id": "dj-2001",
+      "channelType": 0,
+      "toNumber": "+8801725637035",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD820978",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 79696}",
+      "failureReason": null,
+      "sentAt": "2026-06-19T17:35:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2000",
+      "createdAt": "2026-06-19T17:35:57Z"
+    },
+    {
+      "id": "dj-2002",
+      "channelType": 0,
+      "toNumber": "+8801734793303",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD140031",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 15125}",
+      "failureReason": null,
+      "sentAt": "2026-06-16T10:41:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-16T10:41:57Z"
+    },
+    {
+      "id": "dj-2003",
+      "channelType": 3,
+      "toNumber": "+8801738146508",
+      "messageContent": "Transactional message body sample.",
+      "status": 2,
+      "providerMessageId": "PRViD170850",
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 77235}",
+      "failureReason": "Provider timeout",
+      "sentAt": "2026-06-19T03:46:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-19T03:46:57Z"
+    },
+    {
+      "id": "dj-2004",
+      "channelType": 3,
+      "toNumber": "+8801783651822",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD839681",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 18090}",
+      "failureReason": null,
+      "sentAt": "2026-06-15T22:49:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2003",
+      "createdAt": "2026-06-15T22:49:57Z"
+    },
+    {
+      "id": "dj-2005",
+      "channelType": 0,
+      "toNumber": "+8801758657471",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD783550",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 98381}",
+      "failureReason": null,
+      "sentAt": "2026-06-18T13:16:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2004",
+      "createdAt": "2026-06-18T13:16:57Z"
+    },
+    {
+      "id": "dj-2006",
+      "channelType": 1,
+      "toNumber": "+8801748549237",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD464360",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 66214}",
+      "failureReason": null,
+      "sentAt": "2026-06-16T13:29:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-16T13:29:57Z"
+    },
+    {
+      "id": "dj-2007",
+      "channelType": 3,
+      "toNumber": "+8801749650280",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD826807",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 42281}",
+      "failureReason": null,
+      "sentAt": "2026-06-20T08:59:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-20T08:59:57Z"
+    },
+    {
+      "id": "dj-2008",
+      "channelType": 0,
+      "toNumber": "+8801731169118",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD604381",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 10175}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T03:23:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-17T03:23:57Z"
+    },
+    {
+      "id": "dj-2009",
+      "channelType": 3,
+      "toNumber": "+8801770740499",
+      "messageContent": "Transactional message body sample.",
+      "status": 0,
+      "providerMessageId": null,
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 9025}",
+      "failureReason": null,
+      "sentAt": null,
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2008",
+      "createdAt": "2026-06-20T00:55:57Z"
+    },
+    {
+      "id": "dj-2010",
+      "channelType": 3,
+      "toNumber": "+8801759437662",
+      "messageContent": "Transactional message body sample.",
+      "status": 0,
+      "providerMessageId": null,
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 26082}",
+      "failureReason": null,
+      "sentAt": null,
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-16T21:55:57Z"
+    },
+    {
+      "id": "dj-2011",
+      "channelType": 0,
+      "toNumber": "+8801723193774",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD464309",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 88724}",
+      "failureReason": null,
+      "sentAt": "2026-06-15T20:07:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-15T20:07:57Z"
+    },
+    {
+      "id": "dj-2012",
+      "channelType": 2,
+      "toNumber": "+8801759350601",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD667019",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 67917}",
+      "failureReason": null,
+      "sentAt": "2026-06-19T00:22:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-19T00:22:57Z"
+    },
+    {
+      "id": "dj-2013",
+      "channelType": 2,
+      "toNumber": "+8801761665492",
+      "messageContent": "Transactional message body sample.",
+      "status": 2,
+      "providerMessageId": "PRViD237841",
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 33834}",
+      "failureReason": "Provider timeout",
+      "sentAt": "2026-06-15T19:03:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-15T19:03:57Z"
+    },
+    {
+      "id": "dj-2014",
+      "channelType": 2,
+      "toNumber": "+8801783878975",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD440162",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 49258}",
+      "failureReason": null,
+      "sentAt": "2026-06-16T22:54:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-16T22:54:57Z"
+    },
+    {
+      "id": "dj-2015",
+      "channelType": 3,
+      "toNumber": "+8801777368458",
+      "messageContent": "Transactional message body sample.",
+      "status": 2,
+      "providerMessageId": "PRViD112558",
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 37867}",
+      "failureReason": "Insufficient balance",
+      "sentAt": "2026-06-20T12:48:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-20T12:48:57Z"
+    },
+    {
+      "id": "dj-2016",
+      "channelType": 3,
+      "toNumber": "+8801768150861",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD531553",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 34299}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T02:05:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2015",
+      "createdAt": "2026-06-17T02:05:57Z"
+    },
+    {
+      "id": "dj-2017",
+      "channelType": 3,
+      "toNumber": "+8801722503256",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD604323",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 33232}",
+      "failureReason": null,
+      "sentAt": "2026-06-18T15:07:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-18T15:07:57Z"
+    },
+    {
+      "id": "dj-2018",
+      "channelType": 1,
+      "toNumber": "+8801733545527",
+      "messageContent": "Transactional message body sample.",
+      "status": 0,
+      "providerMessageId": null,
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 11864}",
+      "failureReason": null,
+      "sentAt": null,
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-17T10:11:57Z"
+    },
+    {
+      "id": "dj-2019",
+      "channelType": 2,
+      "toNumber": "+8801738003797",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD252293",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 75557}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T09:09:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-17T09:09:57Z"
+    },
+    {
+      "id": "dj-2020",
+      "channelType": 1,
+      "toNumber": "+8801715883373",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD175754",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 14222}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T15:49:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-17T15:49:57Z"
+    },
+    {
+      "id": "dj-2021",
+      "channelType": 0,
+      "toNumber": "+8801792934409",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD203470",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 96804}",
+      "failureReason": null,
+      "sentAt": "2026-06-18T16:26:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2020",
+      "createdAt": "2026-06-18T16:26:57Z"
+    },
+    {
+      "id": "dj-2022",
+      "channelType": 2,
+      "toNumber": "+8801788749845",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD952113",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 97295}",
+      "failureReason": null,
+      "sentAt": "2026-06-15T21:03:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2021",
+      "createdAt": "2026-06-15T21:03:57Z"
+    },
+    {
+      "id": "dj-2023",
+      "channelType": 3,
+      "toNumber": "+8801725092791",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD847525",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 50648}",
+      "failureReason": null,
+      "sentAt": "2026-06-20T01:39:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2022",
+      "createdAt": "2026-06-20T01:39:57Z"
+    },
+    {
+      "id": "dj-2024",
+      "channelType": 0,
+      "toNumber": "+8801754447018",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD176220",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 40946}",
+      "failureReason": null,
+      "sentAt": "2026-06-21T01:05:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2023",
+      "createdAt": "2026-06-21T01:05:57Z"
+    },
+    {
+      "id": "dj-2025",
+      "channelType": 3,
+      "toNumber": "+8801741401078",
+      "messageContent": "Transactional message body sample.",
+      "status": 2,
+      "providerMessageId": "PRViD957328",
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 89996}",
+      "failureReason": "Insufficient balance",
+      "sentAt": "2026-06-18T09:05:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-18T09:05:57Z"
+    },
+    {
+      "id": "dj-2026",
+      "channelType": 0,
+      "toNumber": "+8801720974171",
+      "messageContent": "Transactional message body sample.",
+      "status": 2,
+      "providerMessageId": "PRViD732304",
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 50620}",
+      "failureReason": "Insufficient balance",
+      "sentAt": "2026-06-16T03:18:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2025",
+      "createdAt": "2026-06-16T03:18:57Z"
+    },
+    {
+      "id": "dj-2027",
+      "channelType": 0,
+      "toNumber": "+8801767087165",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD785354",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 41949}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T14:31:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-17T14:31:57Z"
+    },
+    {
+      "id": "dj-2028",
+      "channelType": 3,
+      "toNumber": "+8801721502108",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD210672",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 98723}",
+      "failureReason": null,
+      "sentAt": "2026-06-20T23:14:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-20T23:14:57Z"
+    },
+    {
+      "id": "dj-2029",
+      "channelType": 2,
+      "toNumber": "+8801785039225",
+      "messageContent": "Transactional message body sample.",
+      "status": 2,
+      "providerMessageId": "PRViD616885",
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 93331}",
+      "failureReason": "Provider timeout",
+      "sentAt": "2026-06-17T05:22:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-17T05:22:57Z"
+    },
+    {
+      "id": "dj-2030",
+      "channelType": 2,
+      "toNumber": "+8801754925699",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD654368",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 55874}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T04:52:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2029",
+      "createdAt": "2026-06-17T04:52:57Z"
+    },
+    {
+      "id": "dj-2031",
+      "channelType": 2,
+      "toNumber": "+8801794470329",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD540169",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 85845}",
+      "failureReason": null,
+      "sentAt": "2026-06-18T15:36:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-18T15:36:57Z"
+    },
+    {
+      "id": "dj-2032",
+      "channelType": 1,
+      "toNumber": "+8801762049237",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD285184",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 71063}",
+      "failureReason": null,
+      "sentAt": "2026-06-15T17:07:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-15T17:07:57Z"
+    },
+    {
+      "id": "dj-2033",
+      "channelType": 3,
+      "toNumber": "+8801753762530",
+      "messageContent": "Transactional message body sample.",
+      "status": 0,
+      "providerMessageId": null,
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 34034}",
+      "failureReason": null,
+      "sentAt": null,
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-16T09:45:57Z"
+    },
+    {
+      "id": "dj-2034",
+      "channelType": 3,
+      "toNumber": "+8801744776981",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD208124",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 29507}",
+      "failureReason": null,
+      "sentAt": "2026-06-20T01:11:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-20T01:11:57Z"
+    },
+    {
+      "id": "dj-2035",
+      "channelType": 0,
+      "toNumber": "+8801724402322",
+      "messageContent": "Transactional message body sample.",
+      "status": 0,
+      "providerMessageId": null,
+      "providerRawResponse": "{\"status\": \"fail\", \"id\": 15497}",
+      "failureReason": null,
+      "sentAt": null,
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-15T16:49:57Z"
+    },
+    {
+      "id": "dj-2036",
+      "channelType": 0,
+      "toNumber": "+8801773758989",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD970020",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 71169}",
+      "failureReason": null,
+      "sentAt": "2026-06-19T09:29:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-19T09:29:57Z"
+    },
+    {
+      "id": "dj-2037",
+      "channelType": 0,
+      "toNumber": "+8801749938348",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD490073",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 9658}",
+      "failureReason": null,
+      "sentAt": "2026-06-18T20:31:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-18T20:31:57Z"
+    },
+    {
+      "id": "dj-2038",
+      "channelType": 3,
+      "toNumber": "+8801726282101",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD714461",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 76805}",
+      "failureReason": null,
+      "sentAt": "2026-06-16T04:52:57Z",
+      "isFallback": false,
+      "fallbackFromJobId": null,
+      "createdAt": "2026-06-16T04:52:57Z"
+    },
+    {
+      "id": "dj-2039",
+      "channelType": 3,
+      "toNumber": "+8801768632916",
+      "messageContent": "Transactional message body sample.",
+      "status": 1,
+      "providerMessageId": "PRViD227576",
+      "providerRawResponse": "{\"status\": \"ok\", \"id\": 99261}",
+      "failureReason": null,
+      "sentAt": "2026-06-17T13:47:57Z",
+      "isFallback": true,
+      "fallbackFromJobId": "dj-2038",
+      "createdAt": "2026-06-17T13:47:57Z"
+    }
+  ],
+  "apiLogs": [
+    {
+      "id": "al-3000",
+      "apiKey": "xsk_34087",
+      "toUser": "+8801756050561",
+      "rawBody": "{\"to\": \"+8801756050561\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.193.39.13",
+      "responseStatus": 401,
+      "durationMs": 166,
+      "requestedAt": "2026-06-16T05:34:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3001",
+      "apiKey": "xsk_27353",
+      "toUser": "+8801725637035",
+      "rawBody": "{\"to\": \"+8801725637035\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.148.11.109",
+      "responseStatus": 401,
+      "durationMs": 496,
+      "requestedAt": "2026-06-15T20:34:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3002",
+      "apiKey": "xsk_64570",
+      "toUser": "+8801734793303",
+      "rawBody": "{\"to\": \"+8801734793303\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.102.63.72",
+      "responseStatus": 200,
+      "durationMs": 382,
+      "requestedAt": "2026-06-15T03:49:57Z",
+      "messageRequestId": "mr-1002"
+    },
+    {
+      "id": "al-3003",
+      "apiKey": "xsk_53310",
+      "toUser": "+8801738146508",
+      "rawBody": "{\"to\": \"+8801738146508\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 500}",
+      "callerIp": "103.129.12.202",
+      "responseStatus": 500,
+      "durationMs": 125,
+      "requestedAt": "2026-06-17T10:42:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3004",
+      "apiKey": "xsk_81040",
+      "toUser": "+8801783651822",
+      "rawBody": "{\"to\": \"+8801783651822\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.199.212.254",
+      "responseStatus": 401,
+      "durationMs": 82,
+      "requestedAt": "2026-06-17T07:05:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3005",
+      "apiKey": "xsk_74370",
+      "toUser": "+8801758657471",
+      "rawBody": "{\"to\": \"+8801758657471\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 500}",
+      "callerIp": "103.109.81.100",
+      "responseStatus": 500,
+      "durationMs": 238,
+      "requestedAt": "2026-06-20T17:21:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3006",
+      "apiKey": "xsk_42440",
+      "toUser": "+8801748549237",
+      "rawBody": "{\"to\": \"+8801748549237\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.38.150.135",
+      "responseStatus": 401,
+      "durationMs": 204,
+      "requestedAt": "2026-06-20T15:38:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3007",
+      "apiKey": "xsk_26671",
+      "toUser": "+8801749650280",
+      "rawBody": "{\"to\": \"+8801749650280\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 400}",
+      "callerIp": "103.196.74.147",
+      "responseStatus": 400,
+      "durationMs": 431,
+      "requestedAt": "2026-06-18T15:39:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3008",
+      "apiKey": "xsk_35517",
+      "toUser": "+8801731169118",
+      "rawBody": "{\"to\": \"+8801731169118\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.64.61.184",
+      "responseStatus": 401,
+      "durationMs": 201,
+      "requestedAt": "2026-06-16T14:31:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3009",
+      "apiKey": "xsk_51003",
+      "toUser": "+8801770740499",
+      "rawBody": "{\"to\": \"+8801770740499\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.205.183.247",
+      "responseStatus": 200,
+      "durationMs": 495,
+      "requestedAt": "2026-06-19T09:54:57Z",
+      "messageRequestId": "mr-1009"
+    },
+    {
+      "id": "al-3010",
+      "apiKey": "xsk_76319",
+      "toUser": "+8801759437662",
+      "rawBody": "{\"to\": \"+8801759437662\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.65.212.116",
+      "responseStatus": 401,
+      "durationMs": 17,
+      "requestedAt": "2026-06-20T01:33:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3011",
+      "apiKey": "xsk_99159",
+      "toUser": "+8801723193774",
+      "rawBody": "{\"to\": \"+8801723193774\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 500}",
+      "callerIp": "103.186.176.197",
+      "responseStatus": 500,
+      "durationMs": 687,
+      "requestedAt": "2026-06-21T03:07:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3012",
+      "apiKey": "xsk_70644",
+      "toUser": "+8801759350601",
+      "rawBody": "{\"to\": \"+8801759350601\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.220.198.123",
+      "responseStatus": 200,
+      "durationMs": 538,
+      "requestedAt": "2026-06-17T10:07:57Z",
+      "messageRequestId": "mr-1012"
+    },
+    {
+      "id": "al-3013",
+      "apiKey": "xsk_76003",
+      "toUser": "+8801761665492",
+      "rawBody": "{\"to\": \"+8801761665492\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.5.87.7",
+      "responseStatus": 200,
+      "durationMs": 516,
+      "requestedAt": "2026-06-18T23:17:57Z",
+      "messageRequestId": "mr-1013"
+    },
+    {
+      "id": "al-3014",
+      "apiKey": "xsk_29560",
+      "toUser": "+8801783878975",
+      "rawBody": "{\"to\": \"+8801783878975\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.72.26.187",
+      "responseStatus": 200,
+      "durationMs": 707,
+      "requestedAt": "2026-06-16T05:59:57Z",
+      "messageRequestId": "mr-1014"
+    },
+    {
+      "id": "al-3015",
+      "apiKey": "xsk_38780",
+      "toUser": "+8801777368458",
+      "rawBody": "{\"to\": \"+8801777368458\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.106.195.53",
+      "responseStatus": 200,
+      "durationMs": 757,
+      "requestedAt": "2026-06-19T12:09:57Z",
+      "messageRequestId": "mr-1015"
+    },
+    {
+      "id": "al-3016",
+      "apiKey": "xsk_63596",
+      "toUser": "+8801768150861",
+      "rawBody": "{\"to\": \"+8801768150861\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.193.186.141",
+      "responseStatus": 200,
+      "durationMs": 451,
+      "requestedAt": "2026-06-20T05:59:57Z",
+      "messageRequestId": "mr-1016"
+    },
+    {
+      "id": "al-3017",
+      "apiKey": "xsk_50163",
+      "toUser": "+8801722503256",
+      "rawBody": "{\"to\": \"+8801722503256\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.5.55.139",
+      "responseStatus": 200,
+      "durationMs": 219,
+      "requestedAt": "2026-06-20T05:06:57Z",
+      "messageRequestId": "mr-1017"
+    },
+    {
+      "id": "al-3018",
+      "apiKey": "xsk_52697",
+      "toUser": "+8801733545527",
+      "rawBody": "{\"to\": \"+8801733545527\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.35.129.194",
+      "responseStatus": 401,
+      "durationMs": 712,
+      "requestedAt": "2026-06-17T09:03:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3019",
+      "apiKey": "xsk_98026",
+      "toUser": "+8801738003797",
+      "rawBody": "{\"to\": \"+8801738003797\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.50.51.54",
+      "responseStatus": 200,
+      "durationMs": 644,
+      "requestedAt": "2026-06-19T09:44:57Z",
+      "messageRequestId": "mr-1019"
+    },
+    {
+      "id": "al-3020",
+      "apiKey": "xsk_16859",
+      "toUser": "+8801715883373",
+      "rawBody": "{\"to\": \"+8801715883373\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.58.29.186",
+      "responseStatus": 200,
+      "durationMs": 571,
+      "requestedAt": "2026-06-17T10:06:57Z",
+      "messageRequestId": "mr-1020"
+    },
+    {
+      "id": "al-3021",
+      "apiKey": "xsk_79399",
+      "toUser": "+8801792934409",
+      "rawBody": "{\"to\": \"+8801792934409\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 401}",
+      "callerIp": "103.190.79.121",
+      "responseStatus": 401,
+      "durationMs": 214,
+      "requestedAt": "2026-06-16T09:46:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3022",
+      "apiKey": "xsk_39096",
+      "toUser": "+8801788749845",
+      "rawBody": "{\"to\": \"+8801788749845\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.68.59.37",
+      "responseStatus": 200,
+      "durationMs": 408,
+      "requestedAt": "2026-06-15T12:25:57Z",
+      "messageRequestId": "mr-1022"
+    },
+    {
+      "id": "al-3023",
+      "apiKey": "xsk_33712",
+      "toUser": "+8801725092791",
+      "rawBody": "{\"to\": \"+8801725092791\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.124.79.104",
+      "responseStatus": 200,
+      "durationMs": 283,
+      "requestedAt": "2026-06-16T21:23:57Z",
+      "messageRequestId": "mr-1023"
+    },
+    {
+      "id": "al-3024",
+      "apiKey": "xsk_33763",
+      "toUser": "+8801754447018",
+      "rawBody": "{\"to\": \"+8801754447018\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 500}",
+      "callerIp": "103.117.190.242",
+      "responseStatus": 500,
+      "durationMs": 313,
+      "requestedAt": "2026-06-15T13:57:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3025",
+      "apiKey": "xsk_21024",
+      "toUser": "+8801741401078",
+      "rawBody": "{\"to\": \"+8801741401078\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.204.153.196",
+      "responseStatus": 200,
+      "durationMs": 415,
+      "requestedAt": "2026-06-18T12:37:57Z",
+      "messageRequestId": "mr-1000"
+    },
+    {
+      "id": "al-3026",
+      "apiKey": "xsk_33256",
+      "toUser": "+8801720974171",
+      "rawBody": "{\"to\": \"+8801720974171\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.67.241.10",
+      "responseStatus": 200,
+      "durationMs": 473,
+      "requestedAt": "2026-06-20T20:36:57Z",
+      "messageRequestId": "mr-1001"
+    },
+    {
+      "id": "al-3027",
+      "apiKey": "xsk_65819",
+      "toUser": "+8801767087165",
+      "rawBody": "{\"to\": \"+8801767087165\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"error\", \"code\": 500}",
+      "callerIp": "103.27.88.198",
+      "responseStatus": 500,
+      "durationMs": 395,
+      "requestedAt": "2026-06-16T03:49:57Z",
+      "messageRequestId": null
+    },
+    {
+      "id": "al-3028",
+      "apiKey": "xsk_59118",
+      "toUser": "+8801721502108",
+      "rawBody": "{\"to\": \"+8801721502108\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.173.1.28",
+      "responseStatus": 200,
+      "durationMs": 260,
+      "requestedAt": "2026-06-18T05:29:57Z",
+      "messageRequestId": "mr-1003"
+    },
+    {
+      "id": "al-3029",
+      "apiKey": "xsk_13579",
+      "toUser": "+8801785039225",
+      "rawBody": "{\"to\": \"+8801785039225\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
+      "callerIp": "103.104.228.76",
+      "responseStatus": 200,
+      "durationMs": 546,
+      "requestedAt": "2026-06-19T11:52:57Z",
+      "messageRequestId": "mr-1004"
+    }
+  ],
+  "channelConfigs": [
+    {
+      "id": "cc-4001",
+      "channelType": 0,
+      "providerName": "REVE SMS",
+      "label": "Primary SMS",
+      "isActive": true,
+      "configFields": {
+        "apikey": "sms-key-123",
+        "secretkey": "sms-sec-456",
+        "callerID": "NZGATE",
+        "baseUrl": "https://smpp.reve.example/api"
+      },
+      "createdAt": "2026-05-19T05:40:57Z",
+      "updatedAt": "2026-06-21T05:40:57Z"
+    },
+    {
+      "id": "cc-4002",
+      "channelType": 0,
+      "providerName": "Backup SMS",
+      "label": "Backup SMS",
+      "isActive": false,
+      "configFields": {
+        "apikey": "sms-key-789",
+        "secretkey": "sms-sec-012",
+        "callerID": "NZGATE2",
+        "baseUrl": "https://backup.sms.example/api"
+      },
+      "createdAt": "2026-04-27T05:40:57Z",
+      "updatedAt": "2026-06-20T05:40:57Z"
+    },
+    {
+      "id": "cc-4003",
+      "channelType": 1,
+      "providerName": "WhatsApp Cloud",
+      "label": "WA Text Primary",
+      "isActive": true,
+      "configFields": {
+        "instance_id": "wa-inst-01",
+        "access_token": "wa-token-abc",
+        "baseUrl": "https://graph.wa.example"
+      },
+      "createdAt": "2026-05-01T05:40:57Z",
+      "updatedAt": "2026-06-17T05:40:57Z"
+    },
+    {
+      "id": "cc-4004",
+      "channelType": 1,
+      "providerName": "WA Reseller",
+      "label": "WA Text Backup",
+      "isActive": false,
+      "configFields": {
+        "instance_id": "wa-inst-02",
+        "access_token": "wa-token-def",
+        "baseUrl": "https://reseller.wa.example"
+      },
+      "createdAt": "2026-04-09T05:40:57Z",
+      "updatedAt": "2026-06-19T05:40:57Z"
+    },
+    {
+      "id": "cc-4005",
+      "channelType": 2,
+      "providerName": "WhatsApp Cloud",
+      "label": "WA Media Primary",
+      "isActive": true,
+      "configFields": {
+        "instance_id": "wa-inst-03",
+        "access_token": "wa-token-ghi",
+        "baseUrl": "https://graph.wa.example"
+      },
+      "createdAt": "2026-04-24T05:40:57Z",
+      "updatedAt": "2026-06-19T05:40:57Z"
+    },
+    {
+      "id": "cc-4006",
+      "channelType": 3,
+      "providerName": "REVE Voice",
+      "label": "Voice Primary",
+      "isActive": true,
+      "configFields": {
+        "owner": "nzg",
+        "password": "voice-pass",
+        "authUserId": "auth-77",
+        "campaignId": "camp-01",
+        "lotNumber": "LOT-9",
+        "baseUrl": "https://voice.reve.example/api"
+      },
+      "createdAt": "2026-04-03T05:40:57Z",
+      "updatedAt": "2026-06-20T05:40:57Z"
+    },
+    {
+      "id": "cc-4007",
+      "channelType": 3,
+      "providerName": "Voice Backup",
+      "label": "Voice Backup",
+      "isActive": false,
+      "configFields": {
+        "owner": "nzg2",
+        "password": "voice-pass2",
+        "authUserId": "auth-88",
+        "campaignId": "camp-02",
+        "lotNumber": "LOT-10",
+        "baseUrl": "https://backup.voice.example/api"
+      },
+      "createdAt": "2026-04-04T05:40:57Z",
+      "updatedAt": "2026-06-18T05:40:57Z"
+    }
+  ],
+  "fallbackPolicies": [
+    {
+      "id": "fp-01",
+      "name": "SMS to WhatsApp",
+      "triggerChannel": 0,
+      "fallbackChannel": 1,
+      "isActive": true,
+      "isGlobal": true,
+      "description": "If SMS fails, retry via WhatsApp.",
+      "createdAt": "2026-05-22T05:40:57Z"
+    },
+    {
+      "id": "fp-02",
+      "name": "WhatsApp to SMS",
+      "triggerChannel": 1,
+      "fallbackChannel": 0,
+      "isActive": true,
+      "isGlobal": false,
+      "description": "WhatsApp text fallback to SMS.",
+      "createdAt": "2026-05-30T05:40:57Z"
+    },
+    {
+      "id": "fp-03",
+      "name": "Voice to SMS",
+      "triggerChannel": 3,
+      "fallbackChannel": 0,
+      "isActive": false,
+      "isGlobal": false,
+      "description": "Failed voice call falls back to SMS notification.",
+      "createdAt": "2026-06-09T05:40:57Z"
+    },
+    {
+      "id": "fp-04",
+      "name": "Media to Text",
+      "triggerChannel": 2,
+      "fallbackChannel": 1,
+      "isActive": true,
+      "isGlobal": false,
+      "description": "WA media fallback to plain text.",
+      "createdAt": "2026-06-16T05:40:57Z"
+    }
+  ],
+  "adminUsers": [
+    {
+      "id": "u-0001",
+      "username": "admin",
+      "email": "admin@netzerogateway.io",
+      "role": 0,
+      "isActive": true,
+      "createdAt": "2025-08-25T05:40:57Z",
+      "lastLoginAt": "2026-06-21T04:40:57Z"
+    },
+    {
+      "id": "u-0002",
+      "username": "operator1",
+      "email": "op1@netzerogateway.io",
+      "role": 1,
+      "isActive": true,
+      "createdAt": "2026-02-21T05:40:57Z",
+      "lastLoginAt": "2026-06-19T05:40:57Z"
+    },
+    {
+      "id": "u-0003",
+      "username": "operator2",
+      "email": "op2@netzerogateway.io",
+      "role": 1,
+      "isActive": true,
+      "createdAt": "2026-04-02T05:40:57Z",
+      "lastLoginAt": "2026-06-16T05:40:57Z"
+    },
+    {
+      "id": "u-0004",
+      "username": "auditor",
+      "email": "audit@netzerogateway.io",
+      "role": 1,
+      "isActive": false,
+      "createdAt": "2026-05-12T05:40:57Z",
+      "lastLoginAt": "2026-06-01T05:40:57Z"
+    },
+    {
+      "id": "u-0005",
+      "username": "superadmin2",
+      "email": "sa2@netzerogateway.io",
+      "role": 0,
+      "isActive": true,
+      "createdAt": "2026-06-11T05:40:57Z",
+      "lastLoginAt": "2026-06-20T21:40:57Z"
+    }
+  ],
+  "voiceReportSync": {
+    "totalRecords": 15,
+    "records": [
+      {
+        "callState": "BUSY",
+        "connectTime": null,
+        "destination": "+8801756050561",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-20T23:12:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-21T05:13:00Z",
+        "destination": "+8801725637035",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-21T05:13:37Z",
+        "startTime": "2026-06-21T05:12:57Z"
+      },
+      {
+        "callState": "FAILED",
+        "connectTime": null,
+        "destination": "+8801734793303",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-21T05:00:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-20T18:53:59Z",
+        "destination": "+8801738146508",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-20T18:55:04Z",
+        "startTime": "2026-06-20T18:53:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-20T01:10:04Z",
+        "destination": "+8801783651822",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-20T01:11:14Z",
+        "startTime": "2026-06-20T01:09:57Z"
+      },
+      {
+        "callState": "NO ANSWER",
+        "connectTime": null,
+        "destination": "+8801758657471",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-20T04:25:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-20T09:12:01Z",
+        "destination": "+8801748549237",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-20T09:13:55Z",
+        "startTime": "2026-06-20T09:11:57Z"
+      },
+      {
+        "callState": "NO ANSWER",
+        "connectTime": null,
+        "destination": "+8801749650280",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-21T00:05:57Z"
+      },
+      {
+        "callState": "BUSY",
+        "connectTime": null,
+        "destination": "+8801731169118",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-20T20:10:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-21T00:01:05Z",
+        "destination": "+8801770740499",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-21T00:02:16Z",
+        "startTime": "2026-06-21T00:00:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-20T17:27:03Z",
+        "destination": "+8801759437662",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-20T17:28:20Z",
+        "startTime": "2026-06-20T17:26:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-20T08:49:04Z",
+        "destination": "+8801723193774",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-20T08:50:03Z",
+        "startTime": "2026-06-20T08:48:57Z"
+      },
+      {
+        "callState": "CALL SUCCESS",
+        "connectTime": "2026-06-20T20:13:04Z",
+        "destination": "+8801759350601",
+        "displayNameSent": "NZGATE",
+        "endTime": "2026-06-20T20:13:37Z",
+        "startTime": "2026-06-20T20:12:57Z"
+      },
+      {
+        "callState": "FAILED",
+        "connectTime": null,
+        "destination": "+8801761665492",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-21T01:53:57Z"
+      },
+      {
+        "callState": "FAILED",
+        "connectTime": null,
+        "destination": "+8801783878975",
+        "displayNameSent": "NZGATE",
+        "endTime": null,
+        "startTime": "2026-06-20T01:31:57Z"
+      }
+    ]
+  }
+}

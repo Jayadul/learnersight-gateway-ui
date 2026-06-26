@@ -1,0 +1,41 @@
+<form class="filter-bar" [formGroup]="form" (ngSubmit)="onSearch()">
+  @for (c of controls(); track $index) {
+    @switch (c.kind) {
+      @case ('text') {
+        <mat-form-field appearance="outline" class="field" subscriptSizing="dynamic">
+          <mat-label>{{ c.label }}</mat-label>
+          <input matInput [formControlName]="c.key" [placeholder]="c.placeholder ?? ''" />
+        </mat-form-field>
+      }
+      @case ('select') {
+        <mat-form-field appearance="outline" class="field" subscriptSizing="dynamic">
+          <mat-label>{{ c.label }}</mat-label>
+          <mat-select [formControlName]="c.key">
+            @for (opt of c.options; track opt.label) {
+              <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      @case ('dateRange') {
+        <mat-form-field appearance="outline" class="field date-field" subscriptSizing="dynamic">
+          <mat-label>{{ c.label }}</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate [formControlName]="c.keyFrom" placeholder="From" />
+            <input matEndDate [formControlName]="c.keyTo" placeholder="To" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      }
+    }
+  }
+  <div class="buttons">
+    <button mat-flat-button color="primary" type="submit">
+      <mat-icon>search</mat-icon> Search
+    </button>
+    <button mat-stroked-button type="button" (click)="onClear()">
+      <mat-icon>clear</mat-icon> Clear
+    </button>
+  </div>
+</form>

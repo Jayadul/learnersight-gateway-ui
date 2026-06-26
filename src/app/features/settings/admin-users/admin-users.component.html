@@ -1,0 +1,15 @@
+<div class="nzg-page">
+  <app-page-header title="Users" [breadcrumbs]="[{ label: 'Admin' }, { label: 'Users' }]">
+    <button mat-flat-button color="primary" (click)="openCreate()"><mat-icon>person_add</mat-icon> Add User</button>
+  </app-page-header>
+
+  <app-data-table
+    [columns]="columns"
+    [data]="users()"
+    [loading]="loading()"
+    [serverSide]="false"
+    [rowActions]="rowActions"
+    emptyIcon="manage_accounts"
+    emptyTitle="No users"
+    (actionClick)="onAction($event)" />
+</div>

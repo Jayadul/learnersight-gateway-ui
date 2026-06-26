@@ -1,0 +1,32 @@
+<mat-card class="signin-card">
+  <div class="logo">
+    <mat-icon>hub</mat-icon>
+    <h1>NetZeroGateway</h1>
+    <p>Admin Console</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" autocomplete="username" />
+      <mat-icon matPrefix>person</mat-icon>
+      <app-form-field-errors [control]="form.controls.username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password" />
+      <mat-icon matPrefix>lock</mat-icon>
+      <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
+        <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      <app-form-field-errors [control]="form.controls.password" />
+    </mat-form-field>
+
+    @if (errorMessage()) { <div class="error-banner">{{ errorMessage() }}</div> }
+
+    <button mat-flat-button color="primary" class="full submit" type="submit" [disabled]="loading()">
+      @if (loading()) { <mat-spinner diameter="20"></mat-spinner> } @else { Sign In }
+    </button>
+  </form>
+</mat-card>

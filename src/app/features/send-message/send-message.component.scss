@@ -1,0 +1,208 @@
+// ─── Page layout ──────────────────────────────────────────
+.send-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .send-layout { grid-template-columns: 1fr; }
+}
+
+// ─── Form card ────────────────────────────────────────────
+.form-card { padding: 24px; }
+
+form { display: flex; flex-direction: column; }
+
+// Section label — same as mat-label style used elsewhere
+.field-label {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--nzg-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count-pill {
+  background: var(--nzg-primary);
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.channel-toggle {
+  width: 100%;
+  margin-bottom: 0;
+
+  ::ng-deep .mat-button-toggle {
+    flex: 1;
+
+    .mat-button-toggle-label-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+  }
+}
+
+.divider { margin: 20px 0; }
+
+.full {
+  width: 100%;
+  margin-top: 0;
+}
+
+.opt-label {
+  font-weight: 400;
+  font-size: 10px;
+  color: var(--nzg-text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 2px;
+}
+
+.form-footer {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--nzg-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.send-btn {
+  height: 44px;
+  min-width: 160px;
+  padding: 0 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  mat-spinner { line-height: 0; }
+}
+
+// ─── Right column ─────────────────────────────────────────
+.guide-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// Recipient counter card
+.counter-card {
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.counter-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--nzg-text-muted);
+  margin-bottom: 12px;
+
+  mat-icon { font-size: 15px; width: 15px; height: 15px; }
+}
+
+.counter-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--nzg-primary);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.counter-sub {
+  font-size: 12px;
+  color: var(--nzg-text-muted);
+}
+
+// Channel guide card
+.guide-card { padding: 20px; }
+
+.guide-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--nzg-text);
+  margin-bottom: 14px;
+}
+
+.guide-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: var(--nzg-primary);
+}
+
+.guide-list {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    font-size: 13px;
+    color: var(--nzg-text-muted);
+    line-height: 1.5;
+  }
+
+  code {
+    background: #f1f5f9;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 12px;
+    color: var(--nzg-primary);
+    font-family: 'Courier New', monospace;
+  }
+}
+
+// Reminder card
+.reminder-card { padding: 16px; }
+
+.reminder-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.reminder-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--nzg-accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.reminder-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--nzg-text);
+  margin-bottom: 4px;
+}
+
+.reminder-text {
+  font-size: 12px;
+  color: var(--nzg-text-muted);
+  line-height: 1.5;
+}

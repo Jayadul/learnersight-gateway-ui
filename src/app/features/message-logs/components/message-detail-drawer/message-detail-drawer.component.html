@@ -1,0 +1,27 @@
+<div class="drawer-body">
+  @if (detail(); as d) {
+    <div class="header">
+      <h2>Message Request</h2>
+      <div class="meta">
+        <div><span class="label">To</span><span>{{ d.toUser }}</span></div>
+        <div><span class="label">Status</span><app-status-badge [status]="d.overallStatus" type="message" /></div>
+        <div><span class="label">Received</span><span>{{ d.receivedAt | date: 'medium' }}</span></div>
+        <div><span class="label">Channels</span>
+          <mat-chip-set>
+            @for (ch of d.parsedChannels; track ch) { <mat-chip [disableRipple]="true">{{ ch }}</mat-chip> }
+          </mat-chip-set>
+        </div>
+      </div>
+    </div>
+
+    <h3>Dispatch Jobs ({{ d.jobs.length }})</h3>
+    <app-data-table [columns]="jobColumns" [data]="$any(d.jobs)" [serverSide]="false"
+                    [pageSize]="10" emptyTitle="No dispatch jobs">
+      <ng-template appColumnDef="isFallback" let-row>
+        @if (row.isFallback) { <mat-chip class="fallback" [disableRipple]="true">FALLBACK</mat-chip> } @else { — }
+      </ng-template>
+    </app-data-table>
+  } @else if (loading()) {
+    <p class="loading-text">Loading…</p>
+  }
+</div>

@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Channel Config</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="config-form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Label</mat-label>
+      <input matInput formControlName="label" />
+      <app-form-field-errors [control]="control('label')" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Provider Name</mat-label>
+      <input matInput formControlName="providerName" />
+      <app-form-field-errors [control]="control('providerName')" />
+    </mat-form-field>
+
+    @for (field of providerFields; track field.key) {
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>{{ field.label }}</mat-label>
+        <input matInput [type]="inputType(field)" [formControlName]="field.key" />
+        @if (field.password) {
+          <button mat-icon-button matSuffix type="button" (click)="toggleReveal(field.key)">
+            <mat-icon>{{ revealed()[field.key] ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        }
+        <app-form-field-errors [control]="control(field.key)" />
+      </mat-form-field>
+    }
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

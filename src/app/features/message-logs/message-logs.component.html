@@ -1,0 +1,31 @@
+<mat-sidenav-container class="drawer-container">
+  <mat-sidenav-content>
+    <div class="nzg-page">
+      <app-page-header title="Message Logs" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Message Logs' }]" />
+
+      <app-filter-bar [controls]="filters"
+                      (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
+
+      <app-data-table
+        [columns]="columns"
+        [data]="state.data()"
+        [totalCount]="state.totalCount()"
+        [loading]="state.loading()"
+        [pageIndex]="state.pageIndex()"
+        [pageSize]="state.pageSize()"
+        [rowActions]="rowActions"
+        [clickableRows]="true"
+        emptyIcon="forum"
+        emptyTitle="No message requests"
+        emptySubtitle="Adjust filters or send a message to see logs."
+        (pageChange)="state.setPage($event)"
+        (sortChange)="state.setSort($event)"
+        (rowClick)="openDetail($event)"
+        (actionClick)="onAction($event)" />
+    </div>
+  </mat-sidenav-content>
+
+  <mat-sidenav #drawer position="end" mode="over" [opened]="drawerOpen()" (closedStart)="drawerOpen.set(false)">
+    <app-message-detail-drawer [detail]="selectedDetail()" [loading]="detailLoading()" />
+  </mat-sidenav>
+</mat-sidenav-container>
