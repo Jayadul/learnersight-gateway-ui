@@ -1,7 +1,5 @@
-import { ChannelType } from './enums';
-
 export interface ManualSendRequest {
-  readonly channelType: ChannelType;
+  readonly channelType: string; // wire format: "SMS" | "WP_Text" | "WP_Media" | "Voice"
   readonly toNumbers: string;
   readonly message: string;
   readonly mediaUrl?: string;

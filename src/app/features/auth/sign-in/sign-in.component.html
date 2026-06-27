@@ -1,8 +1,9 @@
 <mat-card class="signin-card">
-  <div class="logo">
-    <mat-icon>hub</mat-icon>
-    <h1>NetZeroGateway</h1>
-    <p>Admin Console</p>
+  <div class="card-header">
+    <div class="logo-band">
+      <img src="logo.png" alt="NetZeroGateway" class="logo-img" />
+    </div>
+    <p class="subtitle">Admin Console</p>
   </div>
 
   <form [formGroup]="form" (ngSubmit)="submit()">

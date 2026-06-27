@@ -42,11 +42,14 @@
         </mat-form-field>
 
         <!-- Message / Script -->
-        <p class="field-label">{{ isVoice() ? 'Campaign Script' : 'Message' }}</p>
+        <p class="field-label">{{ isVoice() ? 'Voice Script (TTS)' : 'Message' }}</p>
         <mat-form-field appearance="outline" class="full">
-          <mat-label>{{ isVoice() ? 'Script / Campaign ID' : 'Message Text' }}</mat-label>
+          <mat-label>{{ isVoice() ? 'Text to be spoken on the call' : 'Message Text' }}</mat-label>
           <textarea matInput formControlName="message" rows="5"
-                    [placeholder]="isVoice() ? 'e.g. payment-reminder-v2' : 'Type your message here…'"></textarea>
+                    [placeholder]="isVoice() ? 'e.g. Hello, your payment of BDT 500 is due on January 31st.' : 'Type your message here…'"></textarea>
+          @if (isVoice()) {
+            <mat-hint>This text will be read aloud to recipients via text-to-speech</mat-hint>
+          }
           <app-form-field-errors [control]="form.controls.message" />
         </mat-form-field>
 
@@ -65,7 +68,8 @@
           <mat-form-field appearance="outline" class="full">
             <mat-label>Campaign ID</mat-label>
             <mat-icon matIconPrefix>campaign</mat-icon>
-            <input matInput formControlName="campaignId" placeholder="e.g. due-bill-reminder" />
+            <input matInput formControlName="campaignId" placeholder="e.g. due-bill-api" />
+            <mat-hint>Must match a pre-configured campaign in your voice provider</mat-hint>
             <app-form-field-errors [control]="form.controls.campaignId" />
           </mat-form-field>
         }
@@ -134,9 +138,9 @@
         }
         @if (isVoice()) {
           <ul class="guide-list">
-            <li>Campaign ID must match a pre-configured voice script in the provider</li>
-            <li>Recipients receive an automated call in the order numbers appear</li>
-            <li>Calls are placed during business hours by default</li>
+            <li><b>Voice Script</b> — the text spoken to the recipient via TTS on the call</li>
+            <li><b>Campaign ID</b> — a slug referencing a campaign template pre-configured in the voice provider (e.g. <code>due-bill-api</code>)</li>
+            <li>Recipients receive an automated call; calls are placed in the order numbers appear</li>
           </ul>
         }
       </mat-card>

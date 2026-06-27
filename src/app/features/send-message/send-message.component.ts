@@ -99,7 +99,7 @@ export class SendMessageComponent {
     }
     const v = this.form.getRawValue();
     const body: ManualSendRequest = {
-      channelType: v.channelType,
+      channelType: ChannelType[v.channelType], // enum key → "SMS" | "WP_Text" | "WP_Media" | "Voice"
       toNumbers:   v.toNumbers,
       message:     v.message,
       ...(v.channelType === ChannelType.WP_Media && { mediaUrl: v.mediaUrl }),
