@@ -1,5 +1,3 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
 # Compiled output
 /dist
 /tmp
@@ -28,9 +26,13 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
+# Angular
 /.angular/cache
+
+# Sass
 .sass-cache/
+
+# Miscellaneous
 /connect.lock
 /coverage
 /libpeerconnection.log
@@ -40,3 +42,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Claude Code
+.claude/

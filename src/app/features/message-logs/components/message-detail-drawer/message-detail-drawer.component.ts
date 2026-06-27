@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -14,7 +14,7 @@ import { MessageStatusPipe } from '../../../../shared/pipes/message-status.pipe'
   selector: 'app-message-detail-drawer',
   standalone: true,
   imports: [
-    CommonModule, MatIconModule, MatButtonModule, MatChipsModule, DataTableComponent,
+    DatePipe, MatIconModule, MatButtonModule, MatChipsModule, DataTableComponent,
     StatusBadgeComponent, ChannelTypePipe, MessageStatusPipe,
   ],
   templateUrl: './message-detail-drawer.component.html',

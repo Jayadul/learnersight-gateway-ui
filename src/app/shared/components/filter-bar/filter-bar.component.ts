@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,7 +22,7 @@ export type FilterControl =
   selector: 'app-filter-bar',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule, MatButtonModule, MatIconModule, MatInputModule,
+    ReactiveFormsModule, MatButtonModule, MatIconModule, MatInputModule,
     MatFormFieldModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule,
   ],
   templateUrl: './filter-bar.component.html',
