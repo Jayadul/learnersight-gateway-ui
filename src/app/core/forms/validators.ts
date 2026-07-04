@@ -1,12 +1,12 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-/** Comma-separated list of international phone numbers; each must match a loose E.164-ish pattern. */
+/** Comma-separated phone numbers, digits only including country code (e.g. 8801700000001 — no "+"). */
 export function phoneListValidator(control: AbstractControl): ValidationErrors | null {
   const value = (control.value as string | null)?.trim();
   if (!value) {
     return null; // let `required` handle emptiness
   }
-  const pattern = /^\+?[0-9]{6,15}$/;
+  const pattern = /^[0-9]{6,15}$/;
   const parts = value.split(',').map((p) => p.trim()).filter((p) => p.length > 0);
   if (parts.length === 0) {
     return { phoneList: true };

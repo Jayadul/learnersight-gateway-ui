@@ -44,7 +44,7 @@ export class DispatchLogsComponent implements OnInit {
         { label: 'Failed', value: JobStatus.Failed },
       ],
     },
-    { kind: 'text', key: 'toNumber', label: 'Number', placeholder: '+8801700000001' },
+    { kind: 'text', key: 'toNumber', label: 'Number', placeholder: '8801700000001' },
   ];
 
   readonly columns: ColumnDef<Row>[] = [

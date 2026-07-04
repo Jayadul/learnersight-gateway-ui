@@ -9,7 +9,7 @@ export const VALIDATION_MESSAGES: Record<string, (err: unknown) => string> = {
   minlength: (e) => `Must be at least ${(e as { requiredLength: number }).requiredLength} characters.`,
   maxlength: (e) => `Must be at most ${(e as { requiredLength: number }).requiredLength} characters.`,
   pattern: () => 'Invalid format.',
-  phoneList: () => 'Enter valid phone numbers, comma-separated (e.g. +8801700000001).',
+  phoneList: () => 'Enter valid phone numbers, comma-separated, digits only with country code — no "+" (e.g. 8801700000001).',
   urlInvalid: () => 'Enter a valid http(s) URL.',
   sameChannel: () => 'Trigger and fallback channels must be different.',
 };

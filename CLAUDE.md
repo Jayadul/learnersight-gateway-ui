@@ -3,9 +3,9 @@
 ## Project
 Angular 18 SPA — multi-channel messaging gateway frontend
 Repo: learnersight-netzero-gateway-ui
-Backend: separate .NET 8 repo (not in this workspace)
+Backend: sibling repo `../learnersight-netzero-gateway` (.NET 8)
 API contracts: /postman/*.json (source of truth for all models)
-Backend URL (dev): http://localhost:5164 | env.ts currently: http://localhost:8080 — align before connecting to real backend
+Backend URL (dev): http://localhost:5212 (environment.ts, mock: false — hits the real backend)
 
 ## Stack
 - Angular 18, standalone components only (zero NgModules)
@@ -42,12 +42,11 @@ src/
       dispatch-logs/
       api-logs/
       send-message/
+      sendtext-api/
       channel-configs/
       fallback-policies/
-      voice-reports/
       auth/
       settings/
-        api-keys/
         admin-users/
     shared/
       components/
@@ -68,7 +67,7 @@ src/
       auth-layout/
   assets/
   environments/
-    environment.ts                 ← dev (mock: true)
+    environment.ts                 ← dev (mock: false, apiUrl: http://localhost:5212)
     environment.prod.ts            ← prod (mock: false, apiUrl: '' nginx proxies)
   styles/
     _tokens.scss                   ← CSS custom properties, single source of truth
@@ -94,8 +93,7 @@ src/
 - No feature component may be imported in app.config.ts or app.component.ts
 
 ## Security Rules
-- Access token: memory only (AuthService private field) — never localStorage, never sessionStorage
-- Refresh token: memory only — accept re-login on page refresh (enterprise console UX tradeoff)
+- Access + refresh tokens: persisted in localStorage (explicit client decision 2026-07 — session must survive page reload; accepted XSS tradeoff)
 - HTTP calls: always through services, never directly in components
 - Auth interceptor: attach Bearer token to all requests except /api/auth/* endpoints
 - Error interceptor: 401 → logout, 403 → show permission error, 5xx → global snackbar
@@ -126,7 +124,7 @@ src/
 - Icons: Material Icons — consistent size
 - Typography: Inter (Google Fonts) for headings and body
 - Snackbars: bottom-center, success=green, error=red
-- Dashboard: auto-refresh every 60s with countdown
+- Dashboard: auto-refresh every 15 min with countdown + Refresh Now button
 
 ## Token Efficiency — Claude Code Instructions
 - Read only files relevant to the current task

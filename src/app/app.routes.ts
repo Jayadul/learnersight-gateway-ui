@@ -48,6 +48,12 @@ export const routes: Routes = [
           import('./features/send-message/send-message.component').then((m) => m.SendMessageComponent),
       },
       {
+        path: 'settings/gateway-simulator',
+        loadComponent: () =>
+          import('./features/sendtext-api/sendtext-api.component').then((m) => m.SendTextApiComponent),
+        canActivate: [roleGuard('SuperAdmin')],
+      },
+      {
         path: 'settings/channels',
         loadComponent: () =>
           import('./features/channel-configs/channel-configs.component').then((m) => m.ChannelConfigsComponent),
@@ -62,11 +68,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/settings/admin-users/admin-users.component').then((m) => m.AdminUsersComponent),
         canActivate: [roleGuard('SuperAdmin')],
-      },
-      {
-        path: 'reports/voice',
-        loadComponent: () =>
-          import('./features/voice-reports/voice-reports.component').then((m) => m.VoiceReportsComponent),
       },
       {
         path: 'forbidden',

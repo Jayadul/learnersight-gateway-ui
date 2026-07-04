@@ -94,7 +94,7 @@
   "messageRequests": [
     {
       "id": "mr-1000",
-      "toUser": "+8801756050561",
+      "toUser": "8801756050561",
       "parsedChannels": [
         "wp"
       ],
@@ -105,7 +105,7 @@
     },
     {
       "id": "mr-1001",
-      "toUser": "+8801725637035",
+      "toUser": "8801725637035",
       "parsedChannels": [
         "sms",
         "wp"
@@ -117,7 +117,7 @@
     },
     {
       "id": "mr-1002",
-      "toUser": "+8801734793303",
+      "toUser": "8801734793303",
       "parsedChannels": [
         "voice"
       ],
@@ -128,7 +128,7 @@
     },
     {
       "id": "mr-1003",
-      "toUser": "+8801738146508",
+      "toUser": "8801738146508",
       "parsedChannels": [
         "wp"
       ],
@@ -139,7 +139,7 @@
     },
     {
       "id": "mr-1004",
-      "toUser": "+8801783651822",
+      "toUser": "8801783651822",
       "parsedChannels": [
         "wp"
       ],
@@ -150,7 +150,7 @@
     },
     {
       "id": "mr-1005",
-      "toUser": "+8801758657471",
+      "toUser": "8801758657471",
       "parsedChannels": [
         "sms"
       ],
@@ -161,7 +161,7 @@
     },
     {
       "id": "mr-1006",
-      "toUser": "+8801748549237",
+      "toUser": "8801748549237",
       "parsedChannels": [
         "voice"
       ],
@@ -172,7 +172,7 @@
     },
     {
       "id": "mr-1007",
-      "toUser": "+8801749650280",
+      "toUser": "8801749650280",
       "parsedChannels": [
         "sms"
       ],
@@ -183,7 +183,7 @@
     },
     {
       "id": "mr-1008",
-      "toUser": "+8801731169118",
+      "toUser": "8801731169118",
       "parsedChannels": [
         "smswp"
       ],
@@ -194,7 +194,7 @@
     },
     {
       "id": "mr-1009",
-      "toUser": "+8801770740499",
+      "toUser": "8801770740499",
       "parsedChannels": [
         "smswp"
       ],
@@ -205,7 +205,7 @@
     },
     {
       "id": "mr-1010",
-      "toUser": "+8801759437662",
+      "toUser": "8801759437662",
       "parsedChannels": [
         "sms"
       ],
@@ -216,7 +216,7 @@
     },
     {
       "id": "mr-1011",
-      "toUser": "+8801723193774",
+      "toUser": "8801723193774",
       "parsedChannels": [
         "smswp"
       ],
@@ -227,7 +227,7 @@
     },
     {
       "id": "mr-1012",
-      "toUser": "+8801759350601",
+      "toUser": "8801759350601",
       "parsedChannels": [
         "voice"
       ],
@@ -238,7 +238,7 @@
     },
     {
       "id": "mr-1013",
-      "toUser": "+8801761665492",
+      "toUser": "8801761665492",
       "parsedChannels": [
         "sms"
       ],
@@ -249,7 +249,7 @@
     },
     {
       "id": "mr-1014",
-      "toUser": "+8801783878975",
+      "toUser": "8801783878975",
       "parsedChannels": [
         "sms",
         "wp"
@@ -261,7 +261,7 @@
     },
     {
       "id": "mr-1015",
-      "toUser": "+8801777368458",
+      "toUser": "8801777368458",
       "parsedChannels": [
         "smswp"
       ],
@@ -272,7 +272,7 @@
     },
     {
       "id": "mr-1016",
-      "toUser": "+8801768150861",
+      "toUser": "8801768150861",
       "parsedChannels": [
         "sms",
         "wp"
@@ -284,7 +284,7 @@
     },
     {
       "id": "mr-1017",
-      "toUser": "+8801722503256",
+      "toUser": "8801722503256",
       "parsedChannels": [
         "wp"
       ],
@@ -295,7 +295,7 @@
     },
     {
       "id": "mr-1018",
-      "toUser": "+8801733545527",
+      "toUser": "8801733545527",
       "parsedChannels": [
         "sms",
         "wp"
@@ -307,7 +307,7 @@
     },
     {
       "id": "mr-1019",
-      "toUser": "+8801738003797",
+      "toUser": "8801738003797",
       "parsedChannels": [
         "smswp"
       ],
@@ -318,7 +318,7 @@
     },
     {
       "id": "mr-1020",
-      "toUser": "+8801715883373",
+      "toUser": "8801715883373",
       "parsedChannels": [
         "sms"
       ],
@@ -329,7 +329,7 @@
     },
     {
       "id": "mr-1021",
-      "toUser": "+8801792934409",
+      "toUser": "8801792934409",
       "parsedChannels": [
         "voice"
       ],
@@ -340,7 +340,7 @@
     },
     {
       "id": "mr-1022",
-      "toUser": "+8801788749845",
+      "toUser": "8801788749845",
       "parsedChannels": [
         "smswp"
       ],
@@ -351,7 +351,7 @@
     },
     {
       "id": "mr-1023",
-      "toUser": "+8801725092791",
+      "toUser": "8801725092791",
       "parsedChannels": [
         "smswp"
       ],
@@ -362,7 +362,7 @@
     },
     {
       "id": "mr-1024",
-      "toUser": "+8801754447018",
+      "toUser": "8801754447018",
       "parsedChannels": [
         "wp"
       ],
@@ -375,7 +375,7 @@
   "messageRequestDetails": {
     "mr-1000": {
       "id": "mr-1000",
-      "toUser": "+8801756050561",
+      "toUser": "8801756050561",
       "parsedChannels": [
         "wp"
       ],
@@ -387,7 +387,7 @@
         {
           "id": "mr-1000-job0",
           "channelType": 3,
-          "toNumber": "+8801756050561",
+          "toNumber": "8801756050561",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD821250",
@@ -402,7 +402,7 @@
     },
     "mr-1001": {
       "id": "mr-1001",
-      "toUser": "+8801725637035",
+      "toUser": "8801725637035",
       "parsedChannels": [
         "sms",
         "wp"
@@ -415,7 +415,7 @@
         {
           "id": "mr-1001-job0",
           "channelType": 3,
-          "toNumber": "+8801725637035",
+          "toNumber": "8801725637035",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD619916",
@@ -430,7 +430,7 @@
     },
     "mr-1002": {
       "id": "mr-1002",
-      "toUser": "+8801734793303",
+      "toUser": "8801734793303",
       "parsedChannels": [
         "voice"
       ],
@@ -442,7 +442,7 @@
         {
           "id": "mr-1002-job0",
           "channelType": 0,
-          "toNumber": "+8801734793303",
+          "toNumber": "8801734793303",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD887818",
@@ -456,7 +456,7 @@
         {
           "id": "mr-1002-job1",
           "channelType": 3,
-          "toNumber": "+8801734793303",
+          "toNumber": "8801734793303",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD779926",
@@ -471,7 +471,7 @@
     },
     "mr-1003": {
       "id": "mr-1003",
-      "toUser": "+8801738146508",
+      "toUser": "8801738146508",
       "parsedChannels": [
         "wp"
       ],
@@ -483,7 +483,7 @@
         {
           "id": "mr-1003-job0",
           "channelType": 3,
-          "toNumber": "+8801738146508",
+          "toNumber": "8801738146508",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD167620",
@@ -497,7 +497,7 @@
         {
           "id": "mr-1003-job1",
           "channelType": 0,
-          "toNumber": "+8801738146508",
+          "toNumber": "8801738146508",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD541026",
@@ -511,7 +511,7 @@
         {
           "id": "mr-1003-job2",
           "channelType": 1,
-          "toNumber": "+8801738146508",
+          "toNumber": "8801738146508",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD375970",
@@ -526,7 +526,7 @@
     },
     "mr-1004": {
       "id": "mr-1004",
-      "toUser": "+8801783651822",
+      "toUser": "8801783651822",
       "parsedChannels": [
         "wp"
       ],
@@ -538,7 +538,7 @@
         {
           "id": "mr-1004-job0",
           "channelType": 1,
-          "toNumber": "+8801783651822",
+          "toNumber": "8801783651822",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD143485",
@@ -552,7 +552,7 @@
         {
           "id": "mr-1004-job1",
           "channelType": 3,
-          "toNumber": "+8801783651822",
+          "toNumber": "8801783651822",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD128490",
@@ -566,7 +566,7 @@
         {
           "id": "mr-1004-job2",
           "channelType": 3,
-          "toNumber": "+8801783651822",
+          "toNumber": "8801783651822",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD357538",
@@ -581,7 +581,7 @@
     },
     "mr-1005": {
       "id": "mr-1005",
-      "toUser": "+8801758657471",
+      "toUser": "8801758657471",
       "parsedChannels": [
         "sms"
       ],
@@ -593,7 +593,7 @@
         {
           "id": "mr-1005-job0",
           "channelType": 0,
-          "toNumber": "+8801758657471",
+          "toNumber": "8801758657471",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD338355",
@@ -607,7 +607,7 @@
         {
           "id": "mr-1005-job1",
           "channelType": 3,
-          "toNumber": "+8801758657471",
+          "toNumber": "8801758657471",
           "messageContent": "Fallback delivery attempt.",
           "status": 0,
           "providerMessageId": null,
@@ -622,7 +622,7 @@
     },
     "mr-1006": {
       "id": "mr-1006",
-      "toUser": "+8801748549237",
+      "toUser": "8801748549237",
       "parsedChannels": [
         "voice"
       ],
@@ -634,7 +634,7 @@
         {
           "id": "mr-1006-job0",
           "channelType": 2,
-          "toNumber": "+8801748549237",
+          "toNumber": "8801748549237",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD481574",
@@ -648,7 +648,7 @@
         {
           "id": "mr-1006-job1",
           "channelType": 1,
-          "toNumber": "+8801748549237",
+          "toNumber": "8801748549237",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD113389",
@@ -662,7 +662,7 @@
         {
           "id": "mr-1006-job2",
           "channelType": 1,
-          "toNumber": "+8801748549237",
+          "toNumber": "8801748549237",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD852450",
@@ -677,7 +677,7 @@
     },
     "mr-1007": {
       "id": "mr-1007",
-      "toUser": "+8801749650280",
+      "toUser": "8801749650280",
       "parsedChannels": [
         "sms"
       ],
@@ -689,7 +689,7 @@
         {
           "id": "mr-1007-job0",
           "channelType": 0,
-          "toNumber": "+8801749650280",
+          "toNumber": "8801749650280",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD486065",
@@ -704,7 +704,7 @@
     },
     "mr-1008": {
       "id": "mr-1008",
-      "toUser": "+8801731169118",
+      "toUser": "8801731169118",
       "parsedChannels": [
         "smswp"
       ],
@@ -716,7 +716,7 @@
         {
           "id": "mr-1008-job0",
           "channelType": 0,
-          "toNumber": "+8801731169118",
+          "toNumber": "8801731169118",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 0,
           "providerMessageId": null,
@@ -730,7 +730,7 @@
         {
           "id": "mr-1008-job1",
           "channelType": 2,
-          "toNumber": "+8801731169118",
+          "toNumber": "8801731169118",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD782468",
@@ -745,7 +745,7 @@
     },
     "mr-1009": {
       "id": "mr-1009",
-      "toUser": "+8801770740499",
+      "toUser": "8801770740499",
       "parsedChannels": [
         "smswp"
       ],
@@ -757,7 +757,7 @@
         {
           "id": "mr-1009-job0",
           "channelType": 1,
-          "toNumber": "+8801770740499",
+          "toNumber": "8801770740499",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD940252",
@@ -771,7 +771,7 @@
         {
           "id": "mr-1009-job1",
           "channelType": 1,
-          "toNumber": "+8801770740499",
+          "toNumber": "8801770740499",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD305003",
@@ -785,7 +785,7 @@
         {
           "id": "mr-1009-job2",
           "channelType": 0,
-          "toNumber": "+8801770740499",
+          "toNumber": "8801770740499",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD798659",
@@ -800,7 +800,7 @@
     },
     "mr-1010": {
       "id": "mr-1010",
-      "toUser": "+8801759437662",
+      "toUser": "8801759437662",
       "parsedChannels": [
         "sms"
       ],
@@ -812,7 +812,7 @@
         {
           "id": "mr-1010-job0",
           "channelType": 3,
-          "toNumber": "+8801759437662",
+          "toNumber": "8801759437662",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 0,
           "providerMessageId": null,
@@ -826,7 +826,7 @@
         {
           "id": "mr-1010-job1",
           "channelType": 2,
-          "toNumber": "+8801759437662",
+          "toNumber": "8801759437662",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD708063",
@@ -841,7 +841,7 @@
     },
     "mr-1011": {
       "id": "mr-1011",
-      "toUser": "+8801723193774",
+      "toUser": "8801723193774",
       "parsedChannels": [
         "smswp"
       ],
@@ -853,7 +853,7 @@
         {
           "id": "mr-1011-job0",
           "channelType": 1,
-          "toNumber": "+8801723193774",
+          "toNumber": "8801723193774",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD742436",
@@ -867,7 +867,7 @@
         {
           "id": "mr-1011-job1",
           "channelType": 2,
-          "toNumber": "+8801723193774",
+          "toNumber": "8801723193774",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD433678",
@@ -882,7 +882,7 @@
     },
     "mr-1012": {
       "id": "mr-1012",
-      "toUser": "+8801759350601",
+      "toUser": "8801759350601",
       "parsedChannels": [
         "voice"
       ],
@@ -894,7 +894,7 @@
         {
           "id": "mr-1012-job0",
           "channelType": 2,
-          "toNumber": "+8801759350601",
+          "toNumber": "8801759350601",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD150805",
@@ -908,7 +908,7 @@
         {
           "id": "mr-1012-job1",
           "channelType": 3,
-          "toNumber": "+8801759350601",
+          "toNumber": "8801759350601",
           "messageContent": "Fallback delivery attempt.",
           "status": 2,
           "providerMessageId": "PRViD676885",
@@ -922,7 +922,7 @@
         {
           "id": "mr-1012-job2",
           "channelType": 3,
-          "toNumber": "+8801759350601",
+          "toNumber": "8801759350601",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD745391",
@@ -937,7 +937,7 @@
     },
     "mr-1013": {
       "id": "mr-1013",
-      "toUser": "+8801761665492",
+      "toUser": "8801761665492",
       "parsedChannels": [
         "sms"
       ],
@@ -949,7 +949,7 @@
         {
           "id": "mr-1013-job0",
           "channelType": 1,
-          "toNumber": "+8801761665492",
+          "toNumber": "8801761665492",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD512577",
@@ -963,7 +963,7 @@
         {
           "id": "mr-1013-job1",
           "channelType": 0,
-          "toNumber": "+8801761665492",
+          "toNumber": "8801761665492",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD987344",
@@ -977,7 +977,7 @@
         {
           "id": "mr-1013-job2",
           "channelType": 1,
-          "toNumber": "+8801761665492",
+          "toNumber": "8801761665492",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD897507",
@@ -992,7 +992,7 @@
     },
     "mr-1014": {
       "id": "mr-1014",
-      "toUser": "+8801783878975",
+      "toUser": "8801783878975",
       "parsedChannels": [
         "sms",
         "wp"
@@ -1005,7 +1005,7 @@
         {
           "id": "mr-1014-job0",
           "channelType": 2,
-          "toNumber": "+8801783878975",
+          "toNumber": "8801783878975",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD408062",
@@ -1019,7 +1019,7 @@
         {
           "id": "mr-1014-job1",
           "channelType": 2,
-          "toNumber": "+8801783878975",
+          "toNumber": "8801783878975",
           "messageContent": "Fallback delivery attempt.",
           "status": 2,
           "providerMessageId": "PRViD637748",
@@ -1033,7 +1033,7 @@
         {
           "id": "mr-1014-job2",
           "channelType": 2,
-          "toNumber": "+8801783878975",
+          "toNumber": "8801783878975",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD393311",
@@ -1048,7 +1048,7 @@
     },
     "mr-1015": {
       "id": "mr-1015",
-      "toUser": "+8801777368458",
+      "toUser": "8801777368458",
       "parsedChannels": [
         "smswp"
       ],
@@ -1060,7 +1060,7 @@
         {
           "id": "mr-1015-job0",
           "channelType": 1,
-          "toNumber": "+8801777368458",
+          "toNumber": "8801777368458",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD194749",
@@ -1074,7 +1074,7 @@
         {
           "id": "mr-1015-job1",
           "channelType": 3,
-          "toNumber": "+8801777368458",
+          "toNumber": "8801777368458",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD957003",
@@ -1089,7 +1089,7 @@
     },
     "mr-1016": {
       "id": "mr-1016",
-      "toUser": "+8801768150861",
+      "toUser": "8801768150861",
       "parsedChannels": [
         "sms",
         "wp"
@@ -1102,7 +1102,7 @@
         {
           "id": "mr-1016-job0",
           "channelType": 1,
-          "toNumber": "+8801768150861",
+          "toNumber": "8801768150861",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD831257",
@@ -1116,7 +1116,7 @@
         {
           "id": "mr-1016-job1",
           "channelType": 1,
-          "toNumber": "+8801768150861",
+          "toNumber": "8801768150861",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 0,
           "providerMessageId": null,
@@ -1130,7 +1130,7 @@
         {
           "id": "mr-1016-job2",
           "channelType": 2,
-          "toNumber": "+8801768150861",
+          "toNumber": "8801768150861",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD702708",
@@ -1145,7 +1145,7 @@
     },
     "mr-1017": {
       "id": "mr-1017",
-      "toUser": "+8801722503256",
+      "toUser": "8801722503256",
       "parsedChannels": [
         "wp"
       ],
@@ -1157,7 +1157,7 @@
         {
           "id": "mr-1017-job0",
           "channelType": 2,
-          "toNumber": "+8801722503256",
+          "toNumber": "8801722503256",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD792485",
@@ -1171,7 +1171,7 @@
         {
           "id": "mr-1017-job1",
           "channelType": 0,
-          "toNumber": "+8801722503256",
+          "toNumber": "8801722503256",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD923699",
@@ -1185,7 +1185,7 @@
         {
           "id": "mr-1017-job2",
           "channelType": 2,
-          "toNumber": "+8801722503256",
+          "toNumber": "8801722503256",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD962226",
@@ -1200,7 +1200,7 @@
     },
     "mr-1018": {
       "id": "mr-1018",
-      "toUser": "+8801733545527",
+      "toUser": "8801733545527",
       "parsedChannels": [
         "sms",
         "wp"
@@ -1213,7 +1213,7 @@
         {
           "id": "mr-1018-job0",
           "channelType": 0,
-          "toNumber": "+8801733545527",
+          "toNumber": "8801733545527",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 0,
           "providerMessageId": null,
@@ -1228,7 +1228,7 @@
     },
     "mr-1019": {
       "id": "mr-1019",
-      "toUser": "+8801738003797",
+      "toUser": "8801738003797",
       "parsedChannels": [
         "smswp"
       ],
@@ -1240,7 +1240,7 @@
         {
           "id": "mr-1019-job0",
           "channelType": 0,
-          "toNumber": "+8801738003797",
+          "toNumber": "8801738003797",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD594663",
@@ -1254,7 +1254,7 @@
         {
           "id": "mr-1019-job1",
           "channelType": 2,
-          "toNumber": "+8801738003797",
+          "toNumber": "8801738003797",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD520543",
@@ -1268,7 +1268,7 @@
         {
           "id": "mr-1019-job2",
           "channelType": 1,
-          "toNumber": "+8801738003797",
+          "toNumber": "8801738003797",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD610534",
@@ -1283,7 +1283,7 @@
     },
     "mr-1020": {
       "id": "mr-1020",
-      "toUser": "+8801715883373",
+      "toUser": "8801715883373",
       "parsedChannels": [
         "sms"
       ],
@@ -1295,7 +1295,7 @@
         {
           "id": "mr-1020-job0",
           "channelType": 0,
-          "toNumber": "+8801715883373",
+          "toNumber": "8801715883373",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD437156",
@@ -1309,7 +1309,7 @@
         {
           "id": "mr-1020-job1",
           "channelType": 3,
-          "toNumber": "+8801715883373",
+          "toNumber": "8801715883373",
           "messageContent": "Fallback delivery attempt.",
           "status": 2,
           "providerMessageId": "PRViD513331",
@@ -1324,7 +1324,7 @@
     },
     "mr-1021": {
       "id": "mr-1021",
-      "toUser": "+8801792934409",
+      "toUser": "8801792934409",
       "parsedChannels": [
         "voice"
       ],
@@ -1336,7 +1336,7 @@
         {
           "id": "mr-1021-job0",
           "channelType": 0,
-          "toNumber": "+8801792934409",
+          "toNumber": "8801792934409",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD324744",
@@ -1350,7 +1350,7 @@
         {
           "id": "mr-1021-job1",
           "channelType": 3,
-          "toNumber": "+8801792934409",
+          "toNumber": "8801792934409",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD147539",
@@ -1364,7 +1364,7 @@
         {
           "id": "mr-1021-job2",
           "channelType": 0,
-          "toNumber": "+8801792934409",
+          "toNumber": "8801792934409",
           "messageContent": "Fallback delivery attempt.",
           "status": 2,
           "providerMessageId": "PRViD302655",
@@ -1379,7 +1379,7 @@
     },
     "mr-1022": {
       "id": "mr-1022",
-      "toUser": "+8801788749845",
+      "toUser": "8801788749845",
       "parsedChannels": [
         "smswp"
       ],
@@ -1391,7 +1391,7 @@
         {
           "id": "mr-1022-job0",
           "channelType": 0,
-          "toNumber": "+8801788749845",
+          "toNumber": "8801788749845",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD149696",
@@ -1405,7 +1405,7 @@
         {
           "id": "mr-1022-job1",
           "channelType": 1,
-          "toNumber": "+8801788749845",
+          "toNumber": "8801788749845",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD794686",
@@ -1419,7 +1419,7 @@
         {
           "id": "mr-1022-job2",
           "channelType": 3,
-          "toNumber": "+8801788749845",
+          "toNumber": "8801788749845",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD948442",
@@ -1434,7 +1434,7 @@
     },
     "mr-1023": {
       "id": "mr-1023",
-      "toUser": "+8801725092791",
+      "toUser": "8801725092791",
       "parsedChannels": [
         "smswp"
       ],
@@ -1446,7 +1446,7 @@
         {
           "id": "mr-1023-job0",
           "channelType": 1,
-          "toNumber": "+8801725092791",
+          "toNumber": "8801725092791",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 2,
           "providerMessageId": "PRViD392591",
@@ -1461,7 +1461,7 @@
     },
     "mr-1024": {
       "id": "mr-1024",
-      "toUser": "+8801754447018",
+      "toUser": "8801754447018",
       "parsedChannels": [
         "wp"
       ],
@@ -1473,7 +1473,7 @@
         {
           "id": "mr-1024-job0",
           "channelType": 0,
-          "toNumber": "+8801754447018",
+          "toNumber": "8801754447018",
           "messageContent": "Your OTP is 4821. Do not share it.",
           "status": 1,
           "providerMessageId": "PRViD773026",
@@ -1487,7 +1487,7 @@
         {
           "id": "mr-1024-job1",
           "channelType": 1,
-          "toNumber": "+8801754447018",
+          "toNumber": "8801754447018",
           "messageContent": "Fallback delivery attempt.",
           "status": 1,
           "providerMessageId": "PRViD580497",
@@ -1505,7 +1505,7 @@
     {
       "id": "dj-2000",
       "channelType": 0,
-      "toNumber": "+8801756050561",
+      "toNumber": "8801756050561",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD278804",
@@ -1519,7 +1519,7 @@
     {
       "id": "dj-2001",
       "channelType": 0,
-      "toNumber": "+8801725637035",
+      "toNumber": "8801725637035",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD820978",
@@ -1533,7 +1533,7 @@
     {
       "id": "dj-2002",
       "channelType": 0,
-      "toNumber": "+8801734793303",
+      "toNumber": "8801734793303",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD140031",
@@ -1547,7 +1547,7 @@
     {
       "id": "dj-2003",
       "channelType": 3,
-      "toNumber": "+8801738146508",
+      "toNumber": "8801738146508",
       "messageContent": "Transactional message body sample.",
       "status": 2,
       "providerMessageId": "PRViD170850",
@@ -1561,7 +1561,7 @@
     {
       "id": "dj-2004",
       "channelType": 3,
-      "toNumber": "+8801783651822",
+      "toNumber": "8801783651822",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD839681",
@@ -1575,7 +1575,7 @@
     {
       "id": "dj-2005",
       "channelType": 0,
-      "toNumber": "+8801758657471",
+      "toNumber": "8801758657471",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD783550",
@@ -1589,7 +1589,7 @@
     {
       "id": "dj-2006",
       "channelType": 1,
-      "toNumber": "+8801748549237",
+      "toNumber": "8801748549237",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD464360",
@@ -1603,7 +1603,7 @@
     {
       "id": "dj-2007",
       "channelType": 3,
-      "toNumber": "+8801749650280",
+      "toNumber": "8801749650280",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD826807",
@@ -1617,7 +1617,7 @@
     {
       "id": "dj-2008",
       "channelType": 0,
-      "toNumber": "+8801731169118",
+      "toNumber": "8801731169118",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD604381",
@@ -1631,7 +1631,7 @@
     {
       "id": "dj-2009",
       "channelType": 3,
-      "toNumber": "+8801770740499",
+      "toNumber": "8801770740499",
       "messageContent": "Transactional message body sample.",
       "status": 0,
       "providerMessageId": null,
@@ -1645,7 +1645,7 @@
     {
       "id": "dj-2010",
       "channelType": 3,
-      "toNumber": "+8801759437662",
+      "toNumber": "8801759437662",
       "messageContent": "Transactional message body sample.",
       "status": 0,
       "providerMessageId": null,
@@ -1659,7 +1659,7 @@
     {
       "id": "dj-2011",
       "channelType": 0,
-      "toNumber": "+8801723193774",
+      "toNumber": "8801723193774",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD464309",
@@ -1673,7 +1673,7 @@
     {
       "id": "dj-2012",
       "channelType": 2,
-      "toNumber": "+8801759350601",
+      "toNumber": "8801759350601",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD667019",
@@ -1687,7 +1687,7 @@
     {
       "id": "dj-2013",
       "channelType": 2,
-      "toNumber": "+8801761665492",
+      "toNumber": "8801761665492",
       "messageContent": "Transactional message body sample.",
       "status": 2,
       "providerMessageId": "PRViD237841",
@@ -1701,7 +1701,7 @@
     {
       "id": "dj-2014",
       "channelType": 2,
-      "toNumber": "+8801783878975",
+      "toNumber": "8801783878975",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD440162",
@@ -1715,7 +1715,7 @@
     {
       "id": "dj-2015",
       "channelType": 3,
-      "toNumber": "+8801777368458",
+      "toNumber": "8801777368458",
       "messageContent": "Transactional message body sample.",
       "status": 2,
       "providerMessageId": "PRViD112558",
@@ -1729,7 +1729,7 @@
     {
       "id": "dj-2016",
       "channelType": 3,
-      "toNumber": "+8801768150861",
+      "toNumber": "8801768150861",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD531553",
@@ -1743,7 +1743,7 @@
     {
       "id": "dj-2017",
       "channelType": 3,
-      "toNumber": "+8801722503256",
+      "toNumber": "8801722503256",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD604323",
@@ -1757,7 +1757,7 @@
     {
       "id": "dj-2018",
       "channelType": 1,
-      "toNumber": "+8801733545527",
+      "toNumber": "8801733545527",
       "messageContent": "Transactional message body sample.",
       "status": 0,
       "providerMessageId": null,
@@ -1771,7 +1771,7 @@
     {
       "id": "dj-2019",
       "channelType": 2,
-      "toNumber": "+8801738003797",
+      "toNumber": "8801738003797",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD252293",
@@ -1785,7 +1785,7 @@
     {
       "id": "dj-2020",
       "channelType": 1,
-      "toNumber": "+8801715883373",
+      "toNumber": "8801715883373",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD175754",
@@ -1799,7 +1799,7 @@
     {
       "id": "dj-2021",
       "channelType": 0,
-      "toNumber": "+8801792934409",
+      "toNumber": "8801792934409",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD203470",
@@ -1813,7 +1813,7 @@
     {
       "id": "dj-2022",
       "channelType": 2,
-      "toNumber": "+8801788749845",
+      "toNumber": "8801788749845",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD952113",
@@ -1827,7 +1827,7 @@
     {
       "id": "dj-2023",
       "channelType": 3,
-      "toNumber": "+8801725092791",
+      "toNumber": "8801725092791",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD847525",
@@ -1841,7 +1841,7 @@
     {
       "id": "dj-2024",
       "channelType": 0,
-      "toNumber": "+8801754447018",
+      "toNumber": "8801754447018",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD176220",
@@ -1855,7 +1855,7 @@
     {
       "id": "dj-2025",
       "channelType": 3,
-      "toNumber": "+8801741401078",
+      "toNumber": "8801741401078",
       "messageContent": "Transactional message body sample.",
       "status": 2,
       "providerMessageId": "PRViD957328",
@@ -1869,7 +1869,7 @@
     {
       "id": "dj-2026",
       "channelType": 0,
-      "toNumber": "+8801720974171",
+      "toNumber": "8801720974171",
       "messageContent": "Transactional message body sample.",
       "status": 2,
       "providerMessageId": "PRViD732304",
@@ -1883,7 +1883,7 @@
     {
       "id": "dj-2027",
       "channelType": 0,
-      "toNumber": "+8801767087165",
+      "toNumber": "8801767087165",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD785354",
@@ -1897,7 +1897,7 @@
     {
       "id": "dj-2028",
       "channelType": 3,
-      "toNumber": "+8801721502108",
+      "toNumber": "8801721502108",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD210672",
@@ -1911,7 +1911,7 @@
     {
       "id": "dj-2029",
       "channelType": 2,
-      "toNumber": "+8801785039225",
+      "toNumber": "8801785039225",
       "messageContent": "Transactional message body sample.",
       "status": 2,
       "providerMessageId": "PRViD616885",
@@ -1925,7 +1925,7 @@
     {
       "id": "dj-2030",
       "channelType": 2,
-      "toNumber": "+8801754925699",
+      "toNumber": "8801754925699",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD654368",
@@ -1939,7 +1939,7 @@
     {
       "id": "dj-2031",
       "channelType": 2,
-      "toNumber": "+8801794470329",
+      "toNumber": "8801794470329",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD540169",
@@ -1953,7 +1953,7 @@
     {
       "id": "dj-2032",
       "channelType": 1,
-      "toNumber": "+8801762049237",
+      "toNumber": "8801762049237",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD285184",
@@ -1967,7 +1967,7 @@
     {
       "id": "dj-2033",
       "channelType": 3,
-      "toNumber": "+8801753762530",
+      "toNumber": "8801753762530",
       "messageContent": "Transactional message body sample.",
       "status": 0,
       "providerMessageId": null,
@@ -1981,7 +1981,7 @@
     {
       "id": "dj-2034",
       "channelType": 3,
-      "toNumber": "+8801744776981",
+      "toNumber": "8801744776981",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD208124",
@@ -1995,7 +1995,7 @@
     {
       "id": "dj-2035",
       "channelType": 0,
-      "toNumber": "+8801724402322",
+      "toNumber": "8801724402322",
       "messageContent": "Transactional message body sample.",
       "status": 0,
       "providerMessageId": null,
@@ -2009,7 +2009,7 @@
     {
       "id": "dj-2036",
       "channelType": 0,
-      "toNumber": "+8801773758989",
+      "toNumber": "8801773758989",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD970020",
@@ -2023,7 +2023,7 @@
     {
       "id": "dj-2037",
       "channelType": 0,
-      "toNumber": "+8801749938348",
+      "toNumber": "8801749938348",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD490073",
@@ -2037,7 +2037,7 @@
     {
       "id": "dj-2038",
       "channelType": 3,
-      "toNumber": "+8801726282101",
+      "toNumber": "8801726282101",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD714461",
@@ -2051,7 +2051,7 @@
     {
       "id": "dj-2039",
       "channelType": 3,
-      "toNumber": "+8801768632916",
+      "toNumber": "8801768632916",
       "messageContent": "Transactional message body sample.",
       "status": 1,
       "providerMessageId": "PRViD227576",
@@ -2067,8 +2067,8 @@
     {
       "id": "al-3000",
       "apiKey": "xsk_34087",
-      "toUser": "+8801756050561",
-      "rawBody": "{\"to\": \"+8801756050561\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801756050561",
+      "rawBody": "{\"to\": \"8801756050561\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.193.39.13",
       "responseStatus": 401,
@@ -2079,8 +2079,8 @@
     {
       "id": "al-3001",
       "apiKey": "xsk_27353",
-      "toUser": "+8801725637035",
-      "rawBody": "{\"to\": \"+8801725637035\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801725637035",
+      "rawBody": "{\"to\": \"8801725637035\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.148.11.109",
       "responseStatus": 401,
@@ -2091,8 +2091,8 @@
     {
       "id": "al-3002",
       "apiKey": "xsk_64570",
-      "toUser": "+8801734793303",
-      "rawBody": "{\"to\": \"+8801734793303\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801734793303",
+      "rawBody": "{\"to\": \"8801734793303\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.102.63.72",
       "responseStatus": 200,
@@ -2103,8 +2103,8 @@
     {
       "id": "al-3003",
       "apiKey": "xsk_53310",
-      "toUser": "+8801738146508",
-      "rawBody": "{\"to\": \"+8801738146508\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801738146508",
+      "rawBody": "{\"to\": \"8801738146508\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 500}",
       "callerIp": "103.129.12.202",
       "responseStatus": 500,
@@ -2115,8 +2115,8 @@
     {
       "id": "al-3004",
       "apiKey": "xsk_81040",
-      "toUser": "+8801783651822",
-      "rawBody": "{\"to\": \"+8801783651822\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801783651822",
+      "rawBody": "{\"to\": \"8801783651822\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.199.212.254",
       "responseStatus": 401,
@@ -2127,8 +2127,8 @@
     {
       "id": "al-3005",
       "apiKey": "xsk_74370",
-      "toUser": "+8801758657471",
-      "rawBody": "{\"to\": \"+8801758657471\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801758657471",
+      "rawBody": "{\"to\": \"8801758657471\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 500}",
       "callerIp": "103.109.81.100",
       "responseStatus": 500,
@@ -2139,8 +2139,8 @@
     {
       "id": "al-3006",
       "apiKey": "xsk_42440",
-      "toUser": "+8801748549237",
-      "rawBody": "{\"to\": \"+8801748549237\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801748549237",
+      "rawBody": "{\"to\": \"8801748549237\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.38.150.135",
       "responseStatus": 401,
@@ -2151,8 +2151,8 @@
     {
       "id": "al-3007",
       "apiKey": "xsk_26671",
-      "toUser": "+8801749650280",
-      "rawBody": "{\"to\": \"+8801749650280\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801749650280",
+      "rawBody": "{\"to\": \"8801749650280\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 400}",
       "callerIp": "103.196.74.147",
       "responseStatus": 400,
@@ -2163,8 +2163,8 @@
     {
       "id": "al-3008",
       "apiKey": "xsk_35517",
-      "toUser": "+8801731169118",
-      "rawBody": "{\"to\": \"+8801731169118\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801731169118",
+      "rawBody": "{\"to\": \"8801731169118\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.64.61.184",
       "responseStatus": 401,
@@ -2175,8 +2175,8 @@
     {
       "id": "al-3009",
       "apiKey": "xsk_51003",
-      "toUser": "+8801770740499",
-      "rawBody": "{\"to\": \"+8801770740499\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801770740499",
+      "rawBody": "{\"to\": \"8801770740499\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.205.183.247",
       "responseStatus": 200,
@@ -2187,8 +2187,8 @@
     {
       "id": "al-3010",
       "apiKey": "xsk_76319",
-      "toUser": "+8801759437662",
-      "rawBody": "{\"to\": \"+8801759437662\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801759437662",
+      "rawBody": "{\"to\": \"8801759437662\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.65.212.116",
       "responseStatus": 401,
@@ -2199,8 +2199,8 @@
     {
       "id": "al-3011",
       "apiKey": "xsk_99159",
-      "toUser": "+8801723193774",
-      "rawBody": "{\"to\": \"+8801723193774\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801723193774",
+      "rawBody": "{\"to\": \"8801723193774\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 500}",
       "callerIp": "103.186.176.197",
       "responseStatus": 500,
@@ -2211,8 +2211,8 @@
     {
       "id": "al-3012",
       "apiKey": "xsk_70644",
-      "toUser": "+8801759350601",
-      "rawBody": "{\"to\": \"+8801759350601\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801759350601",
+      "rawBody": "{\"to\": \"8801759350601\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.220.198.123",
       "responseStatus": 200,
@@ -2223,8 +2223,8 @@
     {
       "id": "al-3013",
       "apiKey": "xsk_76003",
-      "toUser": "+8801761665492",
-      "rawBody": "{\"to\": \"+8801761665492\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801761665492",
+      "rawBody": "{\"to\": \"8801761665492\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.5.87.7",
       "responseStatus": 200,
@@ -2235,8 +2235,8 @@
     {
       "id": "al-3014",
       "apiKey": "xsk_29560",
-      "toUser": "+8801783878975",
-      "rawBody": "{\"to\": \"+8801783878975\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801783878975",
+      "rawBody": "{\"to\": \"8801783878975\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.72.26.187",
       "responseStatus": 200,
@@ -2247,8 +2247,8 @@
     {
       "id": "al-3015",
       "apiKey": "xsk_38780",
-      "toUser": "+8801777368458",
-      "rawBody": "{\"to\": \"+8801777368458\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801777368458",
+      "rawBody": "{\"to\": \"8801777368458\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.106.195.53",
       "responseStatus": 200,
@@ -2259,8 +2259,8 @@
     {
       "id": "al-3016",
       "apiKey": "xsk_63596",
-      "toUser": "+8801768150861",
-      "rawBody": "{\"to\": \"+8801768150861\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801768150861",
+      "rawBody": "{\"to\": \"8801768150861\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.193.186.141",
       "responseStatus": 200,
@@ -2271,8 +2271,8 @@
     {
       "id": "al-3017",
       "apiKey": "xsk_50163",
-      "toUser": "+8801722503256",
-      "rawBody": "{\"to\": \"+8801722503256\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801722503256",
+      "rawBody": "{\"to\": \"8801722503256\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.5.55.139",
       "responseStatus": 200,
@@ -2283,8 +2283,8 @@
     {
       "id": "al-3018",
       "apiKey": "xsk_52697",
-      "toUser": "+8801733545527",
-      "rawBody": "{\"to\": \"+8801733545527\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801733545527",
+      "rawBody": "{\"to\": \"8801733545527\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.35.129.194",
       "responseStatus": 401,
@@ -2295,8 +2295,8 @@
     {
       "id": "al-3019",
       "apiKey": "xsk_98026",
-      "toUser": "+8801738003797",
-      "rawBody": "{\"to\": \"+8801738003797\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801738003797",
+      "rawBody": "{\"to\": \"8801738003797\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.50.51.54",
       "responseStatus": 200,
@@ -2307,8 +2307,8 @@
     {
       "id": "al-3020",
       "apiKey": "xsk_16859",
-      "toUser": "+8801715883373",
-      "rawBody": "{\"to\": \"+8801715883373\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801715883373",
+      "rawBody": "{\"to\": \"8801715883373\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.58.29.186",
       "responseStatus": 200,
@@ -2319,8 +2319,8 @@
     {
       "id": "al-3021",
       "apiKey": "xsk_79399",
-      "toUser": "+8801792934409",
-      "rawBody": "{\"to\": \"+8801792934409\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801792934409",
+      "rawBody": "{\"to\": \"8801792934409\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 401}",
       "callerIp": "103.190.79.121",
       "responseStatus": 401,
@@ -2331,8 +2331,8 @@
     {
       "id": "al-3022",
       "apiKey": "xsk_39096",
-      "toUser": "+8801788749845",
-      "rawBody": "{\"to\": \"+8801788749845\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801788749845",
+      "rawBody": "{\"to\": \"8801788749845\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.68.59.37",
       "responseStatus": 200,
@@ -2343,8 +2343,8 @@
     {
       "id": "al-3023",
       "apiKey": "xsk_33712",
-      "toUser": "+8801725092791",
-      "rawBody": "{\"to\": \"+8801725092791\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801725092791",
+      "rawBody": "{\"to\": \"8801725092791\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.124.79.104",
       "responseStatus": 200,
@@ -2355,8 +2355,8 @@
     {
       "id": "al-3024",
       "apiKey": "xsk_33763",
-      "toUser": "+8801754447018",
-      "rawBody": "{\"to\": \"+8801754447018\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801754447018",
+      "rawBody": "{\"to\": \"8801754447018\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 500}",
       "callerIp": "103.117.190.242",
       "responseStatus": 500,
@@ -2367,8 +2367,8 @@
     {
       "id": "al-3025",
       "apiKey": "xsk_21024",
-      "toUser": "+8801741401078",
-      "rawBody": "{\"to\": \"+8801741401078\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801741401078",
+      "rawBody": "{\"to\": \"8801741401078\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.204.153.196",
       "responseStatus": 200,
@@ -2379,8 +2379,8 @@
     {
       "id": "al-3026",
       "apiKey": "xsk_33256",
-      "toUser": "+8801720974171",
-      "rawBody": "{\"to\": \"+8801720974171\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801720974171",
+      "rawBody": "{\"to\": \"8801720974171\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.67.241.10",
       "responseStatus": 200,
@@ -2391,8 +2391,8 @@
     {
       "id": "al-3027",
       "apiKey": "xsk_65819",
-      "toUser": "+8801767087165",
-      "rawBody": "{\"to\": \"+8801767087165\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801767087165",
+      "rawBody": "{\"to\": \"8801767087165\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"error\", \"code\": 500}",
       "callerIp": "103.27.88.198",
       "responseStatus": 500,
@@ -2403,8 +2403,8 @@
     {
       "id": "al-3028",
       "apiKey": "xsk_59118",
-      "toUser": "+8801721502108",
-      "rawBody": "{\"to\": \"+8801721502108\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801721502108",
+      "rawBody": "{\"to\": \"8801721502108\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.173.1.28",
       "responseStatus": 200,
@@ -2415,8 +2415,8 @@
     {
       "id": "al-3029",
       "apiKey": "xsk_13579",
-      "toUser": "+8801785039225",
-      "rawBody": "{\"to\": \"+8801785039225\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
+      "toUser": "8801785039225",
+      "rawBody": "{\"to\": \"8801785039225\", \"text\": \"[sms::Hello]\", \"apikey\": \"xsk_*****\"}",
       "responseBody": "{\"status\": \"accepted\", \"code\": 200}",
       "callerIp": "103.104.228.76",
       "responseStatus": 200,
@@ -2621,130 +2621,5 @@
       "createdAt": "2026-06-11T05:40:57Z",
       "lastLoginAt": "2026-06-20T21:40:57Z"
     }
-  ],
-  "voiceReportSync": {
-    "totalRecords": 15,
-    "records": [
-      {
-        "callState": "BUSY",
-        "connectTime": null,
-        "destination": "+8801756050561",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-20T23:12:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-21T05:13:00Z",
-        "destination": "+8801725637035",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-21T05:13:37Z",
-        "startTime": "2026-06-21T05:12:57Z"
-      },
-      {
-        "callState": "FAILED",
-        "connectTime": null,
-        "destination": "+8801734793303",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-21T05:00:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-20T18:53:59Z",
-        "destination": "+8801738146508",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-20T18:55:04Z",
-        "startTime": "2026-06-20T18:53:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-20T01:10:04Z",
-        "destination": "+8801783651822",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-20T01:11:14Z",
-        "startTime": "2026-06-20T01:09:57Z"
-      },
-      {
-        "callState": "NO ANSWER",
-        "connectTime": null,
-        "destination": "+8801758657471",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-20T04:25:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-20T09:12:01Z",
-        "destination": "+8801748549237",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-20T09:13:55Z",
-        "startTime": "2026-06-20T09:11:57Z"
-      },
-      {
-        "callState": "NO ANSWER",
-        "connectTime": null,
-        "destination": "+8801749650280",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-21T00:05:57Z"
-      },
-      {
-        "callState": "BUSY",
-        "connectTime": null,
-        "destination": "+8801731169118",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-20T20:10:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-21T00:01:05Z",
-        "destination": "+8801770740499",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-21T00:02:16Z",
-        "startTime": "2026-06-21T00:00:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-20T17:27:03Z",
-        "destination": "+8801759437662",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-20T17:28:20Z",
-        "startTime": "2026-06-20T17:26:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-20T08:49:04Z",
-        "destination": "+8801723193774",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-20T08:50:03Z",
-        "startTime": "2026-06-20T08:48:57Z"
-      },
-      {
-        "callState": "CALL SUCCESS",
-        "connectTime": "2026-06-20T20:13:04Z",
-        "destination": "+8801759350601",
-        "displayNameSent": "NZGATE",
-        "endTime": "2026-06-20T20:13:37Z",
-        "startTime": "2026-06-20T20:12:57Z"
-      },
-      {
-        "callState": "FAILED",
-        "connectTime": null,
-        "destination": "+8801761665492",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-21T01:53:57Z"
-      },
-      {
-        "callState": "FAILED",
-        "connectTime": null,
-        "destination": "+8801783878975",
-        "displayNameSent": "NZGATE",
-        "endTime": null,
-        "startTime": "2026-06-20T01:31:57Z"
-      }
-    ]
-  }
+  ]
 }

@@ -27,7 +27,6 @@ interface MockDb {
   channelConfigs: Array<{ channelType: number }>;
   fallbackPolicies: unknown[];
   adminUsers: Array<{ id: string }>;
-  voiceReportSync: unknown;
 }
 
 let cachedDb: MockDb | null = null;
@@ -204,11 +203,6 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
       }
       if (path.startsWith(`${ApiEndpoints.adminUsers}/`) && method === 'DELETE') {
         return ok(null, 204);
-      }
-
-      // ---- Voice reports ----
-      if (path === ApiEndpoints.voiceReports.sync && method === 'POST') {
-        return ok(db.voiceReportSync);
       }
 
       // Unmatched -> warn and fall through to real network.

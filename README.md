@@ -12,24 +12,39 @@ npm start
 
 Then open http://localhost:4200.
 
-The app ships in **MOCK MODE** by default (`src/environments/environment.ts` has `mock: true`),
-so it runs with realistic demo data and **no backend required**. A "MOCK DATA" badge appears
-in the toolbar. On the sign-in screen, any username/password works in mock mode.
+By default the dev build hits the **real backend** at `http://localhost:5212`
+(`src/environments/environment.ts`, `mock: false`). Start the backend first:
 
-## Mock mode vs real backend
+```bash
+cd ../learnersight-netzero-gateway
+dotnet run --project NetZeroGateway.API
+```
+
+Sign in with the seeded credentials (see the backend's `appsettings.json` — default
+`admin` / `Admin@123`).
+
+## Pages
+
+| Route | Purpose |
+|---|---|
+| `/dashboard` | KPIs, timeline, channel breakdown, failure reasons (auto-refresh) |
+| `/logs/messages`, `/logs/dispatch`, `/logs/api` | Message / dispatch / API audit logs |
+| `/send` | Manual send (SMS, WhatsApp text/media, Voice) |
+| `/settings/gateway-simulator` | **Gateway Simulator** (SuperAdmin only) — integration guide + live simulator for the public `POST /sendtext` endpoint (requires apikey/secretkey/callerID) |
+| `/settings/channels`, `/settings/fallback` | Channel configs, fallback policies |
+| `/settings/users` | Admin users (SuperAdmin only) |
+
+The toolbar also has a **DB backup download** (cloud icon): Last Week / Last Month /
+This Month / This Year / All Time → xlsx via `GET /api/backup/export`.
+
+## Mock mode
 
 A single flag controls everything — no component or service is aware of it:
 
-| Flag | File | Behaviour |
-|------|------|-----------|
-| `mock: true`  | `environment.ts` (dev default) | All HTTP answered from `src/assets/mock.json` via `mock.interceptor.ts`. Network is never hit. |
-| `mock: false` | `environment.prod.ts` (prod) | Real calls to `environment.apiUrl` + `/api/...`. |
-
-To point the dev build at a live backend, set `mock: false` in `environment.ts`.
-The dev server proxies `/api` to `http://localhost:8080` via `proxy.conf.json`.
-
-Mock mode is **stateless** — creates/edits/deletes are echoed as success but do not persist
-across reloads. This is intentional for demos.
+| Flag | Behaviour |
+|------|-----------|
+| `mock: false` (default) | Real calls to `environment.apiUrl` + `/api/...`. |
+| `mock: true`  | All HTTP answered from `src/assets/mock.json` via `mock.interceptor.ts`; no backend needed; any credentials sign in; a "MOCK" badge shows in the toolbar. Stateless — writes don't persist. |
 
 ## Build
 
@@ -37,17 +52,14 @@ across reloads. This is intentional for demos.
 npm run build          # production build -> dist/net-zero-gateway/browser
 ```
 
-The production build uses `environment.prod.ts` (mock off, `apiUrl: ''`), where nginx
-proxies `/api` to the backend.
+The production build uses `environment.prod.ts` (`apiUrl: ''`) — nginx serves the SPA and
+proxies `/api/` (and the root-level `/sendtext` used by the simulator) to the backend.
+See `nginx.conf`.
 
 ## Docker
 
-```bash
-docker build -t netzerogateway-web .
-```
-
-See `nginx.conf` (SPA fallback + `/api` proxy) and `docker-compose.web.yml` for the
-`web` service to add to your stack.
+Use the `docker-compose.yml` at the workspace root (one level up) — it builds and runs
+`web` together with `api`, `db`, `seq`, and `backup`. Frontend: http://localhost:18080.
 
 ## Architecture notes
 

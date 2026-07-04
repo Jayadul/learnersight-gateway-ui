@@ -13,6 +13,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
 import { AuthService } from '../../core/auth/auth.service';
 import { LoadingService } from '../../core/services/loading.service';
+import { BackupPreset, BackupService, backupRange } from '../../core/services/backup.service';
+import { NotificationService } from '../../core/services/notification.service';
 import { HasRoleDirective } from '../../shared/directives/has-role.directive';
 import { environment } from '../../../environments/environment';
 
@@ -24,8 +26,8 @@ const ROUTE_TITLES: Record<string, string> = {
   '/logs/messages': 'Message Logs',
   '/logs/dispatch': 'Dispatch Logs',
   '/logs/api': 'API Logs',
-  '/reports/voice': 'Voice Reports',
   '/send': 'Send Message',
+  '/settings/gateway-simulator': 'Gateway Simulator',
   '/settings/channels': 'Channel Configs',
   '/settings/fallback': 'Fallback Policies',
   '/settings/users': 'Users',
@@ -49,10 +51,21 @@ export class MainLayoutComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly breakpoints = inject(BreakpointObserver);
   private readonly router = inject(Router);
+  private readonly backup = inject(BackupService);
+  private readonly notify = inject(NotificationService);
 
   readonly loading = inject(LoadingService);
   readonly mockMode = environment.mock;
   readonly opened = signal(true);
+  readonly downloading = signal(false);
+
+  readonly backupPresets: ReadonlyArray<{ key: BackupPreset; label: string }> = [
+    { key: 'last-week',  label: 'Last Week' },
+    { key: 'last-month', label: 'Last Month' },
+    { key: 'this-month', label: 'This Month' },
+    { key: 'this-year',  label: 'This Year' },
+    { key: 'all-time',   label: 'All Time' },
+  ];
 
   private readonly isWide = toSignal(
     this.breakpoints.observe(['(min-width: 1024px)']).pipe(map((r) => r.matches)),
@@ -61,6 +74,7 @@ export class MainLayoutComponent implements OnInit {
   readonly sidenavMode = computed<'side' | 'over'>(() => (this.isWide() ? 'side' : 'over'));
 
   readonly user = computed(() => this.auth.getCurrentUser());
+  readonly userInitial = computed(() => this.user()?.name?.charAt(0).toUpperCase() ?? '?');
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
@@ -80,7 +94,6 @@ export class MainLayoutComponent implements OnInit {
         { label: 'Message Logs', icon: 'forum', route: '/logs/messages' },
         { label: 'Dispatch Logs', icon: 'send', route: '/logs/dispatch' },
         { label: 'API Logs', icon: 'receipt_long', route: '/logs/api' },
-        { label: 'Voice Reports', icon: 'phone_in_talk', route: '/reports/voice' },
       ],
     },
     {
@@ -98,6 +111,7 @@ export class MainLayoutComponent implements OnInit {
       title: 'Admin',
       items: [
         { label: 'Users', icon: 'manage_accounts', route: '/settings/users', superAdminOnly: true },
+        { label: 'Gateway Simulator', icon: 'integration_instructions', route: '/settings/gateway-simulator', superAdminOnly: true },
       ],
     },
   ];
@@ -118,5 +132,23 @@ export class MainLayoutComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
+  }
+
+  downloadBackup(preset: BackupPreset): void {
+    this.downloading.set(true);
+    this.backup.download(backupRange(preset)).subscribe({
+      next: (blob) => {
+        this.downloading.set(false);
+        const stamp = new Date().toISOString().slice(0, 10);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `netzero-backup-${preset}-${stamp}.xlsx`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.notify.success('Backup downloaded');
+      },
+      error: () => this.downloading.set(false),
+    });
   }
 }

@@ -31,7 +31,7 @@ export class MessageLogsComponent implements OnInit {
 
   readonly filters: FilterControl[] = [
     { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date range' },
-    { kind: 'text', key: 'toUser', label: 'Phone', placeholder: '+8801700000001' },
+    { kind: 'text', key: 'toUser', label: 'Phone', placeholder: '8801700000001' },
     {
       kind: 'select', key: 'status', label: 'Status',
       options: [

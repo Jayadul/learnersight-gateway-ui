@@ -26,9 +26,13 @@
     </mat-nav-list>
 
     <div class="sidenav-footer">
-      @if (user()) {
-        <div style="font-size:12px; color: var(--nzg-sidebar-group); padding: 0 10px 8px;">
-          {{ user()!.name }} &bull; {{ user()!.role }}
+      @if (user(); as u) {
+        <div class="user-card">
+          <div class="user-avatar">{{ userInitial() }}</div>
+          <div class="user-meta">
+            <div class="user-name">{{ u.name }}</div>
+            <div class="user-role">{{ u.role }}</div>
+          </div>
         </div>
       }
     </div>
@@ -47,12 +51,24 @@
           </mat-chip>
         }
         <span class="spacer"></span>
-        @if (user()) {
+        @if (user(); as u) {
           <span class="user-info">
-            <span class="username">{{ user()!.name }}</span>
-            <mat-chip class="role-chip" [disableRipple]="true">{{ user()!.role }}</mat-chip>
+            <span class="username">{{ u.name }}</span>
+            <mat-chip class="role-chip" [disableRipple]="true">{{ u.role }}</mat-chip>
           </span>
         }
+        <button mat-icon-button [matMenuTriggerFor]="backupMenu" [disabled]="downloading()"
+                matTooltip="Download DB backup" aria-label="Download DB backup">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+        <mat-menu #backupMenu="matMenu">
+          @for (preset of backupPresets; track preset.key) {
+            <button mat-menu-item (click)="downloadBackup(preset.key)">
+              <mat-icon>download</mat-icon>
+              <span>{{ preset.label }}</span>
+            </button>
+          }
+        </mat-menu>
         <button mat-icon-button (click)="logout()" matTooltip="Sign out" aria-label="Sign out">
           <mat-icon>logout</mat-icon>
         </button>

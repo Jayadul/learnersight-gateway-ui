@@ -43,8 +43,6 @@ export class SendMessageComponent {
     toNumbers:   ['', [Validators.required, phoneListValidator]],
     message:     ['', Validators.required],
     mediaUrl:    [''],
-    campaignId:  [''],
-    callerID:    [''],
   });
 
   private readonly selectedChannel = toSignal(this.form.controls.channelType.valueChanges, {
@@ -66,9 +64,10 @@ export class SendMessageComponent {
 
   constructor() {
     this.form.controls.channelType.valueChanges.pipe(takeUntilDestroyed()).subscribe((channel) => {
-      const media    = this.form.controls.mediaUrl;
-      const campaign = this.form.controls.campaignId;
+      const media   = this.form.controls.mediaUrl;
+      const message = this.form.controls.message;
 
+      // Media URL — required only for WhatsApp Media
       if (channel === ChannelType.WP_Media) {
         media.setValidators([Validators.required, urlValidator]);
       } else {
@@ -76,19 +75,16 @@ export class SendMessageComponent {
         media.setValue('');
       }
 
+      // Message — required for every channel except Voice (campaign is pre-configured)
       if (channel === ChannelType.Voice) {
-        campaign.setValidators([Validators.required]);
+        message.clearValidators();
+        message.setValue('');
       } else {
-        campaign.clearValidators();
-        campaign.setValue('');
-      }
-
-      if (channel !== ChannelType.SMS) {
-        this.form.controls.callerID.setValue('');
+        message.setValidators([Validators.required]);
       }
 
       media.updateValueAndValidity();
-      campaign.updateValueAndValidity();
+      message.updateValueAndValidity();
     });
   }
 
@@ -99,12 +95,10 @@ export class SendMessageComponent {
     }
     const v = this.form.getRawValue();
     const body: ManualSendRequest = {
-      channelType: ChannelType[v.channelType], // enum key → "SMS" | "WP_Text" | "WP_Media" | "Voice"
+      channelType: v.channelType, // numeric enum value — backend expects integer (SMS=0, WP_Text=1, ...)
       toNumbers:   v.toNumbers,
-      message:     v.message,
+      ...(v.channelType !== ChannelType.Voice && { message: v.message }),
       ...(v.channelType === ChannelType.WP_Media && { mediaUrl: v.mediaUrl }),
-      ...(v.channelType === ChannelType.Voice    && { campaignId: v.campaignId }),
-      ...(v.channelType === ChannelType.SMS && v.callerID && { callerID: v.callerID }),
     };
 
     this.loading.set(true);

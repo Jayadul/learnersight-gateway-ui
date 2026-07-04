@@ -36,24 +36,23 @@
         <mat-form-field appearance="outline" class="full">
           <mat-label>Phone Numbers</mat-label>
           <textarea matInput formControlName="toNumbers" rows="3"
-                    placeholder="+8801700000001, +8801700000002"></textarea>
-          <mat-hint>Comma-separated · E.164 format (include country code)</mat-hint>
+                    placeholder="8801700000001, 8801700000002"></textarea>
+          <mat-hint>Comma-separated · digits only, start with country code (88…) — no "+"</mat-hint>
           <app-form-field-errors [control]="form.controls.toNumbers" />
         </mat-form-field>
 
-        <!-- Message / Script -->
-        <p class="field-label">{{ isVoice() ? 'Voice Script (TTS)' : 'Message' }}</p>
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>{{ isVoice() ? 'Text to be spoken on the call' : 'Message Text' }}</mat-label>
-          <textarea matInput formControlName="message" rows="5"
-                    [placeholder]="isVoice() ? 'e.g. Hello, your payment of BDT 500 is due on January 31st.' : 'Type your message here…'"></textarea>
-          @if (isVoice()) {
-            <mat-hint>This text will be read aloud to recipients via text-to-speech</mat-hint>
-          }
-          <app-form-field-errors [control]="form.controls.message" />
-        </mat-form-field>
+        <!-- Message — not used for Voice (campaign content is pre-configured at the provider) -->
+        @if (!isVoice()) {
+          <p class="field-label">Message</p>
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Message Text</mat-label>
+            <textarea matInput formControlName="message" rows="5"
+                      placeholder="Type your message here…"></textarea>
+            <app-form-field-errors [control]="form.controls.message" />
+          </mat-form-field>
+        }
 
-        <!-- Conditional fields -->
+        <!-- Media URL — WhatsApp Media only -->
         @if (isMedia()) {
           <mat-form-field appearance="outline" class="full">
             <mat-label>Media URL</mat-label>
@@ -61,25 +60,6 @@
             <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
             <mat-hint>Must be publicly accessible (no authentication required)</mat-hint>
             <app-form-field-errors [control]="form.controls.mediaUrl" />
-          </mat-form-field>
-        }
-
-        @if (isVoice()) {
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>Campaign ID</mat-label>
-            <mat-icon matIconPrefix>campaign</mat-icon>
-            <input matInput formControlName="campaignId" placeholder="e.g. due-bill-api" />
-            <mat-hint>Must match a pre-configured campaign in your voice provider</mat-hint>
-            <app-form-field-errors [control]="form.controls.campaignId" />
-          </mat-form-field>
-        }
-
-        @if (isSms()) {
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>Caller ID <span class="opt-label">optional</span></mat-label>
-            <mat-icon matIconPrefix>badge</mat-icon>
-            <input matInput formControlName="callerID" placeholder="e.g. NETZEROGW" />
-            <mat-hint>Overrides the default sender ID shown on the recipient's device</mat-hint>
           </mat-form-field>
         }
 
@@ -117,7 +97,7 @@
         </div>
         @if (isSms()) {
           <ul class="guide-list">
-            <li>Numbers in E.164 format — e.g. <code>+8801700000001</code></li>
+            <li>Numbers start with the country code, digits only — e.g. <code>8801700000001</code> (no "+")</li>
             <li>Caller ID is optional; defaults to your account's registered sender ID</li>
             <li>Long messages split into 160-character segments automatically</li>
           </ul>
@@ -138,8 +118,7 @@
         }
         @if (isVoice()) {
           <ul class="guide-list">
-            <li><b>Voice Script</b> — the text spoken to the recipient via TTS on the call</li>
-            <li><b>Campaign ID</b> — a slug referencing a campaign template pre-configured in the voice provider (e.g. <code>due-bill-api</code>)</li>
+            <li>Only recipient numbers are required — the campaign is pre-configured in the voice provider</li>
             <li>Recipients receive an automated call; calls are placed in the order numbers appear</li>
           </ul>
         }

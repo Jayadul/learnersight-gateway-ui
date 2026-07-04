@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://localhost:8080',
-  mock: true, // dev defaults to mock so the app runs without the backend
+  apiUrl: 'http://localhost:5212',
+  mock: false, // dev hits the real backend at apiUrl
 };

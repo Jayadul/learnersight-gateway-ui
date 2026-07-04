@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { forkJoin, interval } from 'rxjs';
 import { DashboardService } from './dashboard.service';
 import { MessageLogsService } from '../message-logs/message-logs.service';
@@ -14,12 +17,13 @@ import { ChannelBreakdownChartComponent } from './components/channel-breakdown-c
 import { FailureReasonsChartComponent } from './components/failure-reasons-chart/failure-reasons-chart.component';
 import { RecentActivityComponent } from './components/recent-activity/recent-activity.component';
 
-const REFRESH_INTERVAL = 60;
+const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
+    MatButtonModule, MatIconModule, MatTooltipModule,
     PageHeaderComponent, SummaryCardsComponent, TimelineChartComponent,
     ChannelBreakdownChartComponent, FailureReasonsChartComponent, RecentActivityComponent,
   ],
@@ -40,6 +44,15 @@ export class DashboardComponent implements OnInit {
   readonly failureReasons = signal<FailureReasonDto[]>([]);
   readonly recent = signal<MessageRequestDto[]>([]);
   readonly countdown = signal(REFRESH_INTERVAL);
+  readonly countdownLabel = computed(() => {
+    const s = this.countdown();
+    return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
+  });
+
+  refreshNow(): void {
+    this.countdown.set(REFRESH_INTERVAL);
+    this.fetchAll();
+  }
 
   ngOnInit(): void {
     this.fetchAll();
