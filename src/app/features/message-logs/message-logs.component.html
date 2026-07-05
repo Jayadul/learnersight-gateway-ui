@@ -1,8 +1,7 @@
 <mat-sidenav-container class="drawer-container">
   <mat-sidenav-content>
     <div class="nzg-page">
-      <app-page-header title="Message Logs" subtitle="Every message received by the gateway, with its delivery details"
-                       [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Message Logs' }]" />
+      <app-page-header title="Message Logs" subtitle="Every message received by the gateway, with its delivery details" />
 
       <app-filter-bar [controls]="filters"
                       (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
