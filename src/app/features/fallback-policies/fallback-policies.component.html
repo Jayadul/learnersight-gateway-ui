@@ -11,14 +11,5 @@
     [rowActions]="rowActions"
     emptyIcon="alt_route"
     emptyTitle="No fallback rules yet"
-    (actionClick)="onAction($event)">
-    <ng-template appColumnDef="isGlobal" let-row>
-      @if (row.isGlobal) {
-        <mat-chip class="global-chip" [disableRipple]="true">All Channels</mat-chip>
-      } @else { — }
-    </ng-template>
-    <ng-template appColumnDef="isActive" let-row>
-      <mat-slide-toggle [checked]="row.isActive" (change)="toggleActive(row)"></mat-slide-toggle>
-    </ng-template>
-  </app-data-table>
+    (actionClick)="onAction($event)" />
 </div>

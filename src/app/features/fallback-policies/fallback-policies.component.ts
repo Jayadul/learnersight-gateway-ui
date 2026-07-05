@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { FallbackPoliciesService } from './fallback-policies.service';
 import { FallbackPolicyDto } from '../../core/models/fallback-policy.model';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm.service';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import { ColumnDef, ColumnDefDirective, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
+import { ColumnDef, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
 import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
 import { PolicyFormDialogComponent } from './components/policy-form-dialog/policy-form-dialog.component';
 
@@ -19,8 +17,7 @@ type Row = FallbackPolicyDto;
   selector: 'app-fallback-policies',
   standalone: true,
   imports: [
-    MatButtonModule, MatIconModule, MatChipsModule, MatSlideToggleModule, PageHeaderComponent,
-    DataTableComponent, ColumnDefDirective,
+    MatButtonModule, MatIconModule, PageHeaderComponent, DataTableComponent,
   ],
   templateUrl: './fallback-policies.component.html',
   styleUrl: './fallback-policies.component.scss',
@@ -40,8 +37,8 @@ export class FallbackPoliciesComponent implements OnInit {
     { key: 'triggerChannel', header: 'Trigger', value: (r) => new ChannelTypePipe().transform(r.triggerChannel) },
     { key: 'fallbackChannel', header: 'Fallback', value: (r) => new ChannelTypePipe().transform(r.fallbackChannel) },
     { key: 'description', header: 'Description', value: (r) => r.description ?? '—' },
-    { key: 'isGlobal', header: 'Applies to All', type: 'custom' },
-    { key: 'isActive', header: 'Active', type: 'custom' },
+    { key: 'isGlobal', header: 'Applies to All', type: 'badge', value: (r) => (r.isGlobal ? 'Yes' : 'No') },
+    { key: 'isActive', header: 'Active', type: 'badge', value: (r) => (r.isActive ? 'Active' : 'Inactive') },
   ];
 
   readonly rowActions: RowAction<Row>[] = [
@@ -93,13 +90,6 @@ export class FallbackPoliciesComponent implements OnInit {
           this.load();
         });
       }
-    });
-  }
-
-  toggleActive(policy: Row): void {
-    this.service.toggleActive(policy.id).subscribe(() => {
-      this.notify.success(`Rule ${policy.isActive ? 'deactivated' : 'activated'}.`);
-      this.load();
     });
   }
 

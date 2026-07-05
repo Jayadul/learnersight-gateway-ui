@@ -1,4 +1,5 @@
 .policy-form { display: flex; flex-direction: column; padding-top: 8px; min-width: 420px; }
 .full { width: 100%; }
 .form-error { color: var(--nzg-error); font-size: 13px; margin: -8px 0 12px; }
+mat-slide-toggle { margin-bottom: 12px; }
 @media (max-width: 600px) { .policy-form { min-width: auto; } }

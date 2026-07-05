@@ -62,6 +62,10 @@ export class MessageLogsComponent implements OnInit {
   }
 
   openDetail(row: Row): void {
-    this.dialog.open(MessageDetailDialogComponent, { data: { id: row.id }, width: '880px', maxWidth: '95vw' });
+    // autoFocus 'dialog': keep focus on the container so the browser doesn't
+    // scroll the Close button (bottom) into view when the dialog opens.
+    this.dialog.open(MessageDetailDialogComponent, {
+      data: { id: row.id }, width: '880px', maxWidth: '95vw', autoFocus: 'dialog',
+    });
   }
 }

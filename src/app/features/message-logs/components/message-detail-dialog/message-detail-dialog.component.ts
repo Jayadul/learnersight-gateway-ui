@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +25,7 @@ import { ChannelNamePipe } from '../../../../shared/pipes/channel-name.pipe';
 export class MessageDetailDialogComponent {
   private readonly service = inject(MessageLogsService);
   private readonly data = inject<{ id: string }>(MAT_DIALOG_DATA);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   readonly detail = signal<MessageRequestDetailDto | null>(null);
   readonly loading = signal(true);
@@ -43,6 +44,8 @@ export class MessageDetailDialogComponent {
       next: (d) => {
         this.detail.set(d);
         this.loading.set(false);
+        // Content renders after the dialog is already open — force the view back to the top.
+        setTimeout(() => this.host.nativeElement.querySelector('mat-dialog-content')?.scrollTo({ top: 0 }));
       },
       error: () => this.loading.set(false),
     });

@@ -4,7 +4,7 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import {
   CreateFallbackPolicyRequest, FallbackPolicyDto, UpdateFallbackPolicyRequest,
@@ -22,7 +22,7 @@ export interface PolicyFormDialogData {
   standalone: true,
   imports: [
     ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,
-    MatCheckboxModule, MatButtonModule, FormFieldErrorsComponent,
+    MatSlideToggleModule, MatButtonModule, FormFieldErrorsComponent,
   ],
   templateUrl: './policy-form-dialog.component.html',
   styleUrl: './policy-form-dialog.component.scss',
@@ -48,6 +48,7 @@ export class PolicyFormDialogComponent {
       triggerChannel: [this.data.policy?.triggerChannel ?? ChannelType.SMS, Validators.required],
       fallbackChannel: [this.data.policy?.fallbackChannel ?? ChannelType.WP_Text, Validators.required],
       isGlobal: [this.data.policy?.isGlobal ?? false],
+      isActive: [this.data.policy?.isActive ?? false],
       description: [this.data.policy?.description ?? ''],
     },
     { validators: differentChannelsValidator },
@@ -66,7 +67,7 @@ export class PolicyFormDialogComponent {
         fallbackChannel: v.fallbackChannel,
         isGlobal: v.isGlobal,
         description: v.description || undefined,
-        isActive: this.data.policy!.isActive,
+        isActive: v.isActive,
       };
       this.dialogRef.close({ mode: 'update', id: this.data.policy!.id, body });
     } else {
