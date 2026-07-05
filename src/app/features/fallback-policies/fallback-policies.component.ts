@@ -9,7 +9,7 @@ import { FallbackPolicyDto } from '../../core/models/fallback-policy.model';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm.service';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import { ColumnDef, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
+import { ColumnDef, ColumnDefDirective, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
 import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
 import { PolicyFormDialogComponent } from './components/policy-form-dialog/policy-form-dialog.component';
 
@@ -19,7 +19,8 @@ type Row = FallbackPolicyDto;
   selector: 'app-fallback-policies',
   standalone: true,
   imports: [
-    MatButtonModule, MatIconModule, MatChipsModule, MatSlideToggleModule, PageHeaderComponent, DataTableComponent,
+    MatButtonModule, MatIconModule, MatChipsModule, MatSlideToggleModule, PageHeaderComponent,
+    DataTableComponent, ColumnDefDirective,
   ],
   templateUrl: './fallback-policies.component.html',
   styleUrl: './fallback-policies.component.scss',

@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MessageLogsService } from './message-logs.service';
-import { MessageRequestDetailDto, MessageRequestDto } from '../../core/models/message-request.model';
+import { MessageRequestDto } from '../../core/models/message-request.model';
 import { MessageStatus } from '../../core/models/enums';
 import { ListState } from '../../core/state/list-state';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { FilterBarComponent, FilterControl } from '../../shared/components/filter-bar/filter-bar.component';
 import { ColumnDef, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
-import { MessageDetailDrawerComponent } from './components/message-detail-drawer/message-detail-drawer.component';
+import { MessageDetailDialogComponent } from './components/message-detail-dialog/message-detail-dialog.component';
 import { channelNameLabel } from '../../shared/pipes/channel-name.pipe';
 
 type Row = MessageRequestDto;
@@ -15,20 +15,15 @@ type Row = MessageRequestDto;
 @Component({
   selector: 'app-message-logs',
   standalone: true,
-  imports: [
-    MatSidenavModule, PageHeaderComponent, FilterBarComponent, DataTableComponent, MessageDetailDrawerComponent,
-  ],
+  imports: [PageHeaderComponent, FilterBarComponent, DataTableComponent],
   templateUrl: './message-logs.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageLogsComponent implements OnInit {
   private readonly service = inject(MessageLogsService);
+  private readonly dialog = inject(MatDialog);
 
   readonly state = new ListState<Row>((p) => this.service.getPaged(p), 'receivedAt');
-
-  readonly drawerOpen = signal(false);
-  readonly selectedDetail = signal<MessageRequestDetailDto | null>(null);
-  readonly detailLoading = signal(false);
 
   readonly filters: FilterControl[] = [
     { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date Range' },
@@ -67,15 +62,6 @@ export class MessageLogsComponent implements OnInit {
   }
 
   openDetail(row: Row): void {
-    this.drawerOpen.set(true);
-    this.detailLoading.set(true);
-    this.selectedDetail.set(null);
-    this.service.getDetail(row.id).subscribe({
-      next: (d) => {
-        this.selectedDetail.set(d);
-        this.detailLoading.set(false);
-      },
-      error: () => this.detailLoading.set(false),
-    });
+    this.dialog.open(MessageDetailDialogComponent, { data: { id: row.id }, width: '880px', maxWidth: '95vw' });
   }
 }

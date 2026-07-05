@@ -25,7 +25,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/logs/messages': 'Message Logs',
   '/logs/dispatch': 'Delivery Logs',
   '/logs/api': 'API Logs',
-  '/send': 'Send Messages & Calls',
+  '/send': 'Messages & Calls',
   '/settings/gateway-simulator': 'Gateway Simulator',
   '/settings/channels': 'Channels',
   '/settings/fallback': 'Fallback Rules',
@@ -101,7 +101,7 @@ export class MainLayoutComponent implements OnInit {
     },
     {
       title: 'Messaging',
-      items: [{ label: 'Send Messages & Calls', icon: 'send_to_mobile', route: '/send' }],
+      items: [{ label: 'Messages & Calls', icon: 'send_to_mobile', route: '/send' }],
     },
     {
       title: 'Configuration',

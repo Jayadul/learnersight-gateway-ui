@@ -13,7 +13,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: unknown) => {
       if (error instanceof HttpErrorResponse) {
-        const backendMessage = (error.error as ApiError | undefined)?.message;
+        const payload = error.error as ApiError | undefined;
+        const backendMessage = payload?.detail ?? payload?.message ?? payload?.title;
         switch (error.status) {
           case 401:
             // Sign-in handles its own 401; auth interceptor handles the rest.

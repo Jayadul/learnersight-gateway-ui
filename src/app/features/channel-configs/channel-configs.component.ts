@@ -108,6 +108,10 @@ export class ChannelConfigsComponent implements OnInit {
   }
 
   onDelete(config: ChannelConfigDto): void {
+    if (config.isActive) {
+      this.notify.error('This channel is currently active. Activate another configuration for this channel first, then delete this one.');
+      return;
+    }
     this.confirm
       .confirm({ title: 'Delete Channel Settings', message: `Delete "${config.label}"? This cannot be undone.`, confirmLabel: 'Delete' })
       .subscribe((ok) => {

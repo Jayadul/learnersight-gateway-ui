@@ -6,7 +6,7 @@ import { ChannelType, JobStatus } from '../../core/models/enums';
 import { ListState } from '../../core/state/list-state';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { FilterBarComponent, FilterControl } from '../../shared/components/filter-bar/filter-bar.component';
-import { ColumnDef, DataTableComponent } from '../../shared/components/data-table/data-table.component';
+import { ColumnDef, ColumnDefDirective, DataTableComponent } from '../../shared/components/data-table/data-table.component';
 import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
 
 type Row = DispatchJobDto;
@@ -14,7 +14,7 @@ type Row = DispatchJobDto;
 @Component({
   selector: 'app-dispatch-logs',
   standalone: true,
-  imports: [MatChipsModule, PageHeaderComponent, FilterBarComponent, DataTableComponent],
+  imports: [MatChipsModule, PageHeaderComponent, FilterBarComponent, DataTableComponent, ColumnDefDirective],
   templateUrl: './dispatch-logs.component.html',
   styleUrl: './dispatch-logs.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
