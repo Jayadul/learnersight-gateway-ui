@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MessageRequestDetailDto } from '../../../../core/models/message-request.model';
 import { DispatchJobDto } from '../../../../core/models/dispatch-job.model';
 import { ColumnDef, DataTableComponent } from '../../../../shared/components/data-table/data-table.component';
@@ -15,7 +16,7 @@ import { ChannelNamePipe } from '../../../../shared/pipes/channel-name.pipe';
   selector: 'app-message-detail-drawer',
   standalone: true,
   imports: [
-    DatePipe, MatIconModule, MatButtonModule, MatChipsModule, DataTableComponent,
+    DatePipe, MatIconModule, MatButtonModule, MatChipsModule, MatTooltipModule, DataTableComponent,
     StatusBadgeComponent, ChannelTypePipe, MessageStatusPipe, ChannelNamePipe,
   ],
   templateUrl: './message-detail-drawer.component.html',
@@ -25,6 +26,7 @@ import { ChannelNamePipe } from '../../../../shared/pipes/channel-name.pipe';
 export class MessageDetailDrawerComponent {
   readonly detail = input<MessageRequestDetailDto | null>(null);
   readonly loading = input(false);
+  readonly closed = output<void>();
 
   readonly jobColumns: ColumnDef<DispatchJobDto>[] = [
     { key: 'channelType', header: 'Channel', value: (r) => new ChannelTypePipe().transform(r.channelType) },

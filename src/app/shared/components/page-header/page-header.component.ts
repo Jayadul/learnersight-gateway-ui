@@ -13,5 +13,6 @@ export interface Breadcrumb { label: string; route?: string; }
 })
 export class PageHeaderComponent {
   readonly title = input.required<string>();
+  readonly subtitle = input<string>('');
   readonly breadcrumbs = input<Breadcrumb[]>([]);
 }

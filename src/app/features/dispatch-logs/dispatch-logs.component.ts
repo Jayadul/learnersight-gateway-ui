@@ -24,7 +24,7 @@ export class DispatchLogsComponent implements OnInit {
   readonly state = new ListState<Row>((p) => this.service.getPaged(p), 'createdAt');
 
   readonly filters: FilterControl[] = [
-    { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date range' },
+    { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date Range' },
     {
       kind: 'select', key: 'channelType', label: 'Channel',
       options: [

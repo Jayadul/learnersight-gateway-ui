@@ -1,6 +1,5 @@
 <div class="page-header">
   <div class="left">
-    <h1>{{ title() }}</h1>
     @if (breadcrumbs().length) {
       <nav class="crumbs">
         @for (crumb of breadcrumbs(); track crumb.label; let last = $last) {
@@ -11,6 +10,10 @@
           }
         }
       </nav>
+    }
+    <h1>{{ title() }}</h1>
+    @if (subtitle()) {
+      <p class="subtitle">{{ subtitle() }}</p>
     }
   </div>
   <div class="actions"><ng-content></ng-content></div>

@@ -25,7 +25,7 @@ export class ApiLogsComponent implements OnInit {
   readonly state = new ListState<Row>((p) => this.service.getPaged(p), 'requestedAt');
 
   readonly filters: FilterControl[] = [
-    { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date range' },
+    { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date Range' },
     {
       kind: 'select', key: 'responseStatus', label: 'HTTP Status',
       options: [
@@ -48,7 +48,7 @@ export class ApiLogsComponent implements OnInit {
   ];
 
   readonly rowActions: RowAction<Row>[] = [
-    { action: 'view', icon: 'visibility', tooltip: 'View detail', color: 'primary' },
+    { action: 'view', icon: 'visibility', tooltip: 'View details', color: 'primary' },
   ];
 
   ngOnInit(): void {

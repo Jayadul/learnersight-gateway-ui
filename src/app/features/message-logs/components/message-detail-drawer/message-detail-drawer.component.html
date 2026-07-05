@@ -1,7 +1,12 @@
 <div class="drawer-body">
   @if (detail(); as d) {
     <div class="header">
-      <h2>Message Details</h2>
+      <div class="title-row">
+        <h2>Message Details</h2>
+        <button mat-icon-button type="button" (click)="closed.emit()" matTooltip="Close" aria-label="Close">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
       <div class="meta">
         <div><span class="label">To</span><span>{{ d.toUser }}</span></div>
         <div><span class="label">Status</span><app-status-badge [status]="d.overallStatus" type="message" /></div>

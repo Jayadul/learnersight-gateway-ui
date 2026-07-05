@@ -1,5 +1,6 @@
 <div class="nzg-page">
-  <app-page-header title="Channels" [breadcrumbs]="[{ label: 'Configuration' }, { label: 'Channels' }]" />
+  <app-page-header title="Channels" subtitle="Connect and manage your SMS, WhatsApp, and voice providers"
+                   [breadcrumbs]="[{ label: 'Configuration' }, { label: 'Channels' }]" />
 
   <mat-tab-group [selectedIndex]="activeTab()" (selectedIndexChange)="onTabChange($event)">
     @for (tab of tabs; track tab.channelType) {

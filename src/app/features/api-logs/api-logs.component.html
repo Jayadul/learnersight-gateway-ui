@@ -1,5 +1,6 @@
 <div class="nzg-page">
-  <app-page-header title="API Logs" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'API Logs' }]" />
+  <app-page-header title="API Logs" subtitle="A record of every API call received by the gateway"
+                   [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'API Logs' }]" />
 
   <app-filter-bar [controls]="filters" (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
 
@@ -12,7 +13,7 @@
     [pageSize]="state.pageSize()"
     [rowActions]="rowActions"
     emptyIcon="receipt_long"
-    emptyTitle="No API logs"
+    emptyTitle="No API calls yet"
     (pageChange)="state.setPage($event)"
     (sortChange)="state.setSort($event)"
     (actionClick)="onAction($event)" />

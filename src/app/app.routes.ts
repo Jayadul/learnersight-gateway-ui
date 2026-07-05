@@ -57,11 +57,13 @@ export const routes: Routes = [
         path: 'settings/channels',
         loadComponent: () =>
           import('./features/channel-configs/channel-configs.component').then((m) => m.ChannelConfigsComponent),
+        canActivate: [roleGuard('SuperAdmin')],
       },
       {
         path: 'settings/fallback',
         loadComponent: () =>
           import('./features/fallback-policies/fallback-policies.component').then((m) => m.FallbackPoliciesComponent),
+        canActivate: [roleGuard('SuperAdmin')],
       },
       {
         path: 'settings/users',

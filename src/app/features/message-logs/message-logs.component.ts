@@ -31,7 +31,7 @@ export class MessageLogsComponent implements OnInit {
   readonly detailLoading = signal(false);
 
   readonly filters: FilterControl[] = [
-    { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date range' },
+    { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date Range' },
     { kind: 'text', key: 'toUser', label: 'Phone', placeholder: '8801700000001' },
     {
       kind: 'select', key: 'status', label: 'Status',
@@ -53,7 +53,7 @@ export class MessageLogsComponent implements OnInit {
   ];
 
   readonly rowActions: RowAction<Row>[] = [
-    { action: 'view', icon: 'visibility', tooltip: 'View detail', color: 'primary' },
+    { action: 'view', icon: 'visibility', tooltip: 'View details', color: 'primary' },
   ];
 
   ngOnInit(): void {

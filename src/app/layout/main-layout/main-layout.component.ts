@@ -15,18 +15,17 @@ import { AuthService } from '../../core/auth/auth.service';
 import { LoadingService } from '../../core/services/loading.service';
 import { BackupPreset, BackupService, backupRange } from '../../core/services/backup.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { HasRoleDirective } from '../../shared/directives/has-role.directive';
 import { environment } from '../../../environments/environment';
 
-interface NavItem { label: string; icon: string; route: string; superAdminOnly?: boolean; }
-interface NavGroup { title: string; items: NavItem[]; }
+interface NavItem { label: string; icon: string; route: string; }
+interface NavGroup { title: string; items: NavItem[]; superAdminOnly?: boolean; }
 
 const ROUTE_TITLES: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/logs/messages': 'Message Logs',
   '/logs/dispatch': 'Delivery Logs',
   '/logs/api': 'API Logs',
-  '/send': 'Send Message',
+  '/send': 'Send Messages & Calls',
   '/settings/gateway-simulator': 'Gateway Simulator',
   '/settings/channels': 'Channels',
   '/settings/fallback': 'Fallback Rules',
@@ -41,7 +40,6 @@ const ROUTE_TITLES: Record<string, string> = {
     RouterOutlet, RouterLink, RouterLinkActive,
     MatSidenavModule, MatToolbarModule, MatListModule, MatIconModule,
     MatButtonModule, MatChipsModule, MatMenuModule, MatTooltipModule,
-    HasRoleDirective,
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
@@ -103,10 +101,11 @@ export class MainLayoutComponent implements OnInit {
     },
     {
       title: 'Messaging',
-      items: [{ label: 'Send Message & Calls', icon: 'send_to_mobile', route: '/send' }],
+      items: [{ label: 'Send Messages & Calls', icon: 'send_to_mobile', route: '/send' }],
     },
     {
       title: 'Configuration',
+      superAdminOnly: true,
       items: [
         { label: 'Channels', icon: 'settings_input_antenna', route: '/settings/channels' },
         { label: 'Fallback Rules', icon: 'alt_route', route: '/settings/fallback' },
@@ -114,12 +113,18 @@ export class MainLayoutComponent implements OnInit {
     },
     {
       title: 'Administration',
+      superAdminOnly: true,
       items: [
-        { label: 'Users', icon: 'manage_accounts', route: '/settings/users', superAdminOnly: true },
-        { label: 'Gateway Simulator', icon: 'integration_instructions', route: '/settings/gateway-simulator', superAdminOnly: true },
+        { label: 'Users', icon: 'manage_accounts', route: '/settings/users' },
+        { label: 'Gateway Simulator', icon: 'integration_instructions', route: '/settings/gateway-simulator' },
       ],
     },
   ];
+
+  /** Groups the signed-in user is allowed to see (hides SuperAdmin-only groups entirely). */
+  readonly visibleGroups = computed(() =>
+    this.groups.filter((g) => !g.superAdminOnly || this.user()?.role === 'SuperAdmin'),
+  );
 
   ngOnInit(): void {
     this.opened.set(this.isWide());
