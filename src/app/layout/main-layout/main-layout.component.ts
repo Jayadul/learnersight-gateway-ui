@@ -24,12 +24,12 @@ interface NavGroup { title: string; items: NavItem[]; }
 const ROUTE_TITLES: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/logs/messages': 'Message Logs',
-  '/logs/dispatch': 'Dispatch Logs',
+  '/logs/dispatch': 'Delivery Logs',
   '/logs/api': 'API Logs',
   '/send': 'Send Message',
   '/settings/gateway-simulator': 'Gateway Simulator',
-  '/settings/channels': 'Channel Configs',
-  '/settings/fallback': 'Fallback Policies',
+  '/settings/channels': 'Channels',
+  '/settings/fallback': 'Fallback Rules',
   '/settings/users': 'Users',
   '/forbidden': 'Access Denied',
 };
@@ -76,6 +76,11 @@ export class MainLayoutComponent implements OnInit {
   readonly user = computed(() => this.auth.getCurrentUser());
   readonly userInitial = computed(() => this.user()?.name?.charAt(0).toUpperCase() ?? '?');
 
+  /** Backend sends the role as a compact enum name (e.g. "SuperAdmin"). */
+  roleLabel(role: string): string {
+    return role === 'SuperAdmin' ? 'Super Admin' : role;
+  }
+
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
       filter((e) => e instanceof NavigationEnd),
@@ -92,23 +97,23 @@ export class MainLayoutComponent implements OnInit {
       items: [
         { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
         { label: 'Message Logs', icon: 'forum', route: '/logs/messages' },
-        { label: 'Dispatch Logs', icon: 'send', route: '/logs/dispatch' },
+        { label: 'Delivery Logs', icon: 'send', route: '/logs/dispatch' },
         { label: 'API Logs', icon: 'receipt_long', route: '/logs/api' },
       ],
     },
     {
       title: 'Messaging',
-      items: [{ label: 'Send Message', icon: 'send_to_mobile', route: '/send' }],
+      items: [{ label: 'Send Message & Calls', icon: 'send_to_mobile', route: '/send' }],
     },
     {
       title: 'Configuration',
       items: [
-        { label: 'Channel Configs', icon: 'settings_input_antenna', route: '/settings/channels' },
-        { label: 'Fallback Policies', icon: 'alt_route', route: '/settings/fallback' },
+        { label: 'Channels', icon: 'settings_input_antenna', route: '/settings/channels' },
+        { label: 'Fallback Rules', icon: 'alt_route', route: '/settings/fallback' },
       ],
     },
     {
-      title: 'Admin',
+      title: 'Administration',
       items: [
         { label: 'Users', icon: 'manage_accounts', route: '/settings/users', superAdminOnly: true },
         { label: 'Gateway Simulator', icon: 'integration_instructions', route: '/settings/gateway-simulator', superAdminOnly: true },

@@ -1,5 +1,5 @@
 ﻿<mat-card class="activity-card">
-  <h3>Recent Activity <span class="scope-badge">Latest 10 — All Time</span></h3>
+  <h3>Recent Activity <span class="scope-badge">Latest 10</span></h3>
   @if (items().length === 0) {
     <p class="empty">No recent requests.</p>
   } @else {
@@ -14,7 +14,7 @@
             <div class="middle">
               <mat-chip-set>
                 @for (ch of item.parsedChannels; track ch) {
-                  <mat-chip [disableRipple]="true">{{ ch }}</mat-chip>
+                  <mat-chip [disableRipple]="true">{{ ch | channelName }}</mat-chip>
                 }
               </mat-chip-set>
             </div>

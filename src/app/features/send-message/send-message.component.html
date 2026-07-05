@@ -17,7 +17,7 @@
             <mat-icon>chat</mat-icon> WhatsApp
           </mat-button-toggle>
           <mat-button-toggle [value]="ChannelType.WP_Media">
-            <mat-icon>perm_media</mat-icon> WA Media
+            <mat-icon>perm_media</mat-icon> WhatsApp Media
           </mat-button-toggle>
           <mat-button-toggle [value]="ChannelType.Voice">
             <mat-icon>record_voice_over</mat-icon> Voice
@@ -37,7 +37,7 @@
           <mat-label>Phone Numbers</mat-label>
           <textarea matInput formControlName="toNumbers" rows="3"
                     placeholder="8801700000001, 8801700000002"></textarea>
-          <mat-hint>Comma-separated · digits only, start with country code (88…) — no "+"</mat-hint>
+          <mat-hint>Separate numbers with commas. Digits only, starting with the country code (for example 8801700000001).</mat-hint>
           <app-form-field-errors [control]="form.controls.toNumbers" />
         </mat-form-field>
 
@@ -87,7 +87,7 @@
       <mat-card class="counter-card">
         <div class="counter-label"><mat-icon>group</mat-icon> Recipients</div>
         <div class="counter-value">{{ parsedCount() }}</div>
-        <div class="counter-sub">number(s) ready</div>
+        <div class="counter-sub">{{ parsedCount() === 1 ? 'recipient ready' : 'recipients ready' }}</div>
       </mat-card>
 
       <mat-card class="guide-card">
@@ -97,7 +97,7 @@
         </div>
         @if (isSms()) {
           <ul class="guide-list">
-            <li>Numbers start with the country code, digits only — e.g. <code>8801700000001</code> (no "+")</li>
+            <li>Numbers start with the country code, digits only, for example <code>8801700000001</code> (no "+")</li>
             <li>Caller ID is optional; defaults to your account's registered sender ID</li>
             <li>Long messages split into 160-character segments automatically</li>
           </ul>
@@ -118,7 +118,7 @@
         }
         @if (isVoice()) {
           <ul class="guide-list">
-            <li>Only recipient numbers are required — the campaign is pre-configured in the voice provider</li>
+            <li>Only recipient numbers are required. The campaign is pre-configured in the voice provider</li>
             <li>Recipients receive an automated call; calls are placed in the order numbers appear</li>
           </ul>
         }
@@ -128,8 +128,8 @@
         <div class="reminder-row">
           <mat-icon class="reminder-icon">schedule</mat-icon>
           <div>
-            <div class="reminder-title">Async Processing</div>
-            <div class="reminder-text">Messages are queued and dispatched asynchronously. Track status in Message Logs.</div>
+            <div class="reminder-title">Sent in the Background</div>
+            <div class="reminder-text">Messages are queued and sent in the background. Track their status in Message Logs.</div>
           </div>
         </div>
       </mat-card>

@@ -31,7 +31,7 @@
           <div class="user-avatar">{{ userInitial() }}</div>
           <div class="user-meta">
             <div class="user-name">{{ u.name }}</div>
-            <div class="user-role">{{ u.role }}</div>
+            <div class="user-role">{{ roleLabel(u.role) }}</div>
           </div>
         </div>
       }
@@ -54,11 +54,11 @@
         @if (user(); as u) {
           <span class="user-info">
             <span class="username">{{ u.name }}</span>
-            <mat-chip class="role-chip" [disableRipple]="true">{{ u.role }}</mat-chip>
+            <mat-chip class="role-chip" [disableRipple]="true">{{ roleLabel(u.role) }}</mat-chip>
           </span>
         }
         <button mat-icon-button [matMenuTriggerFor]="backupMenu" [disabled]="downloading()"
-                matTooltip="Download DB backup" aria-label="Download DB backup">
+                matTooltip="Download backup" aria-label="Download backup">
           <mat-icon>cloud_download</mat-icon>
         </button>
         <mat-menu #backupMenu="matMenu">

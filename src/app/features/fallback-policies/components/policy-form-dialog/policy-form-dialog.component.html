@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Fallback Policy</h2>
+<h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Fallback Rule</h2>
 <mat-dialog-content>
   <form [formGroup]="form" class="policy-form">
     <mat-form-field appearance="outline" class="full">
@@ -30,7 +30,7 @@
       <textarea matInput formControlName="description" rows="2"></textarea>
     </mat-form-field>
 
-    <mat-checkbox formControlName="isGlobal">Global policy (applies to all channels)</mat-checkbox>
+    <mat-checkbox formControlName="isGlobal">Apply this rule to all channels</mat-checkbox>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

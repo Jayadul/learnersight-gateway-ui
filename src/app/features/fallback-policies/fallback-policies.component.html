@@ -1,6 +1,6 @@
 <div class="nzg-page">
-  <app-page-header title="Fallback Policies" [breadcrumbs]="[{ label: 'Configuration' }, { label: 'Fallback Policies' }]">
-    <button mat-flat-button color="primary" (click)="openCreate()"><mat-icon>add</mat-icon> Add Policy</button>
+  <app-page-header title="Fallback Rules" [breadcrumbs]="[{ label: 'Configuration' }, { label: 'Fallback Rules' }]">
+    <button mat-flat-button color="primary" (click)="openCreate()"><mat-icon>add</mat-icon> Add Rule</button>
   </app-page-header>
 
   <app-data-table
@@ -10,11 +10,11 @@
     [serverSide]="false"
     [rowActions]="rowActions"
     emptyIcon="alt_route"
-    emptyTitle="No fallback policies"
+    emptyTitle="No fallback rules yet"
     (actionClick)="onAction($event)">
     <ng-template appColumnDef="isGlobal" let-row>
       @if (row.isGlobal) {
-        <mat-chip class="global-chip" [disableRipple]="true">GLOBAL</mat-chip>
+        <mat-chip class="global-chip" [disableRipple]="true">All Channels</mat-chip>
       } @else { — }
     </ng-template>
     <ng-template appColumnDef="isActive" let-row>

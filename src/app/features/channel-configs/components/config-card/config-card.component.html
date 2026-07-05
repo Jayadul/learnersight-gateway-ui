@@ -5,7 +5,7 @@
       <mat-chip [disableRipple]="true" class="provider-chip">{{ config().providerName }}</mat-chip>
     </div>
     @if (config().isActive) {
-      <mat-chip class="active-chip" [disableRipple]="true">ACTIVE</mat-chip>
+      <mat-chip class="active-chip" [disableRipple]="true">Active</mat-chip>
     } @else {
       <app-status-badge status="Inactive" />
     }

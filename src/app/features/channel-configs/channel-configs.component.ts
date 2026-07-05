@@ -72,7 +72,7 @@ export class ChannelConfigsComponent implements OnInit {
     ref.afterClosed().subscribe((result) => {
       if (result?.mode === 'create') {
         this.service.create(result.body).subscribe(() => {
-          this.notify.success('Channel config created.');
+          this.notify.success('Channel created.');
           this.loadTab(this.activeTab());
         });
       }
@@ -87,7 +87,7 @@ export class ChannelConfigsComponent implements OnInit {
     ref.afterClosed().subscribe((result) => {
       if (result?.mode === 'update') {
         this.service.update(result.id, result.body).subscribe(() => {
-          this.notify.success('Channel config updated.');
+          this.notify.success('Channel updated.');
           this.loadTab(this.activeTab());
         });
       }
@@ -96,11 +96,11 @@ export class ChannelConfigsComponent implements OnInit {
 
   onActivate(config: ChannelConfigDto): void {
     this.confirm
-      .confirm({ title: 'Activate Config', message: `Activate "${config.label}"? This deactivates the current active config for this channel.`, confirmLabel: 'Activate' })
+      .confirm({ title: 'Activate Channel Settings', message: `Activate "${config.label}"? The currently active settings for this channel will be turned off.`, confirmLabel: 'Activate' })
       .subscribe((ok) => {
         if (ok) {
           this.service.activate(config.id).subscribe(() => {
-            this.notify.success('Channel config activated.');
+            this.notify.success('Channel activated.');
             this.loadTab(this.activeTab());
           });
         }
@@ -109,11 +109,11 @@ export class ChannelConfigsComponent implements OnInit {
 
   onDelete(config: ChannelConfigDto): void {
     this.confirm
-      .confirm({ title: 'Delete Config', message: `Delete "${config.label}"? This cannot be undone.`, confirmLabel: 'Delete' })
+      .confirm({ title: 'Delete Channel Settings', message: `Delete "${config.label}"? This cannot be undone.`, confirmLabel: 'Delete' })
       .subscribe((ok) => {
         if (ok) {
           this.service.remove(config.id).subscribe(() => {
-            this.notify.success('Channel config deleted.');
+            this.notify.success('Channel deleted.');
             this.loadTab(this.activeTab());
           });
         }

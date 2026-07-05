@@ -24,7 +24,7 @@
       </mat-form-field>
     } @else {
       <mat-form-field appearance="outline" class="full">
-        <mat-label>New Password (optional)</mat-label>
+        <mat-label>New Password (leave blank to keep current)</mat-label>
         <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="newPassword" />
         <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
           <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>

@@ -1,5 +1,5 @@
 <div class="nzg-page">
-  <app-page-header title="Gateway Simulator" [breadcrumbs]="[{ label: 'Settings' }, { label: 'Gateway Simulator' }]" />
+  <app-page-header title="Gateway Simulator" [breadcrumbs]="[{ label: 'Administration' }, { label: 'Gateway Simulator' }]" />
 
   <div class="doc-layout">
 
@@ -7,7 +7,7 @@
     <div class="doc-col">
 
       <mat-card class="doc-card">
-        <h2 class="doc-title">SendText — Integration Guide</h2>
+        <h2 class="doc-title">SendText Integration Guide</h2>
         <p class="doc-intro">
           Single endpoint for dispatching <strong>SMS</strong>, <strong>WhatsApp</strong> and
           <strong>Voice</strong> messages with automatic fallback. Share this page with any
@@ -23,8 +23,8 @@
         <table class="doc-table">
           <tbody>
             <tr><th>Content-Type</th><td><code>application/x-www-form-urlencoded</code></td></tr>
-            <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> form fields (issued by NetZero) — invalid or missing credentials are rejected</td></tr>
-            <tr><th>Processing</th><td>Asynchronous — the response confirms queuing, not delivery</td></tr>
+            <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> form fields (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
+            <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
           </tbody>
         </table>
 
@@ -52,7 +52,7 @@
             <tr>
               <td><code>secretkey</code></td>
               <td><span class="req">Required</span></td>
-              <td>Secret key issued by NetZero. Keep it confidential — server-side only, never in client-side code.</td>
+              <td>Secret key issued by NetZero. Keep it confidential. Use it server-side only, never in client-side code.</td>
             </tr>
             <tr>
               <td><code>callerID</code></td>
@@ -65,7 +65,7 @@
         <h3 class="doc-section">Channel Tags</h3>
         <p>
           Compose <code>messageContent</code> from one or more <code>[tag::content]</code> blocks.
-          Each tag creates one dispatch job — several tags may be combined in a single request.
+          Each tag creates one delivery. Several tags may be combined in a single request.
         </p>
         <table class="doc-table">
           <thead>
@@ -89,7 +89,7 @@
             </tr>
             <tr>
               <td><code>[wpmedia::TEXT||URL]</code></td>
-              <td>WhatsApp media — caption + public file URL</td>
+              <td>WhatsApp media (caption + public file URL)</td>
               <td><code>[wpmedia::Please review the invoice.||https://example.com/invoice.pdf]</code></td>
             </tr>
             <tr>
@@ -118,7 +118,7 @@
         </table>
         <pre class="code-block">{{ '{' }} "Status": "0", "Text": "ACCEPTD", "Message_ID": "3f6e5f2a-9c1d-4e8b-b2a7-1b2c3d4e5f60" {{ '}' }}</pre>
 
-        <h3 class="doc-section">Example — cURL</h3>
+        <h3 class="doc-section">Example (cURL)</h3>
         <div class="code-wrap">
           <pre class="code-block">{{ curlPreview() }}</pre>
           <app-copy-button class="code-copy" [value]="curlPreview()" />
@@ -132,10 +132,10 @@
       <mat-card class="sim-card">
         <div class="sim-heading">
           <mat-icon class="sim-icon">play_circle</mat-icon>
-          <span>Try it — live request</span>
+          <span>Try It (Live)</span>
         </div>
         <p class="sim-sub">Sends a real request to <code>POST /sendtext</code>. The apikey/secretkey are the ones from
-          <strong>Settings → Channel Configs → SMS</strong>; they are never pre-filled here.</p>
+          <strong>Configuration → Channels → SMS</strong>; they are never pre-filled here.</p>
 
         <form [formGroup]="form" (ngSubmit)="submit()">
           <mat-form-field appearance="outline" class="full">
@@ -165,15 +165,15 @@
             <mat-label>toUser</mat-label>
             <input matInput formControlName="toUser"
                    placeholder="8801700000001,8801700000002,8801700000003" />
-            <mat-hint>One or many — separate multiple numbers with commas, include country code. Every number receives every tagged message.</mat-hint>
+            <mat-hint>Enter one or more numbers separated by commas, with country code. Every number receives every tagged message.</mat-hint>
             <app-form-field-errors [control]="form.controls.toUser" />
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full">
             <mat-label>messageContent</mat-label>
             <textarea matInput formControlName="messageContent" rows="8"
-                      placeholder="[sms::TEXT] [wp::TEXT] [smswp::TEXT] [wpmedia::TEXT||MEDIA_URL] [call::CAMPAIGN_ID] — combine any of them"></textarea>
-            <mat-hint>The pre-filled example uses every tag — remove the ones you don't need</mat-hint>
+                      placeholder="[sms::TEXT] [wp::TEXT] [smswp::TEXT] [wpmedia::TEXT||MEDIA_URL] [call::CAMPAIGN_ID] (combine any of them)"></textarea>
+            <mat-hint>The pre-filled example uses every tag. Remove the ones you don't need.</mat-hint>
             <app-form-field-errors [control]="form.controls.messageContent" />
           </mat-form-field>
 
@@ -196,7 +196,7 @@
           <mat-divider class="sim-divider"></mat-divider>
           <div class="resp-heading" [class.resp-ok]="accepted()" [class.resp-fail]="!accepted()">
             <mat-icon>{{ accepted() ? 'check_circle' : 'error' }}</mat-icon>
-            <span>{{ accepted() ? 'Accepted — queued for dispatch' : 'Rejected' }}</span>
+            <span>{{ accepted() ? 'Accepted and queued' : 'Rejected' }}</span>
           </div>
           <div class="code-wrap">
             <pre class="code-block resp-block">{{ responseJson() }}</pre>

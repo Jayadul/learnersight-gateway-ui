@@ -9,13 +9,14 @@ import { ColumnDef, DataTableComponent } from '../../../../shared/components/dat
 import { StatusBadgeComponent } from '../../../../shared/components/status-badge/status-badge.component';
 import { ChannelTypePipe } from '../../../../shared/pipes/channel-type.pipe';
 import { MessageStatusPipe } from '../../../../shared/pipes/message-status.pipe';
+import { ChannelNamePipe } from '../../../../shared/pipes/channel-name.pipe';
 
 @Component({
   selector: 'app-message-detail-drawer',
   standalone: true,
   imports: [
     DatePipe, MatIconModule, MatButtonModule, MatChipsModule, DataTableComponent,
-    StatusBadgeComponent, ChannelTypePipe, MessageStatusPipe,
+    StatusBadgeComponent, ChannelTypePipe, MessageStatusPipe, ChannelNamePipe,
   ],
   templateUrl: './message-detail-drawer.component.html',
   styleUrl: './message-detail-drawer.component.scss',

@@ -99,9 +99,9 @@ export class SendTextApiComponent {
           this.loading.set(false);
           this.response.set(res);
           if (res.Status === '0') {
-            this.notify.success('Accepted — message queued for dispatch');
+            this.notify.success('Request accepted. Message queued for sending.');
           } else {
-            this.notify.error('Rejected by the gateway');
+            this.notify.error('Request rejected. Check the API key, secret key, and caller ID.');
           }
         },
         error: () => this.loading.set(false),

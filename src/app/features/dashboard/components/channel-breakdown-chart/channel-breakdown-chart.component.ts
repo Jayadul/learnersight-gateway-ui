@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import type { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ApexLegend, ApexPlotOptions } from 'ng-apexcharts';
 import { ChannelBreakdownDto } from '../../../../core/models/dashboard.model';
+import { channelNameLabel } from '../../../../shared/pipes/channel-name.pipe';
 
 @Component({
   selector: 'app-channel-breakdown-chart',
@@ -24,5 +25,5 @@ export class ChannelBreakdownChartComponent {
   readonly dataLabels: ApexDataLabels = { enabled: false };
   readonly legend: ApexLegend = { position: 'top' };
   readonly colors = ['#16a34a', '#dc2626'];
-  readonly xaxis = computed<ApexXAxis>(() => ({ categories: this.breakdown().map((b) => b.channelType) }));
+  readonly xaxis = computed<ApexXAxis>(() => ({ categories: this.breakdown().map((b) => channelNameLabel(b.channelType)) }));
 }

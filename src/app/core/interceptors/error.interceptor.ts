@@ -19,7 +19,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             // Sign-in handles its own 401; auth interceptor handles the rest.
             break;
           case 403:
-            notify.error('Access denied');
+            notify.error("You don't have permission to do this.");
             break;
           case 400:
           case 422:

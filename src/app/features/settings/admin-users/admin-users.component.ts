@@ -91,7 +91,7 @@ export class AdminUsersComponent implements OnInit {
 
   onDelete(user: Row): void {
     this.confirm
-      .confirm({ title: 'Delete User', message: `Delete "${user.username}"?`, confirmLabel: 'Delete' })
+      .confirm({ title: 'Delete User', message: `Delete "${user.username}"? This cannot be undone.`, confirmLabel: 'Delete' })
       .subscribe((ok) => {
         if (ok) {
           this.service.remove(user.id).subscribe(() => {

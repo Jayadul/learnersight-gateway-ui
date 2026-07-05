@@ -39,7 +39,7 @@ export class FallbackPoliciesComponent implements OnInit {
     { key: 'triggerChannel', header: 'Trigger', value: (r) => new ChannelTypePipe().transform(r.triggerChannel) },
     { key: 'fallbackChannel', header: 'Fallback', value: (r) => new ChannelTypePipe().transform(r.fallbackChannel) },
     { key: 'description', header: 'Description', value: (r) => r.description ?? '—' },
-    { key: 'isGlobal', header: 'Global', type: 'custom' },
+    { key: 'isGlobal', header: 'Applies to All', type: 'custom' },
     { key: 'isActive', header: 'Active', type: 'custom' },
   ];
 
@@ -76,7 +76,7 @@ export class FallbackPoliciesComponent implements OnInit {
     ref.afterClosed().subscribe((result) => {
       if (result?.mode === 'create') {
         this.service.create(result.body).subscribe(() => {
-          this.notify.success('Policy created.');
+          this.notify.success('Rule created.');
           this.load();
         });
       }
@@ -88,7 +88,7 @@ export class FallbackPoliciesComponent implements OnInit {
     ref.afterClosed().subscribe((result) => {
       if (result?.mode === 'update') {
         this.service.update(result.id, result.body).subscribe(() => {
-          this.notify.success('Policy updated.');
+          this.notify.success('Rule updated.');
           this.load();
         });
       }
@@ -97,18 +97,18 @@ export class FallbackPoliciesComponent implements OnInit {
 
   toggleActive(policy: Row): void {
     this.service.toggleActive(policy.id).subscribe(() => {
-      this.notify.success(`Policy ${policy.isActive ? 'deactivated' : 'activated'}.`);
+      this.notify.success(`Rule ${policy.isActive ? 'deactivated' : 'activated'}.`);
       this.load();
     });
   }
 
   onDelete(policy: Row): void {
     this.confirm
-      .confirm({ title: 'Delete Policy', message: `Delete "${policy.name}"?`, confirmLabel: 'Delete' })
+      .confirm({ title: 'Delete Rule', message: `Delete "${policy.name}"? This cannot be undone.`, confirmLabel: 'Delete' })
       .subscribe((ok) => {
         if (ok) {
           this.service.remove(policy.id).subscribe(() => {
-            this.notify.success('Policy deleted.');
+            this.notify.success('Rule deleted.');
             this.load();
           });
         }

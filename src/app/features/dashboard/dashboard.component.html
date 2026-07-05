@@ -1,7 +1,7 @@
 <div class="nzg-page dashboard">
   <app-page-header title="Dashboard" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Dashboard' }]">
     <div class="refresh-indicator">
-      <span class="refresh-label">Auto-refresh in</span>
+      <span class="refresh-label">Refreshes in</span>
       <span class="refresh-count">{{ countdownLabel() }}</span>
       <button mat-icon-button (click)="refreshNow()" [disabled]="loading()"
               matTooltip="Refresh now" aria-label="Refresh now">

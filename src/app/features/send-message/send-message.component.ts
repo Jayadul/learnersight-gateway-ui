@@ -105,7 +105,7 @@ export class SendMessageComponent {
     this.service.send(body).subscribe({
       next: (res) => {
         this.loading.set(false);
-        this.notify.success(`Message accepted — Request ID: ${res.messageRequestId}`);
+        this.notify.success(`Message queued. Request ID: ${res.messageRequestId}`);
         this.form.reset({ channelType: v.channelType });
       },
       error: () => this.loading.set(false),

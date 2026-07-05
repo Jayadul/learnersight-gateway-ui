@@ -52,7 +52,7 @@ export class DispatchLogsComponent implements OnInit {
     { key: 'channelType', header: 'Channel', value: (r) => new ChannelTypePipe().transform(r.channelType) },
     { key: 'toNumber', header: 'Number' },
     { key: 'status', header: 'Status', type: 'badge', badgeType: 'job' },
-    { key: 'providerRawResponse', header: 'Provider Response', truncate: 60, value: (r) => r.providerRawResponse ?? '—' },
+    { key: 'providerRawResponse', header: 'Provider Reply', truncate: 60, value: (r) => r.providerRawResponse ?? '—' },
     { key: 'isFallback', header: 'Fallback', type: 'custom', width: '90px' },
     { key: 'sentAt', header: 'Sent At', type: 'datetime' },
   ];

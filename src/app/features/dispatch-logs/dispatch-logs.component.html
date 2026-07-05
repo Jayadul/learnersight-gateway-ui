@@ -1,5 +1,5 @@
 <div class="nzg-page">
-  <app-page-header title="Dispatch Logs" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Dispatch Logs' }]" />
+  <app-page-header title="Delivery Logs" [breadcrumbs]="[{ label: 'Monitoring' }, { label: 'Delivery Logs' }]" />
 
   <app-filter-bar [controls]="filters" (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
 
@@ -11,13 +11,13 @@
     [pageIndex]="state.pageIndex()"
     [pageSize]="state.pageSize()"
     emptyIcon="send"
-    emptyTitle="No dispatch jobs"
-    emptySubtitle="No jobs have been dispatched yet."
+    emptyTitle="No deliveries yet"
+    emptySubtitle="Nothing has been sent yet."
     (pageChange)="state.setPage($event)"
     (sortChange)="state.setSort($event)">
     <ng-template appColumnDef="isFallback" let-row>
       @if (row.isFallback) {
-        <mat-chip class="fallback-chip" [disableRipple]="true">FALLBACK</mat-chip>
+        <mat-chip class="fallback-chip" [disableRipple]="true">Fallback</mat-chip>
       } @else { — }
     </ng-template>
   </app-data-table>

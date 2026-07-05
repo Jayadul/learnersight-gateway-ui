@@ -8,6 +8,7 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 import { FilterBarComponent, FilterControl } from '../../shared/components/filter-bar/filter-bar.component';
 import { ColumnDef, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
 import { MessageDetailDrawerComponent } from './components/message-detail-drawer/message-detail-drawer.component';
+import { channelNameLabel } from '../../shared/pipes/channel-name.pipe';
 
 type Row = MessageRequestDto;
 
@@ -47,7 +48,7 @@ export class MessageLogsComponent implements OnInit {
   readonly columns: ColumnDef<Row>[] = [
     { key: 'receivedAt', header: 'Time', type: 'datetime', sortable: true },
     { key: 'toUser', header: 'To' },
-    { key: 'parsedChannels', header: 'Channels', type: 'chips' },
+    { key: 'parsedChannels', header: 'Channels', type: 'chips', value: (r) => r.parsedChannels.map(channelNameLabel) },
     { key: 'overallStatus', header: 'Status', type: 'badge', badgeType: 'message' },
   ];
 
