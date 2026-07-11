@@ -55,6 +55,17 @@ browser scrolls the bottom button into view). No side drawers.
 - Delete confirmations always warn "This cannot be undone."
 - Dashboard: 15-min auto-refresh + icon-only refresh button (client-specified).
 
+## Dates & times (project standard — see backend `docs/conventions.md`)
+
+- Backend stores/returns UTC. The UI always DISPLAYS Dhaka time (UTC+6) regardless of
+  the browser zone: `DATE_PIPE_DEFAULT_OPTIONS` in `app.config.ts` covers every
+  `| date` pipe (never pass a per-usage timezone to the pipe).
+- Manual formatting (charts, `toLocaleDateString`) must pass
+  `timeZone: APP_TIMEZONE` from `core/time/app-time.ts` — the only file allowed to
+  name the zone/offset.
+- Datepicker filters convert to UTC ISO in `BaseCrudService.buildParams` — keep new
+  filters on that path.
+
 ## Mock mode
 
 `environment.mock: true` answers all HTTP from `assets/mock.json` via

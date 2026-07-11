@@ -36,3 +36,5 @@ per route · `shared/` reusable components/pipes/directives · `layout/` app she
 - Surgical edits; read only whats needed; never regenerate unchanged files.
 - Token persistence, JWT lifetimes, phone format, no-breadcrumbs: client decisions —
   don't change without team-lead approval.
+- **Time**: display Dhaka (UTC+6) everywhere via `DATE_PIPE_DEFAULT_OPTIONS` +
+  `core/time/app-time.ts`; never hardcode offsets (see `docs/frontend.md`).
