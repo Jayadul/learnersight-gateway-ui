@@ -48,6 +48,11 @@ export const routes: Routes = [
           import('./features/send-message/send-message.component').then((m) => m.SendMessageComponent),
       },
       {
+        path: 'media',
+        loadComponent: () =>
+          import('./features/media-library/media-library.component').then((m) => m.MediaLibraryComponent),
+      },
+      {
         path: 'settings/gateway-simulator',
         loadComponent: () =>
           import('./features/sendtext-api/sendtext-api.component').then((m) => m.SendTextApiComponent),

@@ -1,0 +1,57 @@
+<div class="nzg-page">
+  <app-page-header
+    title="Media Library"
+    subtitle="Upload files and share their public links in your messages" />
+
+  <mat-card class="upload-card">
+    <h3 class="upload-title">Upload a File</h3>
+    <form [formGroup]="form" class="upload-form">
+      <input #fileInput type="file" hidden (change)="onFileChosen($event)" />
+
+      <button mat-stroked-button type="button" class="choose-btn" (click)="fileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+        {{ selectedFile()?.name ?? 'Choose File' }}
+      </button>
+
+      <mat-form-field appearance="outline" class="name-field">
+        <mat-label>File Name (optional)</mat-label>
+        <input matInput formControlName="customName"
+               (input)="onNameInput($any($event.target).value)" />
+        <mat-hint>Leave empty to keep the original name</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="expiry-field">
+        <mat-label>Keep For (days)</mat-label>
+        <input matInput type="number" formControlName="expiryDays" min="1" max="3650" />
+        <app-form-field-errors [control]="form.controls.expiryDays" />
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="button" class="upload-btn"
+              [disabled]="uploading() || !selectedFile()" (click)="upload()">
+        <mat-icon>upload</mat-icon>
+        {{ uploading() ? 'Uploading…' : 'Upload' }}
+      </button>
+    </form>
+
+    @if (linkNamePreview()) {
+      <p class="link-preview">The file will be shared as <strong>{{ linkNamePreview() }}</strong></p>
+    }
+  </mat-card>
+
+  <app-filter-bar [controls]="filters" (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
+
+  <app-data-table
+    [columns]="columns"
+    [data]="state.data()"
+    [totalCount]="state.totalCount()"
+    [loading]="state.loading()"
+    [pageIndex]="state.pageIndex()"
+    [pageSize]="state.pageSize()"
+    [rowActions]="rowActions"
+    emptyIcon="perm_media"
+    emptyTitle="No files yet"
+    emptySubtitle="Upload your first file to get a public link you can use in messages"
+    (pageChange)="state.setPage($event)"
+    (sortChange)="state.setSort($event)"
+    (actionClick)="onAction($event)" />
+</div>

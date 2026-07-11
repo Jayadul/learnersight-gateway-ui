@@ -1,0 +1,43 @@
+.upload-card {
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.upload-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.upload-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.choose-btn {
+  height: 56px;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.name-field {
+  flex: 1 1 240px;
+}
+
+.expiry-field {
+  width: 160px;
+}
+
+.upload-btn {
+  height: 56px;
+}
+
+.link-preview {
+  margin: 4px 0 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+}
