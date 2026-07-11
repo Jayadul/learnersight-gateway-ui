@@ -1,0 +1,62 @@
+# Frontend Standards & Patterns
+
+Load this when: building/altering UI features, reviewing UI code, or styling.
+
+## Shared primitives — always reuse, never rebuild
+
+| Primitive | Use for |
+|---|---|
+| `shared/components/data-table` | every table; config-driven `ColumnDef[]`; `type:'custom'` cells **require `ColumnDefDirective` in the page's `imports`** or cells render blank |
+| `shared/components/filter-bar` | list filters (text / select / dateRange) |
+| `core/state/list-state.ts` | signal-based paged list state |
+| `core/api/base-crud.service.ts` | feature services set only `resourcePath` |
+| `shared/components/*` | page-header (title+subtitle), status-badge, empty-state, confirm-dialog (`ConfirmService`), form-field-errors, copy-button |
+| `shared/pipes` | `channelType` (enum int → label), `channelName` (string → label), message-status |
+
+Feature recipe: model (`core/models/*.model.ts`, all `readonly`, names from
+`postman/*.json`) → service (extend BaseCrudService) → thin page over the primitives.
+Every feature is lazy-loaded in `app.routes.ts`.
+
+## Angular rules
+
+- Standalone components only; `inject()` (never constructor DI); OnPush everywhere.
+- Signals for local state; `computed()` for derived values; RxJS only for HTTP.
+- Reactive forms only; validation messages via `core/forms/validation-messages.ts`
+  (add new validator keys there once — every form picks them up).
+- `takeUntilDestroyed(this.destroyRef)` for subscriptions made outside injection context.
+- TypeScript strict, no `any`. Enums arrive as integers (see backend `docs/api.md`).
+
+## Auth (client-approved decisions — don't relitigate)
+
+- Tokens persist in localStorage (`nzg.accessToken`/`nzg.refreshToken`); session must
+  survive reload; XSS tradeoff accepted 2026-07.
+- Auth interceptor: single shared in-flight refresh, retry-once, skips `/api/auth/*`.
+- Error interceptor reads ProblemDetails `detail`/`message`/`title`; 403 → permission
+  toast, 5xx → generic toast, 401 → refresh/logout path.
+
+## Dialogs (the only modal pattern)
+
+All view/edit interactions are MatDialog, width `880px` (view) or `480px` (form),
+`maxWidth: '95vw'`. Views: `mat-dialog-title` + content + right-aligned Close. Forms:
+Cancel + Save. Dialogs whose content loads async: `autoFocus: 'dialog'` (else the
+browser scrolls the bottom button into view). No side drawers.
+
+## UX & copy (ClickUp-inspired, established in R1 review)
+
+- Dark navy sidebar, white content, mat-cards with 24px padding, Inter font.
+- Page header: title + one-line subtitle; **no breadcrumbs** (removed by client request).
+- Status-style values use `status-badge` (`Active`/`Inactive`, `Yes`/`No`) — never
+  ad-hoc chips. On/off inputs are `mat-slide-toggle` — never checkboxes.
+- Copy: simple customer language; no dev jargon (config, async, dispatch), no raw enum
+  values (map `WP_Text` → "WhatsApp Text"), no em dashes, Title Case labels,
+  sentence-case messages. Phones: digits with country code, no `+` (`8801700000001`).
+- Empty states: friendly title + hint, never blank. Toasts: bottom, success green /
+  error red; error text must say what to do next.
+- Delete confirmations always warn "This cannot be undone."
+- Dashboard: 15-min auto-refresh + icon-only refresh button (client-specified).
+
+## Mock mode
+
+`environment.mock: true` answers all HTTP from `assets/mock.json` via
+`mock.interceptor.ts` — no component knows about it. Keep mock.json aligned with API
+changes or mock mode drifts.
