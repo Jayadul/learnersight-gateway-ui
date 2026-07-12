@@ -75,7 +75,6 @@ export class MediaLibraryComponent implements OnInit {
     { key: 'sizeBytes', header: 'Size', value: (r) => this.formatSize(r.sizeBytes) },
     { key: 'uploadedAt', header: 'Uploaded', type: 'datetime' },
     { key: 'expiresAt', header: 'Expires', type: 'date' },
-    { key: 'status', header: 'Status', type: 'badge', value: (r) => this.statusLabel(r) },
     { key: 'publicUrl', header: 'Public Link', truncate: 45 },
   ];
 
@@ -199,13 +198,6 @@ export class MediaLibraryComponent implements OnInit {
       case 'zip': return 'folder_zip';
       default: return 'insert_drive_file';
     }
-  }
-
-  private statusLabel(row: Row): string {
-    if (row.status === MediaStatus.Deleted) {
-      return 'Deleted';
-    }
-    return new Date(row.expiresAt) <= new Date() ? 'Expired' : 'Active';
   }
 
   private formatSize(bytes: number): string {
