@@ -26,7 +26,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/logs/dispatch': 'Delivery Logs',
   '/logs/api': 'API Logs',
   '/send': 'Messages & Calls',
-  '/media': 'Media Library',
+  '/media-library': 'Media Library',
   '/settings/gateway-simulator': 'Gateway Simulator',
   '/settings/channels': 'Channels',
   '/settings/fallback': 'Fallback Rules',
@@ -104,7 +104,7 @@ export class MainLayoutComponent implements OnInit {
       title: 'Messaging',
       items: [
         { label: 'Messages & Calls', icon: 'send_to_mobile', route: '/send' },
-        { label: 'Media Library', icon: 'perm_media', route: '/media' },
+        { label: 'Media Library', icon: 'perm_media', route: '/media-library' },
       ],
     },
     {

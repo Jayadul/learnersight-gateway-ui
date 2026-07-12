@@ -48,7 +48,10 @@ export const routes: Routes = [
           import('./features/send-message/send-message.component').then((m) => m.SendMessageComponent),
       },
       {
-        path: 'media',
+        // NOT '/media' — that namespace belongs to the public file links served
+        // through nginx (/media/{slug}); a same-origin SPA route there would be
+        // 301-redirected into the API and blank the page on reload.
+        path: 'media-library',
         loadComponent: () =>
           import('./features/media-library/media-library.component').then((m) => m.MediaLibraryComponent),
       },
