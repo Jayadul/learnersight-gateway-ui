@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import type { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ApexStroke, ApexFill } from 'ng-apexcharts';
 import { TimelinePointDto } from '../../../../core/models/dashboard.model';
+import { APP_TIMEZONE } from '../../../../core/time/app-time';
 
 @Component({
   selector: 'app-timeline-chart',
@@ -24,6 +25,7 @@ export class TimelineChartComponent {
   readonly fill: ApexFill = { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05 } };
   readonly colors = ['#2563eb'];
   readonly xaxis = computed<ApexXAxis>(() => ({
-    categories: this.points().map((p) => new Date(p.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })),
+    categories: this.points().map((p) =>
+      new Date(p.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', timeZone: APP_TIMEZONE })),
   }));
 }
