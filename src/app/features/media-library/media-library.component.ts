@@ -13,7 +13,7 @@ import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm.service';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { FilterBarComponent, FilterControl } from '../../shared/components/filter-bar/filter-bar.component';
-import { ColumnDef, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
+import { ColumnDef, ColumnDefDirective, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
 import { FormFieldErrorsComponent } from '../../shared/components/form-field-errors/form-field-errors.component';
 
 type Row = MediaFileDto;
@@ -24,7 +24,7 @@ type Row = MediaFileDto;
   imports: [
     ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule,
     MatInputModule, PageHeaderComponent, FilterBarComponent, DataTableComponent,
-    FormFieldErrorsComponent,
+    ColumnDefDirective, FormFieldErrorsComponent,
   ],
   templateUrl: './media-library.component.html',
   styleUrl: './media-library.component.scss',
@@ -69,6 +69,7 @@ export class MediaLibraryComponent implements OnInit {
   ];
 
   readonly columns: ColumnDef<Row>[] = [
+    { key: 'thumbnail', header: '', type: 'custom', width: '56px' },
     { key: 'storedFileName', header: 'File Name', truncate: 40 },
     { key: 'extension', header: 'Type', type: 'chip', value: (r) => r.extension.toUpperCase() },
     { key: 'sizeBytes', header: 'Size', value: (r) => this.formatSize(r.sizeBytes) },
@@ -82,7 +83,7 @@ export class MediaLibraryComponent implements OnInit {
     { action: 'copy', icon: 'content_copy', tooltip: 'Copy link', color: 'primary' },
     { action: 'preview', icon: 'visibility', tooltip: 'Preview', color: 'primary' },
     { action: 'download', icon: 'download', tooltip: 'Download', color: 'primary' },
-    { action: 'delete', icon: 'delete', tooltip: 'Delete', color: 'warn', show: (r) => r.status !== MediaStatus.Deleted },
+    { action: 'delete', icon: 'delete', tooltip: 'Delete', color: 'warn' },
   ];
 
   ngOnInit(): void {
@@ -138,11 +139,7 @@ export class MediaLibraryComponent implements OnInit {
         });
         break;
       case 'preview':
-        if (this.isPreviewable(e.row)) {
-          window.open(e.row.publicUrl, '_blank', 'noopener');
-        } else {
-          this.download(e.row); // no in-browser preview for this type
-        }
+        window.open(e.row.publicUrl, '_blank', 'noopener');
         break;
       case 'download':
         this.download(e.row);
@@ -174,22 +171,34 @@ export class MediaLibraryComponent implements OnInit {
     a.click();
   }
 
-  /** Types browsers can render in a tab; everything else falls back to download. */
-  private isPreviewable(row: Row): boolean {
-    const type = row.contentType.toLowerCase();
-    return type.startsWith('image/') || type.startsWith('video/')
-      || type.startsWith('audio/') || type.startsWith('text/')
-      || type === 'application/pdf';
-  }
-
   private resetForm(): void {
     this.selectedFile.set(null);
     this.customName.set('');
     this.form.reset({ customName: '', expiryDays: 90 });
   }
 
-  private isAvailable(row: Row): boolean {
+  isImage(row: Row): boolean {
+    return row.contentType.toLowerCase().startsWith('image/');
+  }
+
+  isAvailable(row: Row): boolean {
     return row.status === MediaStatus.Active && new Date(row.expiresAt) > new Date();
+  }
+
+  /** Placeholder icon for the thumbnail column when there is no image to show. */
+  fileIcon(row: Row): string {
+    const type = row.contentType.toLowerCase();
+    if (type.startsWith('image/')) return 'image';
+    if (type.startsWith('video/')) return 'movie';
+    if (type.startsWith('audio/')) return 'audiotrack';
+    if (type === 'application/pdf') return 'picture_as_pdf';
+    switch (row.extension.toLowerCase()) {
+      case 'doc': case 'docx': case 'txt': return 'description';
+      case 'xls': case 'xlsx': case 'csv': return 'table_chart';
+      case 'ppt': case 'pptx': return 'slideshow';
+      case 'zip': return 'folder_zip';
+      default: return 'insert_drive_file';
+    }
   }
 
   private statusLabel(row: Row): string {

@@ -53,5 +53,13 @@
     emptySubtitle="Upload your first file to get a public link you can use in messages"
     (pageChange)="state.setPage($event)"
     (sortChange)="state.setSort($event)"
-    (actionClick)="onAction($event)" />
+    (actionClick)="onAction($event)">
+    <ng-template appColumnDef="thumbnail" let-row>
+      @if (isImage(row) && isAvailable(row)) {
+        <img class="thumb" [src]="row.publicUrl" alt="" loading="lazy" />
+      } @else {
+        <mat-icon class="thumb-icon">{{ fileIcon(row) }}</mat-icon>
+      }
+    </ng-template>
+  </app-data-table>
 </div>

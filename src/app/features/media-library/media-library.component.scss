@@ -41,3 +41,20 @@
   color: rgba(0, 0, 0, 0.6);
   font-size: 13px;
 }
+
+.thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.thumb-icon {
+  color: #64748b;
+  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
