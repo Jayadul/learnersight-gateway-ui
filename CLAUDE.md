@@ -24,6 +24,9 @@ ng g c features/<name>/<name> --standalone --change-detection OnPush
 | Shipping (images + git) | backend `docs/release-process.md` |
 | Collaboration/autonomy rules | backend `docs/claude/workflow.md` |
 
+Skills in this repo's `.claude/skills/`: `angular-feature` (feature recipe),
+`ui-consistency-review` (customer-lens copy audit). Prefer them over ad-hoc prompts.
+
 ## Structure (one line)
 
 `core/` singletons (auth, interceptors, models, api base) · `features/` one lazy folder
