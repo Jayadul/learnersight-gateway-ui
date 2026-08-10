@@ -4,12 +4,24 @@
       <h4>{{ config().label }}</h4>
       <mat-chip [disableRipple]="true" class="provider-chip">{{ config().providerName }}</mat-chip>
     </div>
-    @if (config().isActive) {
-      <mat-chip class="active-chip" [disableRipple]="true">Active</mat-chip>
-    } @else {
-      <app-status-badge status="Inactive" />
-    }
+    <div class="state-chips">
+      @if (config().isDefault) {
+        <mat-chip class="default-chip" [disableRipple]="true"
+                  matTooltip="Messages without a channel label are sent through this channel">Default</mat-chip>
+      }
+      @if (config().isActive) {
+        <mat-chip class="active-chip" [disableRipple]="true">Active</mat-chip>
+      } @else {
+        <app-status-badge status="Inactive" />
+      }
+    </div>
   </div>
+
+  <!-- The slug is what integrators put in a tag, so it must be visible and copyable. -->
+  <p class="slug-line">
+    Channel label
+    <code class="slug" [matTooltip]="tagExample()">{{ config().labelSlug }}</code>
+  </p>
 
   <p class="created">Created {{ config().createdAt | date: 'medium' }}</p>
 
@@ -17,12 +29,25 @@
     <button mat-icon-button color="primary" matTooltip="Edit" (click)="edit.emit(config())">
       <mat-icon>edit</mat-icon>
     </button>
-    @if (!config().isActive) {
+    @if (!config().isDefault) {
+      <button mat-icon-button color="primary" matTooltip="Make default"
+              (click)="setDefault.emit(config())">
+        <mat-icon>star</mat-icon>
+      </button>
+    }
+    @if (config().isActive) {
+      <!-- The default cannot be switched off; promote another channel first. -->
+      <button mat-icon-button matTooltip="Deactivate"
+              [disabled]="config().isDefault" (click)="deactivate.emit(config())">
+        <mat-icon>pause_circle</mat-icon>
+      </button>
+    } @else {
       <button mat-icon-button color="accent" matTooltip="Activate" (click)="activate.emit(config())">
         <mat-icon>check_circle</mat-icon>
       </button>
     }
-    <button mat-icon-button color="warn" matTooltip="Delete" (click)="delete.emit(config())">
+    <button mat-icon-button color="warn" matTooltip="Delete"
+            [disabled]="config().isDefault" (click)="delete.emit(config())">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

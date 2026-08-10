@@ -71,6 +71,10 @@ export class ConfigFormDialogComponent {
   private buildForm() {
     const group: Record<string, unknown> = {
       label: [this.data.config?.label ?? '', Validators.required],
+      // Optional: the backend derives one from the label when left blank. The pattern
+      // mirrors the server rule -- lowercase alphanumeric, no hyphens, because the
+      // combined tag form splits on "-wp_label:".
+      labelSlug: [this.data.config?.labelSlug ?? '', Validators.pattern(/^[a-z0-9]*$/)],
       providerName: [this.data.config?.providerName ?? '', Validators.required],
     };
     for (const f of this.providerFields) {
@@ -109,6 +113,7 @@ export class ConfigFormDialogComponent {
     if (this.isEdit) {
       const body: UpdateChannelConfigRequest = {
         label: raw['label'],
+        ...(raw['labelSlug']?.trim() ? { labelSlug: raw['labelSlug'].trim() } : {}),
         providerName: raw['providerName'],
         configJson,
       };
@@ -117,6 +122,7 @@ export class ConfigFormDialogComponent {
       const body: CreateChannelConfigRequest = {
         channelType: this.data.channelType,
         label: raw['label'],
+        ...(raw['labelSlug']?.trim() ? { labelSlug: raw['labelSlug'].trim() } : {}),
         providerName: raw['providerName'],
         configJson,
       };

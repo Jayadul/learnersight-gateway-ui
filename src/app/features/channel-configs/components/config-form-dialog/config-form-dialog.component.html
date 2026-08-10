@@ -8,6 +8,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full">
+      <mat-label>Channel Label (for message tags)</mat-label>
+      <input matInput formControlName="labelSlug" placeholder="e.g. revemain" />
+      <mat-hint>Lowercase letters and numbers only. Used to send to this exact channel, for example [sms_label:revemain::your message]. Leave empty to generate one from the name above.</mat-hint>
+      <app-form-field-errors [control]="control('labelSlug')" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full">
       <mat-label>Provider Name</mat-label>
       <input matInput formControlName="providerName" />
       <app-form-field-errors [control]="control('providerName')" />

@@ -18,7 +18,9 @@
         <div class="cards-grid">
           @for (config of configs(); track config.id) {
             <app-config-card [config]="config"
-                             (edit)="onEdit($event)" (activate)="onActivate($event)" (delete)="onDelete($event)" />
+                             (edit)="onEdit($event)" (activate)="onActivate($event)"
+                             (deactivate)="onDeactivate($event)" (setDefault)="onSetDefault($event)"
+                             (delete)="onDelete($event)" />
           }
         </div>
       }

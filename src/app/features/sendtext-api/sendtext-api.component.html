@@ -97,6 +97,29 @@
               <td>Voice call (pre-configured campaign)</td>
               <td><code>[call::due-bill-api]</code></td>
             </tr>
+            <tr class="section-row">
+              <td colspan="3"><strong>Sending through a specific channel</strong> — use the channel label shown on each channel in Settings &rsaquo; Channels. Without a label, the default channel for that type is used.</td>
+            </tr>
+            <tr>
+              <td><code>[sms_label:SLUG::TEXT]</code></td>
+              <td>SMS through the channel with this label</td>
+              <td><code>[sms_label:revemain::Your OTP is 123456]</code></td>
+            </tr>
+            <tr>
+              <td><code>[wp_label:SLUG::TEXT]</code></td>
+              <td>WhatsApp through the channel with this label</td>
+              <td><code>[wp_label:watrendmain::Your appointment is confirmed.]</code></td>
+            </tr>
+            <tr>
+              <td><code>[sms_label:A-wp_label:B::TEXT]</code></td>
+              <td>SMS <em>and</em> WhatsApp, each through a named channel</td>
+              <td><code>[sms_label:revemain-wp_label:watrendmain::Big sale this weekend!]</code></td>
+            </tr>
+            <tr>
+              <td><code>[call_label:SLUG::CAMPAIGN_ID]</code></td>
+              <td>Voice call through the channel with this label</td>
+              <td><code>[call_label:voicemain::due-bill-api]</code></td>
+            </tr>
             <tr>
               <td><em>(no tag)</em></td>
               <td>Plain SMS with the full content</td>
