@@ -1,5 +1,5 @@
 export interface ManualSendRequest {
-  readonly channelType: number; // wire format: integer enum (SMS=0, WP_Text=1, WP_Media=2, Voice=3)
+  readonly channelType: number; // wire format: integer enum (SMS=0, WP=1, Voice=3; 2 retired)
   readonly toNumbers: string;
   readonly message?: string; // not used for Voice (campaign is pre-configured)
   readonly mediaUrl?: string; // WhatsApp Media only

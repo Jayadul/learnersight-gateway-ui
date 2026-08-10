@@ -48,8 +48,7 @@ export class ConfigFormDialogComponent {
           { key: 'callerID', label: 'Caller ID' },
           { key: 'baseUrl', label: 'Base URL' },
         ];
-      case ChannelType.WP_Text:
-      case ChannelType.WP_Media:
+      case ChannelType.WP:
         return [
           { key: 'instance_id', label: 'Instance ID' },
           { key: 'access_token', label: 'Access Token', password: true },

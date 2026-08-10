@@ -52,10 +52,9 @@ export class SendMessageComponent {
     initialValue: this.form.controls.toNumbers.value,
   });
 
-  readonly isVoice  = computed(() => this.selectedChannel() === ChannelType.Voice);
-  readonly isMedia  = computed(() => this.selectedChannel() === ChannelType.WP_Media);
-  readonly isSms    = computed(() => this.selectedChannel() === ChannelType.SMS);
-  readonly isWpText = computed(() => this.selectedChannel() === ChannelType.WP_Text);
+  readonly isVoice = computed(() => this.selectedChannel() === ChannelType.Voice);
+  readonly isSms   = computed(() => this.selectedChannel() === ChannelType.SMS);
+  readonly isWp    = computed(() => this.selectedChannel() === ChannelType.WP);
 
   readonly parsedCount = computed(() => {
     const raw = this.toNumbersRaw() ?? '';
@@ -67,9 +66,10 @@ export class SendMessageComponent {
       const media   = this.form.controls.mediaUrl;
       const message = this.form.controls.message;
 
-      // Media URL — required only for WhatsApp Media
-      if (channel === ChannelType.WP_Media) {
-        media.setValidators([Validators.required, urlValidator]);
+      // Media URL — optional on WhatsApp (a URL turns the send into a media message),
+      // and not offered at all on the other channels.
+      if (channel === ChannelType.WP) {
+        media.setValidators([urlValidator]);
       } else {
         media.clearValidators();
         media.setValue('');
@@ -95,10 +95,12 @@ export class SendMessageComponent {
     }
     const v = this.form.getRawValue();
     const body: ManualSendRequest = {
-      channelType: v.channelType, // numeric enum value — backend expects integer (SMS=0, WP_Text=1, ...)
+      channelType: v.channelType, // numeric enum value — backend expects integer (SMS=0, WP=1, Voice=3)
       toNumbers:   v.toNumbers,
       ...(v.channelType !== ChannelType.Voice && { message: v.message }),
-      ...(v.channelType === ChannelType.WP_Media && { mediaUrl: v.mediaUrl }),
+      // Only send mediaUrl when one was actually entered — its presence is what makes
+      // the backend dispatch this as WhatsApp media rather than text.
+      ...(v.channelType === ChannelType.WP && v.mediaUrl.trim() !== '' && { mediaUrl: v.mediaUrl }),
     };
 
     this.loading.set(true);

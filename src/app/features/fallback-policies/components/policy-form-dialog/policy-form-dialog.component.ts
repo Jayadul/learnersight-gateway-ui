@@ -37,8 +37,7 @@ export class PolicyFormDialogComponent {
 
   readonly channels = [
     { label: 'SMS', value: ChannelType.SMS },
-    { label: 'WhatsApp Text', value: ChannelType.WP_Text },
-    { label: 'WhatsApp Media', value: ChannelType.WP_Media },
+    { label: 'WhatsApp', value: ChannelType.WP },
     { label: 'Voice', value: ChannelType.Voice },
   ];
 
@@ -46,7 +45,7 @@ export class PolicyFormDialogComponent {
     {
       name: [this.data.policy?.name ?? '', Validators.required],
       triggerChannel: [this.data.policy?.triggerChannel ?? ChannelType.SMS, Validators.required],
-      fallbackChannel: [this.data.policy?.fallbackChannel ?? ChannelType.WP_Text, Validators.required],
+      fallbackChannel: [this.data.policy?.fallbackChannel ?? ChannelType.WP, Validators.required],
       isGlobal: [this.data.policy?.isGlobal ?? false],
       isActive: [this.data.policy?.isActive ?? false],
       description: [this.data.policy?.description ?? ''],

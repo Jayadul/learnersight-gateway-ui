@@ -35,8 +35,7 @@ export class ChannelConfigsComponent implements OnInit {
 
   readonly tabs: TabDef[] = [
     { label: 'SMS', channelType: ChannelType.SMS },
-    { label: 'WhatsApp Text', channelType: ChannelType.WP_Text },
-    { label: 'WhatsApp Media', channelType: ChannelType.WP_Media },
+    { label: 'WhatsApp', channelType: ChannelType.WP },
     { label: 'Voice', channelType: ChannelType.Voice },
   ];
 

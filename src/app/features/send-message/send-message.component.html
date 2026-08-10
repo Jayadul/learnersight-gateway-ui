@@ -13,11 +13,8 @@
           <mat-button-toggle [value]="ChannelType.SMS">
             <mat-icon>sms</mat-icon> SMS
           </mat-button-toggle>
-          <mat-button-toggle [value]="ChannelType.WP_Text">
+          <mat-button-toggle [value]="ChannelType.WP">
             <mat-icon>chat</mat-icon> WhatsApp
-          </mat-button-toggle>
-          <mat-button-toggle [value]="ChannelType.WP_Media">
-            <mat-icon>perm_media</mat-icon> WhatsApp Media
           </mat-button-toggle>
           <mat-button-toggle [value]="ChannelType.Voice">
             <mat-icon>record_voice_over</mat-icon> Voice
@@ -52,13 +49,13 @@
           </mat-form-field>
         }
 
-        <!-- Media URL — WhatsApp Media only -->
-        @if (isMedia()) {
+        <!-- Media URL — optional on WhatsApp; adding one sends the message as media -->
+        @if (isWp()) {
           <mat-form-field appearance="outline" class="full">
-            <mat-label>Media URL</mat-label>
+            <mat-label>Media URL (optional)</mat-label>
             <mat-icon matIconPrefix>link</mat-icon>
             <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
-            <mat-hint>Must be publicly accessible (no authentication required)</mat-hint>
+            <mat-hint>Leave empty to send a text message. Any link must be publicly accessible.</mat-hint>
             <app-form-field-errors [control]="form.controls.mediaUrl" />
           </mat-form-field>
         }
@@ -102,16 +99,13 @@
             <li>Long messages are split into 160-character parts automatically</li>
           </ul>
         }
-        @if (isWpText()) {
+        @if (isWp()) {
           <ul class="guide-list">
             <li>Recipients must be active WhatsApp users</li>
             <li>Messages must comply with WhatsApp Business policies</li>
             <li>Emojis and Unicode characters are fully supported</li>
-          </ul>
-        }
-        @if (isMedia()) {
-          <ul class="guide-list">
-            <li>Media URL must be publicly accessible without authentication</li>
+            <li>Add a media URL to send an image, video or document instead of plain text</li>
+            <li>Media must be publicly accessible without authentication</li>
             <li>Supported: JPG, PNG, PDF, MP4, DOCX</li>
             <li>Image max 5 MB · Video max 16 MB · Document max 100 MB</li>
           </ul>

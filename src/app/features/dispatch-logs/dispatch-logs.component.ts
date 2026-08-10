@@ -30,8 +30,7 @@ export class DispatchLogsComponent implements OnInit {
       options: [
         { label: 'All', value: null },
         { label: 'SMS', value: ChannelType.SMS },
-        { label: 'WhatsApp Text', value: ChannelType.WP_Text },
-        { label: 'WhatsApp Media', value: ChannelType.WP_Media },
+        { label: 'WhatsApp', value: ChannelType.WP },
         { label: 'Voice', value: ChannelType.Voice },
       ],
     },
