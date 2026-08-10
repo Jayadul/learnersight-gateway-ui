@@ -23,7 +23,7 @@ const EXAMPLE_MESSAGE =
   '[wp::Hello, your appointment is confirmed for tomorrow at 3:00 PM.] ' +
   '[smswp::Big sale this weekend! Visit https://example.com] ' +
   '[wpmedia::Please review the attached invoice.||https://example.com/files/invoice.pdf] ' +
-  '[call::due-bill-api]';
+  '[call::due-bill-api||lot-42]';
 
 @Component({
   selector: 'app-sendtext-api',

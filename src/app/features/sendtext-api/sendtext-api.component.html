@@ -98,6 +98,11 @@
               <td><code>[call::due-bill-api]</code></td>
             </tr>
             <tr>
+              <td><code>[call::CAMPAIGN_ID||LOT_NUMBER]</code></td>
+              <td>Voice call targeting a specific lot. Without it, the channel's configured lot is used</td>
+              <td><code>[call::due-bill-api||lot-42]</code></td>
+            </tr>
+            <tr>
               <td><em>(no tag)</em></td>
               <td>Plain SMS with the full content</td>
               <td><code>Hello without any tag</code></td>
@@ -172,7 +177,7 @@
           <mat-form-field appearance="outline" class="full">
             <mat-label>messageContent</mat-label>
             <textarea matInput formControlName="messageContent" rows="8"
-                      placeholder="[sms::TEXT] [wp::TEXT] [smswp::TEXT] [wpmedia::TEXT||MEDIA_URL] [call::CAMPAIGN_ID] (combine any of them)"></textarea>
+                      placeholder="[sms::TEXT] [wp::TEXT] [smswp::TEXT] [wpmedia::TEXT||MEDIA_URL] [call::CAMPAIGN_ID||LOT_NUMBER] (combine any of them)"></textarea>
             <mat-hint>The pre-filled example uses every tag. Remove the ones you don't need.</mat-hint>
             <app-form-field-errors [control]="form.controls.messageContent" />
           </mat-form-field>
