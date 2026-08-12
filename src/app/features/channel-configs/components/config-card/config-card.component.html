@@ -23,6 +23,13 @@
     <code class="slug" [matTooltip]="tagExample()">{{ config().labelSlug }}</code>
   </p>
 
+  @if (config().delaySeconds > 0) {
+    <p class="delay-line">
+      <mat-icon class="delay-icon">schedule</mat-icon>
+      {{ config().delaySeconds }}s delay between sends
+    </p>
+  }
+
   <p class="created">Created {{ config().createdAt | date: 'medium' }}</p>
 
   <div class="actions">

@@ -2,17 +2,35 @@
 <mat-dialog-content>
   <form [formGroup]="form" class="config-form">
     <mat-form-field appearance="outline" class="full">
-      <mat-label>Label</mat-label>
+      <mat-label>Display Name</mat-label>
       <input matInput formControlName="label" />
       <app-form-field-errors [control]="control('label')" />
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Channel Label (for message tags)</mat-label>
+    <!-- subscriptSizing="dynamic" lets the hint grow instead of overflowing the fixed
+         single-line subscript and colliding with the field below. -->
+    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+      <mat-label>Channel Label</mat-label>
       <input matInput formControlName="labelSlug" placeholder="e.g. revemain" />
-      <mat-hint>Lowercase letters and numbers only. Used to send to this exact channel, for example [sms_label:revemain::your message]. Leave empty to generate one from the name above.</mat-hint>
+      <mat-hint>Lowercase letters and numbers. Leave empty to generate one.</mat-hint>
       <app-form-field-errors [control]="control('labelSlug')" />
     </mat-form-field>
+
+    <!-- Kept outside the field so the example has room to wrap on its own. -->
+    <p class="tag-example">
+      Send to this channel with
+      <code>[{{ tagPrefix }}_label:{{ slugPreview }}::your message]</code>
+    </p>
+
+    @if (isWhatsApp) {
+      <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+        <mat-label>Send Delay (seconds)</mat-label>
+        <input matInput type="number" formControlName="delaySeconds" min="0" max="300" />
+        <mat-hint>Waits this long before every send on this channel, including retries. 0 = no delay.</mat-hint>
+        <app-form-field-errors [control]="control('delaySeconds')" />
+      </mat-form-field>
+      <p class="delay-note">Use this to stay under WhatsApp rate limits. It applies per recipient, so a long list takes proportionally longer.</p>
+    }
 
     <mat-form-field appearance="outline" class="full">
       <mat-label>Provider Name</mat-label>
