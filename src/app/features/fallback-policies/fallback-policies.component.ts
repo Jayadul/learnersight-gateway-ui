@@ -34,12 +34,26 @@ export class FallbackPoliciesComponent implements OnInit {
 
   readonly columns: ColumnDef<Row>[] = [
     { key: 'name', header: 'Name', sortable: true },
-    { key: 'triggerChannel', header: 'Trigger', value: (r) => new ChannelTypePipe().transform(r.triggerChannel) },
-    { key: 'fallbackChannel', header: 'Fallback', value: (r) => new ChannelTypePipe().transform(r.fallbackChannel) },
+    // A rule may target one named channel or every channel of its type — showing only
+    // the type would make those two look identical in the list.
+    {
+      key: 'triggerChannel', header: 'Trigger',
+      value: (r) => this.channelCell(r.triggerChannel, r.triggerChannelLabel, 'any channel'),
+    },
+    {
+      key: 'fallbackChannel', header: 'Fallback',
+      value: (r) => this.channelCell(r.fallbackChannel, r.fallbackChannelLabel, 'default channel'),
+    },
     { key: 'description', header: 'Description', value: (r) => r.description ?? '—' },
+    { key: 'allowCrossChannel', header: 'Cross-type', type: 'badge', value: (r) => (r.allowCrossChannel ? 'Yes' : 'No') },
     { key: 'isGlobal', header: 'Applies to All', type: 'badge', value: (r) => (r.isGlobal ? 'Yes' : 'No') },
     { key: 'isActive', header: 'Active', type: 'badge', value: (r) => (r.isActive ? 'Active' : 'Inactive') },
   ];
+
+  private channelCell(type: Row['triggerChannel'], label: string | null | undefined, unset: string): string {
+    const typeName = new ChannelTypePipe().transform(type);
+    return label ? `${typeName} — ${label}` : `${typeName} (${unset})`;
+  }
 
   readonly rowActions: RowAction<Row>[] = [
     { action: 'edit', icon: 'edit', tooltip: 'Edit', color: 'primary' },

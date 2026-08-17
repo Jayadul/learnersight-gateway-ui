@@ -7,22 +7,75 @@
       <app-form-field-errors [control]="form.controls.name" />
     </mat-form-field>
 
+    <!-- ── When this fails ── -->
+    <p class="section-label">When a message fails on</p>
+
     <mat-form-field appearance="outline" class="full">
-      <mat-label>Trigger Channel</mat-label>
+      <mat-label>Trigger Channel Type</mat-label>
       <mat-select formControlName="triggerChannel">
         @for (c of channels; track c.value) { <mat-option [value]="c.value">{{ c.label }}</mat-option> }
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+      <mat-label>{{ isSameType ? 'Trigger Channel' : 'Trigger Channel (optional)' }}</mat-label>
+      <mat-select formControlName="triggerChannelConfigId">
+        @if (!isSameType) { <mat-option [value]="''">Any channel of this type</mat-option> }
+        @for (ch of triggerOptions(); track ch.id) {
+          <mat-option [value]="ch.id">{{ ch.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-hint>Leave unset to cover every channel of this type.</mat-hint>
+    </mat-form-field>
+
+    <!-- ── Retry here ── -->
+    <p class="section-label">Retry it on</p>
+
     <mat-form-field appearance="outline" class="full">
-      <mat-label>Fallback Channel</mat-label>
+      <mat-label>Fallback Channel Type</mat-label>
       <mat-select formControlName="fallbackChannel">
         @for (c of channels; track c.value) { <mat-option [value]="c.value">{{ c.label }}</mat-option> }
       </mat-select>
     </mat-form-field>
 
-    @if (form.errors?.['sameChannel'] && form.touched) {
-      <div class="form-error">Trigger and fallback channels must be different.</div>
+    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+      <mat-label>{{ isSameType ? 'Fallback Channel' : 'Fallback Channel (optional)' }}</mat-label>
+      <mat-select formControlName="fallbackChannelConfigId">
+        @if (!isSameType) { <mat-option [value]="''">Default channel of this type</mat-option> }
+        @for (ch of fallbackOptions(); track ch.id) {
+          <mat-option [value]="ch.id">{{ ch.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-hint>Leave unset to use this type's default channel.</mat-hint>
+    </mat-form-field>
+
+    <!-- Cross-type fallback changes delivery format and cost, so it is opt-in. -->
+    @if (!isSameType) {
+      <mat-slide-toggle formControlName="allowCrossChannel"
+                        (change)="onCrossChannelToggle($event.checked)">
+        Allow fallback to a different channel type
+      </mat-slide-toggle>
+      <p class="toggle-note">
+        <mat-icon class="warn-icon">warning</mat-icon>
+        Messages retried on another channel are delivered in that channel's format and
+        billed at its rate.
+      </p>
+    }
+
+    @if (form.touched) {
+      @if (form.errors?.['sameChannel']) {
+        <div class="form-error">A channel cannot fall back to itself. Choose a different channel.</div>
+      }
+      @if (form.errors?.['sameChannelNeedsBoth']) {
+        <div class="form-error">
+          When both sides are the same channel type, name the channel that fails and the channel to retry on.
+        </div>
+      }
+      @if (form.errors?.['crossChannelNotAllowed']) {
+        <div class="form-error">
+          This rule falls back to a different channel type. Turn on "Allow fallback to a different channel type" to save it.
+        </div>
+      }
     }
 
     <mat-form-field appearance="outline" class="full">
