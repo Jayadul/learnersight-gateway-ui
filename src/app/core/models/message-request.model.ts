@@ -8,6 +8,8 @@ export interface MessageRequestDto {
   readonly overallStatus: MessageStatus;
   readonly receivedAt: string;
   readonly source: MessageSource;
+  /** The sender tagged more than one delivery, so fallback rules are skipped. */
+  readonly isMultiChannel: boolean;
   readonly createdAt: string;
 }
 export interface MessageRequestDetailDto extends MessageRequestDto {

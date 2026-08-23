@@ -25,6 +25,7 @@
             <tr><th>Content-Type</th><td><code>application/x-www-form-urlencoded</code></td></tr>
             <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> form fields (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
             <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
+            <tr><th>Pacing</th><td>A channel may be configured with a send delay to respect provider rate limits, so deliveries on that channel arrive spaced out rather than all at once</td></tr>
           </tbody>
         </table>
 
@@ -88,9 +89,9 @@
               <td><code>[smswp::Big sale this weekend!]</code></td>
             </tr>
             <tr>
-              <td><code>[wpmedia::TEXT||URL]</code></td>
-              <td>WhatsApp media (caption + public file URL)</td>
-              <td><code>[wpmedia::Please review the invoice.||https://example.com/invoice.pdf]</code></td>
+              <td><code>[wp::TEXT||URL]</code></td>
+              <td>WhatsApp — the same tag carries media when the body ends in <code>||URL</code></td>
+              <td><code>[wp::Please review the invoice.||https://example.com/invoice.pdf]</code></td>
             </tr>
             <tr>
               <td><code>[call::CAMPAIGN_ID]</code></td>
@@ -124,6 +125,35 @@
               <td><em>(no tag)</em></td>
               <td>Plain SMS with the full content</td>
               <td><code>Hello without any tag</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="doc-section">Automatic Fallback</h3>
+        <p>
+          If a delivery fails at the provider, NetZero can retry it on another channel.
+          Which retries happen is configured by NetZero, not by the request — three rules
+          decide whether one applies:
+        </p>
+        <table class="doc-table">
+          <tbody>
+            <tr>
+              <th>Same type by default</th>
+              <td>A failed WhatsApp send retries on another WhatsApp channel, SMS on another SMS,
+                Voice on another Voice. Retrying across types changes both the delivery format and
+                the per-message cost, so it has to be enabled deliberately.</td>
+            </tr>
+            <tr>
+              <th>One tag only</th>
+              <td>A request that asks for <strong>more than one delivery</strong> never gets a
+                fallback — for example <code>[sms::…][wp::…]</code>, <code>[smswp::…]</code>, or the
+                combined <code>[sms_label:A-wp_label:B::…]</code> form. The second channel is already
+                the redundancy, so no third message is generated and nothing extra is charged.</td>
+            </tr>
+            <tr>
+              <th>Visible either way</th>
+              <td>A retry appears in <strong>Message Logs</strong> as an extra delivery badged
+                <em>Fallback</em>. When a retry is skipped, the message detail says so.</td>
             </tr>
           </tbody>
         </table>
@@ -195,8 +225,8 @@
           <mat-form-field appearance="outline" class="full">
             <mat-label>messageContent</mat-label>
             <textarea matInput formControlName="messageContent" rows="8"
-                      placeholder="[sms::TEXT] [wp::TEXT] [smswp::TEXT] [wpmedia::TEXT||MEDIA_URL] [call::CAMPAIGN_ID] (combine any of them)"></textarea>
-            <mat-hint>The pre-filled example uses every tag. Remove the ones you don't need.</mat-hint>
+                      placeholder="[sms::TEXT] [wp::TEXT] [wp::TEXT||MEDIA_URL] [smswp::TEXT] [call::CAMPAIGN_ID] (combine any of them)"></textarea>
+            <mat-hint>The pre-filled example uses every tag — and because it asks for several deliveries, fallback does not apply to it. Remove the ones you don't need.</mat-hint>
             <app-form-field-errors [control]="form.controls.messageContent" />
           </mat-form-field>
 

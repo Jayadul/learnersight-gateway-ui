@@ -10,6 +10,11 @@
           @for (ch of d.parsedChannels; track ch) { <mat-chip [disableRipple]="true">{{ ch | channelName }}</mat-chip> }
         </mat-chip-set>
       </div>
+      @if (d.isMultiChannel) {
+        <div><span class="label">Fallback</span>
+          <span class="skipped">Not applied — the sender tagged more than one channel</span>
+        </div>
+      }
     </div>
 
     <h3>Deliveries ({{ d.jobs.length }})</h3>
