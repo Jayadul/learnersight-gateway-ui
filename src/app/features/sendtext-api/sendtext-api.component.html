@@ -10,8 +10,8 @@
         <h2 class="doc-title">SendText Integration Guide</h2>
         <p class="doc-intro">
           Single endpoint for dispatching <strong>SMS</strong>, <strong>WhatsApp</strong> and
-          <strong>Voice</strong> messages with automatic fallback. Share this page with any
-          third-party application that will integrate.
+          <strong>Voice</strong> messages, with automatic fallback when a delivery fails.
+          Share this page with any third-party application that will integrate.
         </p>
 
         <h3 class="doc-section">Endpoint</h3>
@@ -25,7 +25,8 @@
             <tr><th>Content-Type</th><td><code>application/x-www-form-urlencoded</code></td></tr>
             <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> form fields (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
             <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
-            <tr><th>Pacing</th><td>A channel may be configured with a send delay to respect provider rate limits, so deliveries on that channel arrive spaced out rather than all at once</td></tr>
+            <tr><th>Gateways</th><td>Each channel type may have several gateways configured. A message goes to that type's default gateway unless its tag names one</td></tr>
+            <tr><th>Pacing</th><td>A WhatsApp gateway may be given a send delay to stay under provider rate limits, so its deliveries arrive spaced out rather than all at once. A long recipient list takes proportionally longer</td></tr>
           </tbody>
         </table>
 
@@ -66,7 +67,9 @@
         <h3 class="doc-section">Channel Tags</h3>
         <p>
           Compose <code>messageContent</code> from one or more <code>[tag::content]</code> blocks.
-          Each tag creates one delivery. Several tags may be combined in a single request.
+          Each tag creates one delivery, and several tags may be combined in a single request.
+          There are three channels — SMS, WhatsApp and Voice — and an unrecognised tag
+          rejects the whole request rather than being skipped.
         </p>
         <table class="doc-table">
           <thead>
@@ -80,54 +83,67 @@
             </tr>
             <tr>
               <td><code>[wp::TEXT]</code></td>
-              <td>WhatsApp text</td>
+              <td>WhatsApp</td>
               <td><code>[wp::Hello, your appointment is confirmed.]</code></td>
             </tr>
             <tr>
-              <td><code>[smswp::TEXT]</code></td>
-              <td>SMS <em>and</em> WhatsApp (same text)</td>
-              <td><code>[smswp::Big sale this weekend!]</code></td>
-            </tr>
-            <tr>
               <td><code>[wp::TEXT||URL]</code></td>
-              <td>WhatsApp — the same tag carries media when the body ends in <code>||URL</code></td>
+              <td>WhatsApp with media — the same tag; the URL is what makes it a media message</td>
               <td><code>[wp::Please review the invoice.||https://example.com/invoice.pdf]</code></td>
             </tr>
             <tr>
+              <td><code>[sms-wp::TEXT]</code></td>
+              <td>SMS <em>and</em> WhatsApp (same text, two deliveries)</td>
+              <td><code>[sms-wp::Big sale this weekend!]</code></td>
+            </tr>
+            <tr>
               <td><code>[call::CAMPAIGN_ID]</code></td>
-              <td>Voice call (pre-configured campaign)</td>
+              <td>Voice call using the campaign's configured lot</td>
               <td><code>[call::due-bill-api]</code></td>
             </tr>
-            <tr class="section-row">
-              <td colspan="3"><strong>Sending through a specific channel</strong> — use the channel label shown on each channel in Settings &rsaquo; Channels. Without a label, the default channel for that type is used.</td>
-            </tr>
             <tr>
-              <td><code>[sms_label:SLUG::TEXT]</code></td>
-              <td>SMS through the channel with this label</td>
-              <td><code>[sms_label:revemain::Your OTP is 123456]</code></td>
-            </tr>
-            <tr>
-              <td><code>[wp_label:SLUG::TEXT]</code></td>
-              <td>WhatsApp through the channel with this label</td>
-              <td><code>[wp_label:watrendmain::Your appointment is confirmed.]</code></td>
-            </tr>
-            <tr>
-              <td><code>[sms_label:A-wp_label:B::TEXT]</code></td>
-              <td>SMS <em>and</em> WhatsApp, each through a named channel</td>
-              <td><code>[sms_label:revemain-wp_label:watrendmain::Big sale this weekend!]</code></td>
-            </tr>
-            <tr>
-              <td><code>[call_label:SLUG::CAMPAIGN_ID]</code></td>
-              <td>Voice call through the channel with this label</td>
-              <td><code>[call_label:voicemain::due-bill-api]</code></td>
+              <td><code>[call::CAMPAIGN_ID||LOT]</code></td>
+              <td>Voice call for a specific lot within the campaign</td>
+              <td><code>[call::due-bill-api||lot-42]</code></td>
             </tr>
             <tr>
               <td><em>(no tag)</em></td>
               <td>Plain SMS with the full content</td>
               <td><code>Hello without any tag</code></td>
             </tr>
+            <tr class="section-row">
+              <td colspan="3"><strong>Choosing a specific gateway</strong> — each channel type
+                may have several gateways configured. Without a label a message goes to that
+                type's <strong>default</strong> gateway; add a label to name one exactly. Labels
+                are shown against each channel in Settings &rsaquo; Channels.</td>
+            </tr>
+            <tr>
+              <td><code>[sms_label:SLUG::TEXT]</code></td>
+              <td>SMS through the gateway with this label</td>
+              <td><code>[sms_label:revemain::Your OTP is 123456]</code></td>
+            </tr>
+            <tr>
+              <td><code>[wp_label:SLUG::TEXT]</code></td>
+              <td>WhatsApp through the gateway with this label (media works the same: <code>||URL</code>)</td>
+              <td><code>[wp_label:watrendmain::Your appointment is confirmed.]</code></td>
+            </tr>
+            <tr>
+              <td><code>[call_label:SLUG::CAMPAIGN_ID]</code></td>
+              <td>Voice call through the gateway with this label</td>
+              <td><code>[call_label:voicemain::due-bill-api||lot-42]</code></td>
+            </tr>
+            <tr>
+              <td><code>[sms_label:A-wp_label:B::TEXT]</code></td>
+              <td>The combined send, with each leg on a named gateway. Either leg may be
+                labelled on its own — the unlabelled one uses its type's default</td>
+              <td><code>[sms_label:revemain-wp::Big sale this weekend!]</code></td>
+            </tr>
           </tbody>
         </table>
+        <p class="muted">
+          <code>||</code> means the same thing everywhere: it separates a media URL from its
+          caption, and a lot number from its campaign id.
+        </p>
 
         <h3 class="doc-section">Automatic Fallback</h3>
         <p>
@@ -167,6 +183,7 @@
             <tr><td><code>Status</code></td><td><code>"0"</code> = accepted &nbsp;·&nbsp; <code>"101"</code> = rejected (invalid/missing credentials or server error)</td></tr>
             <tr><td><code>Text</code></td><td><code>ACCEPTD</code> or <code>REJECTD</code></td></tr>
             <tr><td><code>Message_ID</code></td><td>Tracking id (GUID) of the queued request</td></tr>
+            <tr><td><code>Reason</code></td><td>Present only on a rejection that you can fix — an unrecognised channel tag, for example. Names the tag and what to use instead</td></tr>
           </tbody>
         </table>
         <pre class="code-block">{{ '{' }} "Status": "0", "Text": "ACCEPTD", "Message_ID": "3f6e5f2a-9c1d-4e8b-b2a7-1b2c3d4e5f60" {{ '}' }}</pre>
@@ -225,7 +242,7 @@
           <mat-form-field appearance="outline" class="full">
             <mat-label>messageContent</mat-label>
             <textarea matInput formControlName="messageContent" rows="8"
-                      placeholder="[sms::TEXT] [wp::TEXT] [wp::TEXT||MEDIA_URL] [smswp::TEXT] [call::CAMPAIGN_ID] (combine any of them)"></textarea>
+                      placeholder="[sms::TEXT] [wp::TEXT] [wp::TEXT||MEDIA_URL] [sms-wp::TEXT] [call::CAMPAIGN_ID||LOT] (combine any of them)"></textarea>
             <mat-hint>The pre-filled example uses every tag — and because it asks for several deliveries, fallback does not apply to it. Remove the ones you don't need.</mat-hint>
             <app-form-field-errors [control]="form.controls.messageContent" />
           </mat-form-field>
