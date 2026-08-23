@@ -31,11 +31,14 @@
     <!-- ── Retry here ── -->
     <p class="section-label">Retry it on</p>
 
-    <mat-form-field appearance="outline" class="full">
+    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
       <mat-label>Fallback Channel Type</mat-label>
       <mat-select formControlName="fallbackChannel">
         @for (c of channels; track c.value) { <mat-option [value]="c.value">{{ c.label }}</mat-option> }
       </mat-select>
+      @if (!form.controls.allowCrossChannel.value) {
+        <mat-hint>Matches the trigger type. Turn on cross-channel below to retry on a different type.</mat-hint>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
@@ -49,12 +52,13 @@
       <mat-hint>Leave unset to use this type's default channel.</mat-hint>
     </mat-form-field>
 
-    <!-- Cross-type fallback changes delivery format and cost, so it is opt-in. -->
+    <!-- Cross-type fallback changes delivery format and cost, so it is opt-in. Until it
+         is on, the fallback type is locked to the trigger's type. -->
+    <mat-slide-toggle formControlName="allowCrossChannel"
+                      (change)="onCrossChannelToggle($event.checked)">
+      Allow fallback to a different channel type
+    </mat-slide-toggle>
     @if (!isSameType) {
-      <mat-slide-toggle formControlName="allowCrossChannel"
-                        (change)="onCrossChannelToggle($event.checked)">
-        Allow fallback to a different channel type
-      </mat-slide-toggle>
       <p class="toggle-note">
         <mat-icon class="warn-icon">warning</mat-icon>
         Messages retried on another channel are delivered in that channel's format and

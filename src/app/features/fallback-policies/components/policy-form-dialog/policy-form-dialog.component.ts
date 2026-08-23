@@ -57,7 +57,9 @@ export class PolicyFormDialogComponent {
       name: [this.data.policy?.name ?? '', Validators.required],
       triggerChannel: [this.data.policy?.triggerChannel ?? ChannelType.SMS, Validators.required],
       triggerChannelConfigId: [this.data.policy?.triggerChannelConfigId ?? ''],
-      fallbackChannel: [this.data.policy?.fallbackChannel ?? ChannelType.WP, Validators.required],
+      // Defaults to the trigger's own type: a rule stays within a channel type unless
+      // cross-channel is deliberately enabled.
+      fallbackChannel: [this.data.policy?.fallbackChannel ?? ChannelType.SMS, Validators.required],
       fallbackChannelConfigId: [this.data.policy?.fallbackChannelConfigId ?? ''],
       allowCrossChannel: [this.data.policy?.allowCrossChannel ?? false],
       isGlobal: [this.data.policy?.isGlobal ?? false],
@@ -75,6 +77,7 @@ export class PolicyFormDialogComponent {
   constructor() {
     this.loadChannels('trigger', this.form.controls.triggerChannel.value);
     this.loadChannels('fallback', this.form.controls.fallbackChannel.value);
+    this.applyCrossChannelLock(this.form.controls.allowCrossChannel.value);
 
     // Changing a type invalidates the channel chosen under the old one.
     this.form.controls.triggerChannel.valueChanges
@@ -82,6 +85,11 @@ export class PolicyFormDialogComponent {
       .subscribe((type) => {
         this.form.controls.triggerChannelConfigId.setValue('');
         this.loadChannels('trigger', type);
+
+        // While the rule is locked to one type, the fallback follows the trigger.
+        if (!this.form.controls.allowCrossChannel.value) {
+          this.form.controls.fallbackChannel.setValue(type);
+        }
       });
 
     this.form.controls.fallbackChannel.valueChanges
@@ -105,7 +113,10 @@ export class PolicyFormDialogComponent {
    * so it is confirmed explicitly rather than silently toggled.
    */
   onCrossChannelToggle(enabled: boolean): void {
-    if (!enabled) return;
+    if (!enabled) {
+      this.applyCrossChannelLock(false);
+      return;
+    }
 
     this.confirm
       .confirm({
@@ -118,7 +129,25 @@ export class PolicyFormDialogComponent {
       })
       .subscribe((ok) => {
         if (!ok) this.form.controls.allowCrossChannel.setValue(false);
+        this.applyCrossChannelLock(ok);
       });
+  }
+
+  /**
+   * Locked, the fallback type mirrors the trigger and cannot be changed — the rule can
+   * only ever pick another channel of the same type. Unlocking is what opens all three
+   * types up, so an unintended cross-type rule cannot be built by accident.
+   */
+  private applyCrossChannelLock(crossChannelEnabled: boolean): void {
+    const fallbackType = this.form.controls.fallbackChannel;
+
+    if (crossChannelEnabled) {
+      fallbackType.enable({ emitEvent: false });
+      return;
+    }
+
+    fallbackType.setValue(this.form.controls.triggerChannel.value);
+    fallbackType.disable({ emitEvent: false });
   }
 
   save(): void {
