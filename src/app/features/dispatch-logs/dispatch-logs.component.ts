@@ -49,6 +49,8 @@ export class DispatchLogsComponent implements OnInit {
   readonly columns: ColumnDef<Row>[] = [
     { key: 'createdAt', header: 'Time', type: 'datetime', sortable: true },
     { key: 'channelType', header: 'Channel', value: (r) => new ChannelTypePipe().transform(r.channelType) },
+    // Which gateway, not just which kind — several of a type may be active at once.
+    { key: 'channelLabel', header: 'Sent Via', value: (r) => r.channelLabel ?? '—' },
     { key: 'toNumber', header: 'Number' },
     { key: 'status', header: 'Status', type: 'badge', badgeType: 'job' },
     { key: 'providerRawResponse', header: 'Provider Reply', truncate: 60, value: (r) => r.providerRawResponse ?? '—' },
