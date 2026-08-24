@@ -35,8 +35,7 @@ export class ChannelConfigsComponent implements OnInit {
 
   readonly tabs: TabDef[] = [
     { label: 'SMS', channelType: ChannelType.SMS },
-    { label: 'WhatsApp Text', channelType: ChannelType.WP_Text },
-    { label: 'WhatsApp Media', channelType: ChannelType.WP_Media },
+    { label: 'WhatsApp', channelType: ChannelType.WP },
     { label: 'Voice', channelType: ChannelType.Voice },
   ];
 
@@ -95,8 +94,10 @@ export class ChannelConfigsComponent implements OnInit {
   }
 
   onActivate(config: ChannelConfigDto): void {
+    // Activating no longer switches anything else off — several channels of a type can
+    // now be active at once, and only the default decides where untagged sends go.
     this.confirm
-      .confirm({ title: 'Activate Channel Settings', message: `Activate "${config.label}"? The currently active settings for this channel will be turned off.`, confirmLabel: 'Activate' })
+      .confirm({ title: 'Activate Channel Settings', message: `Activate "${config.label}"? It becomes available for messages that name it by its channel label.`, confirmLabel: 'Activate' })
       .subscribe((ok) => {
         if (ok) {
           this.service.activate(config.id).subscribe(() => {
@@ -107,9 +108,35 @@ export class ChannelConfigsComponent implements OnInit {
       });
   }
 
+  onDeactivate(config: ChannelConfigDto): void {
+    this.confirm
+      .confirm({ title: 'Deactivate Channel Settings', message: `Deactivate "${config.label}"? Messages naming this channel will stop being delivered through it.`, confirmLabel: 'Deactivate' })
+      .subscribe((ok) => {
+        if (ok) {
+          this.service.deactivate(config.id).subscribe(() => {
+            this.notify.success('Channel deactivated.');
+            this.loadTab(this.activeTab());
+          });
+        }
+      });
+  }
+
+  onSetDefault(config: ChannelConfigDto): void {
+    this.confirm
+      .confirm({ title: 'Make Default Channel', message: `Make "${config.label}" the default? Messages that do not name a channel will be sent through it, and the current default will stop being used for them.`, confirmLabel: 'Make Default' })
+      .subscribe((ok) => {
+        if (ok) {
+          this.service.setDefault(config.id).subscribe(() => {
+            this.notify.success('Default channel updated.');
+            this.loadTab(this.activeTab());
+          });
+        }
+      });
+  }
+
   onDelete(config: ChannelConfigDto): void {
-    if (config.isActive) {
-      this.notify.error('This channel is currently active. Activate another configuration for this channel first, then delete this one.');
+    if (config.isDefault) {
+      this.notify.error('This is the default channel for its type. Make another channel the default first, then delete this one.');
       return;
     }
     this.confirm

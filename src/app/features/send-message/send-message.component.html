@@ -13,16 +13,27 @@
           <mat-button-toggle [value]="ChannelType.SMS">
             <mat-icon>sms</mat-icon> SMS
           </mat-button-toggle>
-          <mat-button-toggle [value]="ChannelType.WP_Text">
+          <mat-button-toggle [value]="ChannelType.WP">
             <mat-icon>chat</mat-icon> WhatsApp
-          </mat-button-toggle>
-          <mat-button-toggle [value]="ChannelType.WP_Media">
-            <mat-icon>perm_media</mat-icon> WhatsApp Media
           </mat-button-toggle>
           <mat-button-toggle [value]="ChannelType.Voice">
             <mat-icon>record_voice_over</mat-icon> Voice
           </mat-button-toggle>
         </mat-button-toggle-group>
+
+        <!-- Which gateway of that type. Several may be active, so the default is
+             preselected rather than left blank. -->
+        <mat-form-field appearance="outline" class="full gateway-select" subscriptSizing="dynamic">
+          <mat-label>Send Through</mat-label>
+          <mat-select formControlName="channelLabelSlug">
+            @for (ch of channelOptions(); track ch.id) {
+              <mat-option [value]="ch.labelSlug">
+                {{ ch.label }}@if (ch.isDefault) { <span class="default-tag">default</span> }
+              </mat-option>
+            }
+          </mat-select>
+          <mat-hint>Pick a different gateway if you do not want the default one.</mat-hint>
+        </mat-form-field>
 
         <mat-divider class="divider"></mat-divider>
 
@@ -52,14 +63,37 @@
           </mat-form-field>
         }
 
-        <!-- Media URL — WhatsApp Media only -->
-        @if (isMedia()) {
+        <!-- Media URL — optional on WhatsApp; adding one sends the message as media -->
+        @if (isWp()) {
           <mat-form-field appearance="outline" class="full">
-            <mat-label>Media URL</mat-label>
+            <mat-label>Media URL (optional)</mat-label>
             <mat-icon matIconPrefix>link</mat-icon>
             <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
-            <mat-hint>Must be publicly accessible (no authentication required)</mat-hint>
+            <mat-hint>Leave empty to send a text message. Any link must be publicly accessible.</mat-hint>
             <app-form-field-errors [control]="form.controls.mediaUrl" />
+          </mat-form-field>
+        }
+
+        <!-- Optional per-send overrides. Blank keeps the channel's configured value. -->
+        @if (isSms()) {
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Sender ID (optional)</mat-label>
+            <input matInput formControlName="callerId" placeholder="leave empty to use the channel's sender ID" />
+            <mat-hint>Overrides the sender name shown to recipients, for this send only.</mat-hint>
+          </mat-form-field>
+        }
+
+        @if (isVoice()) {
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Campaign ID (optional)</mat-label>
+            <input matInput formControlName="campaignId" placeholder="leave empty to use the channel's campaign" />
+            <mat-hint>The campaign to dial. Its recorded content is configured at the provider.</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Lot Number (optional)</mat-label>
+            <input matInput formControlName="lotNumber" placeholder="leave empty to use the channel's lot" />
+            <mat-hint>Which lot within the campaign these calls belong to.</mat-hint>
           </mat-form-field>
         }
 
@@ -98,20 +132,17 @@
         @if (isSms()) {
           <ul class="guide-list">
             <li>Numbers start with the country code, digits only, for example <code>8801700000001</code> (no "+")</li>
-            <li>The sender name is added automatically from your active SMS channel settings</li>
+            <li>The sender name comes from the chosen SMS channel unless you override it below</li>
             <li>Long messages are split into 160-character parts automatically</li>
           </ul>
         }
-        @if (isWpText()) {
+        @if (isWp()) {
           <ul class="guide-list">
             <li>Recipients must be active WhatsApp users</li>
             <li>Messages must comply with WhatsApp Business policies</li>
             <li>Emojis and Unicode characters are fully supported</li>
-          </ul>
-        }
-        @if (isMedia()) {
-          <ul class="guide-list">
-            <li>Media URL must be publicly accessible without authentication</li>
+            <li>Add a media URL to send an image, video or document instead of plain text</li>
+            <li>Media must be publicly accessible without authentication</li>
             <li>Supported: JPG, PNG, PDF, MP4, DOCX</li>
             <li>Image max 5 MB · Video max 16 MB · Document max 100 MB</li>
           </ul>
@@ -119,6 +150,7 @@
         @if (isVoice()) {
           <ul class="guide-list">
             <li>Only recipient numbers are needed. The call content comes from your voice provider's campaign</li>
+            <li>Leave campaign and lot empty to use the ones configured on the chosen voice channel</li>
             <li>Recipients receive an automated call; calls are placed in the order numbers appear</li>
           </ul>
         }

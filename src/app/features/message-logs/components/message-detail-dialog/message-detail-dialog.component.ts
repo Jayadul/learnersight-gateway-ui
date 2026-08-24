@@ -31,13 +31,20 @@ export class MessageDetailDialogComponent {
   readonly loading = signal(true);
 
   readonly jobColumns: ColumnDef<DispatchJobDto>[] = [
-    { key: 'channelType', header: 'Channel', value: (r) => new ChannelTypePipe().transform(r.channelType) },
+    // Name and type together: with several gateways live per type, the type alone does
+    // not say which one delivered — or which one failed.
+    { key: 'channelType', header: 'Channel', value: (r) => this.channelCell(r) },
     { key: 'toNumber', header: 'Number' },
     { key: 'status', header: 'Status', type: 'badge', badgeType: 'job' },
     { key: 'providerMessageId', header: 'Provider ID', value: (r) => r.providerMessageId ?? '—' },
     { key: 'sentAt', header: 'Sent At', type: 'datetime' },
     { key: 'isFallback', header: 'Fallback', type: 'custom' },
   ];
+
+  private channelCell(job: DispatchJobDto): string {
+    const type = new ChannelTypePipe().transform(job.channelType);
+    return job.channelLabel ? `${job.channelLabel} (${type})` : type;
+  }
 
   constructor() {
     this.service.getDetail(this.data.id).subscribe({

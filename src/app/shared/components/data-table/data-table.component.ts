@@ -30,6 +30,7 @@ export interface ColumnDef<T> {
   type?: 'text' | 'date' | 'datetime' | 'chip' | 'chips' | 'badge' | 'custom';
   value?: (row: T) => unknown;
   badgeType?: 'message' | 'job' | 'call';
+  /** Cut the cell to this many characters; the full text stays available on hover. */
   truncate?: number;
   width?: string;
 }
@@ -125,11 +126,25 @@ export class DataTableComponent<T> {
   }
 
   cellValue(col: ColumnDef<T>, row: T): unknown {
-    const raw = col.value ? col.value(row) : (row as Record<string, unknown>)[col.key];
+    const raw = this.rawValue(col, row);
     if (col.truncate && typeof raw === 'string' && raw.length > col.truncate) {
       return raw.substring(0, col.truncate) + '…';
     }
     return raw;
+  }
+
+  /**
+   * Full text for a cell that was cut short, empty otherwise — an unconditional tooltip
+   * would pop up over every short cell repeating what is already on screen.
+   */
+  cellTooltip(col: ColumnDef<T>, row: T): string {
+    if (!col.truncate) return '';
+    const raw = this.rawValue(col, row);
+    return typeof raw === 'string' && raw.length > col.truncate ? raw : '';
+  }
+
+  private rawValue(col: ColumnDef<T>, row: T): unknown {
+    return col.value ? col.value(row) : (row as Record<string, unknown>)[col.key];
   }
 
   onPage(e: PageEvent): void {

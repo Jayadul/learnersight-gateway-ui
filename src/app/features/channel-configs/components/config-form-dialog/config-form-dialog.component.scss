@@ -1,3 +1,29 @@
 .config-form { display: flex; flex-direction: column; padding-top: 8px; min-width: 420px; }
 .full { width: 100%; }
+
+/* Worked tag example sits between two fields, so it needs its own breathing room —
+   it is deliberately outside the form field's subscript, which is height-capped. */
+.delay-note {
+  margin: -4px 0 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--nzg-text-muted);
+}
+
+.tag-example {
+  margin: -4px 0 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--nzg-text-muted);
+}
+.tag-example code {
+  font-family: var(--nzg-font-mono, monospace);
+  background: var(--nzg-surface-alt, #f2f4f7);
+  color: var(--nzg-text, inherit);
+  padding: 1px 6px;
+  border-radius: 4px;
+  /* Long slugs must wrap inside the dialog rather than widen it. */
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 600px) { .config-form { min-width: auto; } }

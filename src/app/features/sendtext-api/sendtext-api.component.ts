@@ -16,14 +16,14 @@ import { FormFieldErrorsComponent } from '../../shared/components/form-field-err
 import { CopyButtonComponent } from '../../shared/components/copy-button/copy-button.component';
 import { SendTextApiService } from './sendtext-api.service';
 
-// Demonstrates every supported tag in one request:
-// SMS, WhatsApp text, SMS+WhatsApp combo, WhatsApp media, Voice campaign.
+// Demonstrates every supported tag in one request: SMS, WhatsApp text, WhatsApp with
+// media (same tag, ||url body), the SMS+WhatsApp combo, and a voice campaign with a lot.
 const EXAMPLE_MESSAGE =
   '[sms::Your OTP is 123456. It expires in 10 minutes.] ' +
   '[wp::Hello, your appointment is confirmed for tomorrow at 3:00 PM.] ' +
-  '[smswp::Big sale this weekend! Visit https://example.com] ' +
-  '[wpmedia::Please review the attached invoice.||https://example.com/files/invoice.pdf] ' +
-  '[call::due-bill-api]';
+  '[wp::Please review the attached invoice.||https://example.com/files/invoice.pdf] ' +
+  '[sms-wp::Big sale this weekend! Visit https://example.com] ' +
+  '[call::due-bill-api||lot-42]';
 
 @Component({
   selector: 'app-sendtext-api',

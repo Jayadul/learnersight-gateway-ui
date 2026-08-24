@@ -210,3 +210,11 @@ code {
 .resp-block {
   margin: 0;
 }
+
+// Grouping row inside the tag reference — a full-width note, not a tag definition.
+.doc-table .section-row td {
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.66);
+}

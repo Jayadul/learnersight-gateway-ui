@@ -15,4 +15,11 @@ export class ChannelConfigsService extends BaseCrudService<ChannelConfigDto, Cre
   activate(id: string): Observable<void> {
     return this.patch(id, 'activate');
   }
+  deactivate(id: string): Observable<void> {
+    return this.patch(id, 'deactivate');
+  }
+  /** Promotes this channel to be its type's default, demoting the previous one. */
+  setDefault(id: string): Observable<void> {
+    return this.patch(id, 'set-default');
+  }
 }

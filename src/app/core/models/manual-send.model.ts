@@ -1,8 +1,17 @@
 export interface ManualSendRequest {
-  readonly channelType: number; // wire format: integer enum (SMS=0, WP_Text=1, WP_Media=2, Voice=3)
+  readonly channelType: number; // wire format: integer enum (SMS=0, WP=1, Voice=3; 2 retired)
   readonly toNumbers: string;
   readonly message?: string; // not used for Voice (campaign is pre-configured)
-  readonly mediaUrl?: string; // WhatsApp Media only
+  /** WhatsApp only — its presence is what makes the send a media message. */
+  readonly mediaUrl?: string;
+  /** Which gateway of this type to send on. Omitted = the type's default channel. */
+  readonly channelLabelSlug?: string;
+  /** SMS only. Omitted = the channel's configured sender id. */
+  readonly callerId?: string;
+  /** Voice only. Omitted = the channel's configured campaign. */
+  readonly campaignId?: string;
+  /** Voice only. Omitted = the channel's configured lot. */
+  readonly lotNumber?: string;
 }
 export interface ManualSendResponse {
   readonly messageRequestId: string;

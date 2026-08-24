@@ -30,8 +30,7 @@ export class DispatchLogsComponent implements OnInit {
       options: [
         { label: 'All', value: null },
         { label: 'SMS', value: ChannelType.SMS },
-        { label: 'WhatsApp Text', value: ChannelType.WP_Text },
-        { label: 'WhatsApp Media', value: ChannelType.WP_Media },
+        { label: 'WhatsApp', value: ChannelType.WP },
         { label: 'Voice', value: ChannelType.Voice },
       ],
     },
@@ -50,9 +49,14 @@ export class DispatchLogsComponent implements OnInit {
   readonly columns: ColumnDef<Row>[] = [
     { key: 'createdAt', header: 'Time', type: 'datetime', sortable: true },
     { key: 'channelType', header: 'Channel', value: (r) => new ChannelTypePipe().transform(r.channelType) },
+    // Which gateway, not just which kind — several of a type may be active at once.
+    { key: 'channelLabel', header: 'Sent Via', value: (r) => r.channelLabel ?? '—' },
     { key: 'toNumber', header: 'Number' },
     { key: 'status', header: 'Status', type: 'badge', badgeType: 'job' },
+    // Truncated in the cell, full reply on hover — provider errors are the one thing
+    // worth reading in full here, and they run long.
     { key: 'providerRawResponse', header: 'Provider Reply', truncate: 60, value: (r) => r.providerRawResponse ?? '—' },
+    { key: 'failureReason', header: 'Failure Reason', truncate: 40, value: (r) => r.failureReason ?? '—' },
     { key: 'isFallback', header: 'Fallback', type: 'custom', width: '90px' },
     { key: 'sentAt', header: 'Sent At', type: 'datetime' },
   ];

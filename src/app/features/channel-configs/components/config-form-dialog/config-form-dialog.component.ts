@@ -33,7 +33,29 @@ export class ConfigFormDialogComponent {
   readonly dialogRef = inject(MatDialogRef<ConfigFormDialogComponent>);
 
   readonly isEdit = !!this.data.config;
+  /** Pacing is only meaningful for WhatsApp, which sends one job per recipient. */
+  readonly isWhatsApp = this.data.channelType === ChannelType.WP;
   readonly revealed = signal<Record<string, boolean>>({});
+
+  /** Tag prefix for this channel type, used in the worked example under the slug field. */
+  readonly tagPrefix =
+    this.data.channelType === ChannelType.SMS ? 'sms'
+    : this.data.channelType === ChannelType.Voice ? 'call'
+    : 'wp';
+
+  /**
+   * What the slug will actually be: the typed value, else the one the backend would
+   * derive from the display name, else a placeholder. Mirrors ChannelConfigService.Slugify.
+   */
+  get slugPreview(): string {
+    const typed = (this.form?.get('labelSlug')?.value as string | null)?.trim();
+    if (typed) return typed;
+
+    const derived = ((this.form?.get('label')?.value as string | null) ?? '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '');
+    return derived || 'yourlabel';
+  }
 
   readonly providerFields: FieldDef[] = this.fieldsForChannel(this.data.channelType);
 
@@ -48,8 +70,7 @@ export class ConfigFormDialogComponent {
           { key: 'callerID', label: 'Caller ID' },
           { key: 'baseUrl', label: 'Base URL' },
         ];
-      case ChannelType.WP_Text:
-      case ChannelType.WP_Media:
+      case ChannelType.WP:
         return [
           { key: 'instance_id', label: 'Instance ID' },
           { key: 'access_token', label: 'Access Token', password: true },
@@ -72,7 +93,16 @@ export class ConfigFormDialogComponent {
   private buildForm() {
     const group: Record<string, unknown> = {
       label: [this.data.config?.label ?? '', Validators.required],
+      // Optional: the backend derives one from the label when left blank. The pattern
+      // mirrors the server rule -- lowercase alphanumeric, no hyphens, because the
+      // combined tag form splits on "-wp_label:".
+      labelSlug: [this.data.config?.labelSlug ?? '', Validators.pattern(/^[a-z0-9]*$/)],
       providerName: [this.data.config?.providerName ?? '', Validators.required],
+      // WhatsApp-only pacing; the backend rejects anything outside 0..300.
+      delaySeconds: [
+        this.data.config?.delaySeconds ?? 0,
+        [Validators.required, Validators.min(0), Validators.max(300)],
+      ],
     };
     for (const f of this.providerFields) {
       group[f.key] = [this.data.config?.configFields?.[f.key] ?? '', Validators.required];
@@ -110,7 +140,9 @@ export class ConfigFormDialogComponent {
     if (this.isEdit) {
       const body: UpdateChannelConfigRequest = {
         label: raw['label'],
+        ...(raw['labelSlug']?.trim() ? { labelSlug: raw['labelSlug'].trim() } : {}),
         providerName: raw['providerName'],
+        delaySeconds: this.isWhatsApp ? Number(raw['delaySeconds'] ?? 0) : 0,
         configJson,
       };
       this.dialogRef.close({ mode: 'update', id: this.data.config!.id, body });
@@ -118,7 +150,9 @@ export class ConfigFormDialogComponent {
       const body: CreateChannelConfigRequest = {
         channelType: this.data.channelType,
         label: raw['label'],
+        ...(raw['labelSlug']?.trim() ? { labelSlug: raw['labelSlug'].trim() } : {}),
         providerName: raw['providerName'],
+        delaySeconds: this.isWhatsApp ? Number(raw['delaySeconds'] ?? 0) : 0,
         configJson,
       };
       this.dialogRef.close({ mode: 'create', body });

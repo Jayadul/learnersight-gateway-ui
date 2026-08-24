@@ -1,2 +1,28 @@
 .chart-card { padding: 18px; height: 100%; }
 h3 { margin: 0 0 8px; font-size: 16px; }
+.empty { color: var(--nzg-text-muted); font-size: 13px; margin: 24px 0; }
+
+.reason-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
+
+.reason-head { display: flex; align-items: baseline; gap: 12px; }
+// One line with an ellipsis: provider messages run long, and the full text is on hover.
+.reason-text {
+  flex: 1; min-width: 0;
+  font-size: 13px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.reason-count { font-size: 13px; font-weight: 700; flex-shrink: 0; }
+
+.bar-track {
+  margin-top: 6px; height: 6px; border-radius: 3px;
+  background: rgba(127, 127, 127, 0.16);
+}
+.bar-fill { height: 100%; border-radius: 3px; background: #dc2626; }
+
+.channel-row { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.channel-pill {
+  padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}

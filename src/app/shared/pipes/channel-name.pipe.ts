@@ -1,11 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-/** Maps backend channel-name strings (e.g. "WP_Text") to customer-friendly labels. */
+/** Maps backend channel-name strings (e.g. "WP") to customer-friendly labels. */
 export function channelNameLabel(value: string): string {
   switch (value) {
     case 'SMS': return 'SMS';
-    case 'WP_Text': return 'WhatsApp Text';
-    case 'WP_Media': return 'WhatsApp Media';
+    case 'WP': return 'WhatsApp';
+    // Pre-unification names, still present in older exports and archived payloads.
+    case 'WP_Text': return 'WhatsApp';
+    case 'WP_Media': return 'WhatsApp';
     case 'Voice': return 'Voice Call';
     default: return value;
   }
