@@ -9,4 +9,6 @@ export interface ApiLogDto {
   readonly durationMs: number;
   readonly requestedAt: string;
   readonly messageRequestId?: string;
+  /** Channel types the request's tags asked for, e.g. "SMS, WhatsApp". */
+  readonly requestedChannels?: string;
 }

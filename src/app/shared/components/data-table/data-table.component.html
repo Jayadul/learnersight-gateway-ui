@@ -18,7 +18,10 @@
           } @else {
             <th mat-header-cell *matHeaderCellDef [style.width]="col.width">{{ col.header }}</th>
           }
-          <td mat-cell *matCellDef="let row">
+          <td mat-cell *matCellDef="let row"
+              [matTooltip]="cellTooltip(col, row)"
+              [matTooltipClass]="'nzg-cell-tooltip'"
+              matTooltipPosition="above">
             @switch (col.type) {
               @case ('custom') {
                 <ng-container *ngTemplateOutlet="templateFor(col.key); context: { $implicit: row }"></ng-container>

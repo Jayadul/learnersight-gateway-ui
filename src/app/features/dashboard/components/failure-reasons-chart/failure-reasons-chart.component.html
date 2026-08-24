@@ -1,5 +1,25 @@
-﻿<mat-card class="chart-card">
+<mat-card class="chart-card">
   <h3>Top 5 Failure Reasons <span class="scope-badge">All Time</span></h3>
-  <apx-chart [series]="series()" [chart]="chart" [plotOptions]="plotOptions" [dataLabels]="dataLabels"
-             [colors]="colors" [xaxis]="xaxis()"></apx-chart>
+
+  @if (rows().length === 0) {
+    <p class="empty">No failures recorded.</p>
+  } @else {
+    <ul class="reason-list">
+      @for (row of rows(); track row.reason) {
+        <li class="reason">
+          <div class="reason-head">
+            <span class="reason-text" [matTooltip]="row.reason"
+                  matTooltipClass="nzg-cell-tooltip">{{ row.reason }}</span>
+            <span class="reason-count">{{ row.count }}</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" [style.width.%]="row.widthPercent"></div></div>
+          <div class="channel-row">
+            @for (ch of row.channels; track ch.label) {
+              <span class="channel-pill" [matTooltip]="ch.type">{{ ch.label }} · {{ ch.count }}</span>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  }
 </mat-card>

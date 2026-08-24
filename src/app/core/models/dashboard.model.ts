@@ -9,4 +9,15 @@ export interface DashboardSummaryDto {
 }
 export interface TimelinePointDto { readonly date: string; readonly count: number; }
 export interface ChannelBreakdownDto { readonly channelType: string; readonly sentCount: number; readonly failedCount: number; }
-export interface FailureReasonDto { readonly reason: string; readonly count: number; }
+export interface ChannelFailureCountDto {
+  readonly channelType: string;
+  /** Which gateway, when the job still has one. */
+  readonly channelLabel?: string;
+  readonly count: number;
+}
+export interface FailureReasonDto {
+  readonly reason: string;
+  readonly count: number;
+  /** The same failures split by channel, worst first. */
+  readonly byChannel: ChannelFailureCountDto[];
+}

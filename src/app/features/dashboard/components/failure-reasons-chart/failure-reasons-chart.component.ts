@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import type { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexDataLabels, ApexPlotOptions } from 'ng-apexcharts';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FailureReasonDto } from '../../../../core/models/dashboard.model';
+import { channelNameLabel } from '../../../../shared/pipes/channel-name.pipe';
 
 @Component({
   selector: 'app-failure-reasons-chart',
   standalone: true,
-  imports: [MatCardModule, NgApexchartsModule],
+  imports: [MatCardModule, MatTooltipModule],
   templateUrl: './failure-reasons-chart.component.html',
   styleUrl: './failure-reasons-chart.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,12 +15,26 @@ import { FailureReasonDto } from '../../../../core/models/dashboard.model';
 export class FailureReasonsChartComponent {
   readonly reasons = input.required<FailureReasonDto[]>();
 
-  readonly series = computed<ApexAxisChartSeries>(() => [
-    { name: 'Failures', data: this.reasons().map((r) => r.count) },
-  ]);
-  readonly chart: ApexChart = { type: 'bar', height: 300, toolbar: { show: false }, fontFamily: 'Roboto, sans-serif' };
-  readonly plotOptions: ApexPlotOptions = { bar: { horizontal: true, borderRadius: 4 } };
-  readonly dataLabels: ApexDataLabels = { enabled: true };
-  readonly colors = ['#dc2626'];
-  readonly xaxis = computed<ApexXAxis>(() => ({ categories: this.reasons().map((r) => r.reason) }));
+  /**
+   * A ranked list rather than a bar chart. Failure reasons are raw provider messages —
+   * long, and unreadable as axis labels — and each one now carries a per-channel split,
+   * which a single bar cannot show. The bar is drawn as a width so the ranking still
+   * reads at a glance.
+   */
+  readonly rows = computed(() => {
+    const worst = Math.max(...this.reasons().map((r) => r.count), 1);
+
+    return this.reasons().map((r) => ({
+      reason: r.reason,
+      count: r.count,
+      widthPercent: (r.count / worst) * 100,
+      channels: r.byChannel.map((c) => ({
+        // The gateway name when there is one: with several live per type, "WhatsApp"
+        // alone does not say which provider is failing.
+        label: c.channelLabel ?? channelNameLabel(c.channelType),
+        type: channelNameLabel(c.channelType),
+        count: c.count,
+      })),
+    }));
+  });
 }

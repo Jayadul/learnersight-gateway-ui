@@ -53,7 +53,10 @@ export class DispatchLogsComponent implements OnInit {
     { key: 'channelLabel', header: 'Sent Via', value: (r) => r.channelLabel ?? '—' },
     { key: 'toNumber', header: 'Number' },
     { key: 'status', header: 'Status', type: 'badge', badgeType: 'job' },
+    // Truncated in the cell, full reply on hover — provider errors are the one thing
+    // worth reading in full here, and they run long.
     { key: 'providerRawResponse', header: 'Provider Reply', truncate: 60, value: (r) => r.providerRawResponse ?? '—' },
+    { key: 'failureReason', header: 'Failure Reason', truncate: 40, value: (r) => r.failureReason ?? '—' },
     { key: 'isFallback', header: 'Fallback', type: 'custom', width: '90px' },
     { key: 'sentAt', header: 'Sent At', type: 'datetime' },
   ];

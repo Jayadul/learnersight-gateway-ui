@@ -4,6 +4,8 @@ import { DispatchJobDto } from './dispatch-job.model';
 export interface MessageRequestDto {
   readonly id: string;
   readonly toUser: string;
+  /** The message as submitted, tags and all. */
+  readonly rawMessageContent: string;
   readonly parsedChannels: string[];
   readonly overallStatus: MessageStatus;
   readonly receivedAt: string;

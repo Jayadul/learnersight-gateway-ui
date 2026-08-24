@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { JobStatus, MessageStatus } from '../../../core/models/enums';
+import { MessageStatusPipe } from '../../pipes/message-status.pipe';
 
 type BadgeType = 'message' | 'job' | 'call';
 type BadgeColor = 'green' | 'red' | 'orange' | 'amber' | 'grey';
@@ -26,7 +27,9 @@ export class StatusBadgeComponent {
     if (t === 'job') {
       return JobStatus[s] ?? 'Unknown';
     }
-    return MessageStatus[s] ?? 'Unknown';
+    // The pipe owns the wording, so the badge cannot drift from the rest of the UI —
+    // the raw enum name renders as "PartialSuccess", one word.
+    return new MessageStatusPipe().transform(s);
   });
 
   readonly color = computed<BadgeColor>(() => {
@@ -57,6 +60,9 @@ export class StatusBadgeComponent {
       case MessageStatus.Success: return 'green';
       case MessageStatus.Failed: return 'red';
       case MessageStatus.Pending: return 'orange';
+      // Delivered, but a channel had to fail first — amber alongside Partial Success
+      // rather than green, which would hide that something needs looking at.
+      case MessageStatus.Fallback: return 'amber';
       case MessageStatus.PartialSuccess: return 'amber';
       default: return 'grey';
     }

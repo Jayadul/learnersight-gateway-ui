@@ -17,6 +17,9 @@
       }
     </div>
 
+    <h3>Message</h3>
+    <pre class="raw-content">{{ d.rawMessageContent }}</pre>
+
     <h3>Deliveries ({{ d.jobs.length }})</h3>
     <app-data-table [columns]="jobColumns" [data]="$any(d.jobs)" [serverSide]="false"
                     [pageSize]="10" emptyTitle="No deliveries">

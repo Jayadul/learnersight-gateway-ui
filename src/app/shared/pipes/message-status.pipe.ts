@@ -9,6 +9,7 @@ export class MessageStatusPipe implements PipeTransform {
       case MessageStatus.PartialSuccess: return 'Partial Success';
       case MessageStatus.Success: return 'Success';
       case MessageStatus.Failed: return 'Failed';
+      case MessageStatus.Fallback: return 'Delivered via Fallback';
       default: return 'Unknown';
     }
   }

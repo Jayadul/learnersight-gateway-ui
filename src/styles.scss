@@ -82,3 +82,17 @@ body {
   color: var(--nzg-primary, #7b68ee);
   white-space: nowrap;
 }
+
+// Tooltip carrying the full text of a truncated table cell. Material's default is sized
+// for a few words; a raw provider reply or a tagged message needs room and line breaks.
+.nzg-cell-tooltip {
+  --mdc-plain-tooltip-supporting-text-size: 12px;
+
+  .mdc-tooltip__surface {
+    max-width: 520px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    text-align: left;
+    line-height: 1.5;
+  }
+}
