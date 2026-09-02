@@ -4,7 +4,7 @@ Angular 18 + Material admin UI for the messaging gateway. Backend: sibling repo
 `../learnersight-netzero-gateway` (.NET 8, dev URL http://localhost:5212).
 API contracts: `postman/*.json` + backend `docs/api.md` (source of truth for models).
 
-Current baseline: **Release 1.0.0** (see backend `docs/releases/1.0.0.md`).
+Current baseline: **Release 2.1.0** (see backend `docs/releases/2.1.0.md`).
 
 ## Commands
 
