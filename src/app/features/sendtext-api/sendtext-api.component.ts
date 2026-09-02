@@ -15,15 +15,23 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 import { FormFieldErrorsComponent } from '../../shared/components/form-field-errors/form-field-errors.component';
 import { CopyButtonComponent } from '../../shared/components/copy-button/copy-button.component';
 import { SendTextApiService } from './sendtext-api.service';
+import { ChannelConfigsService } from '../channel-configs/channel-configs.service';
+import { ChannelConfigDto } from '../../core/models/channel-config.model';
+import { ChannelType } from '../../core/models/enums';
+import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
+import { GatewayCredentialsService } from '../settings/gateway-credentials/gateway-credentials.service';
 
-// Demonstrates every supported tag in one request: SMS, WhatsApp text, WhatsApp with
-// media (same tag, ||url body), the SMS+WhatsApp combo, and a voice campaign with a lot.
+// Demonstrates the messaging tags in one request: SMS, WhatsApp text, WhatsApp with
+// media (same tag, ||url body), and the SMS+WhatsApp combo. The labels are placeholders —
+// the Gateway Labels table on the page lists the real ones.
+//
+// No [call:…] tag on purpose: pressing Send would place a real outbound call and bill for
+// it. The guide documents the voice tag; the one-click example must not fire one.
 const EXAMPLE_MESSAGE =
-  '[sms::Your OTP is 123456. It expires in 10 minutes.] ' +
-  '[wp::Hello, your appointment is confirmed for tomorrow at 3:00 PM.] ' +
-  '[wp::Please review the attached invoice.||https://example.com/files/invoice.pdf] ' +
-  '[sms-wp::Big sale this weekend! Visit https://example.com] ' +
-  '[call::due-bill-api||lot-42]';
+  '[sms:revemain::Your OTP is 123456. It expires in 10 minutes.] ' +
+  '[wp:waprimary::Hello, your appointment is confirmed for tomorrow at 3:00 PM.] ' +
+  '[wp:waprimary::Please review the attached invoice.||https://example.com/files/invoice.pdf] ' +
+  '[sms:revemain-wp:waprimary::Big sale this weekend! Visit https://example.com]';
 
 @Component({
   selector: 'app-sendtext-api',
@@ -31,7 +39,7 @@ const EXAMPLE_MESSAGE =
   imports: [
     ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatIconModule, MatDividerModule, MatProgressSpinnerModule,
-    PageHeaderComponent, FormFieldErrorsComponent, CopyButtonComponent,
+    PageHeaderComponent, FormFieldErrorsComponent, CopyButtonComponent, ChannelTypePipe,
   ],
   templateUrl: './sendtext-api.component.html',
   styleUrl: './sendtext-api.component.scss',
@@ -41,6 +49,8 @@ export class SendTextApiComponent {
   private readonly fb      = inject(FormBuilder);
   private readonly service = inject(SendTextApiService);
   private readonly notify  = inject(NotificationService);
+  private readonly channels = inject(ChannelConfigsService);
+  private readonly credentials = inject(GatewayCredentialsService);
   private readonly destroyRef = inject(DestroyRef);
 
   /** Base URL shown in the docs — the origin serving this page (nginx proxies /sendtext). */
@@ -50,9 +60,18 @@ export class SendTextApiComponent {
   readonly response = signal<SendTextGatewayResponse | null>(null);
 
   readonly hideSecret = signal(true);
+  readonly hideApiKey = signal(true);
+
+  /**
+   * The gateways an integrator can actually name. Every tag carries a label now, so the
+   * page has to show which ones exist — a guide listing only placeholder slugs would
+   * document tags that reject.
+   */
+  readonly channelsLoading = signal(true);
+  readonly labelledChannels = signal<ChannelConfigDto[]>([]);
 
   readonly form = this.fb.nonNullable.group({
-    // credentials are never pre-filled — the caller must supply their own
+    // pre-filled from Gateway Credentials once loaded; editable to test a rejection
     apikey:         ['', Validators.required],
     secretkey:      ['', Validators.required],
     callerID:       ['', Validators.required],
@@ -63,6 +82,52 @@ export class SendTextApiComponent {
   private readonly formValue = toSignal(this.form.valueChanges, {
     initialValue: this.form.getRawValue(),
   });
+
+  constructor() {
+    // Pre-fill the real credentials. Before 2.1 these were an SMS channel's keys and the
+    // page told you to copy them from Channels by hand; now the gateway owns them and
+    // this screen is SuperAdmin-only, so there is nothing gained by making you fetch them.
+    this.credentials
+      .get()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (c) => {
+          if (!c.isReadable) return;
+          this.form.controls.apikey.setValue(c.apiKey);
+          this.form.controls.secretkey.setValue(c.secretKey);
+          // callerID is recorded with the request, never used to authenticate, so the
+          // credential username is a sensible default rather than a meaningful one.
+          if (!this.form.controls.callerID.value) {
+            this.form.controls.callerID.setValue(c.username);
+          }
+        },
+        // A missing or unreadable row just means the fields stay empty and the caller
+        // types them; the page is still usable.
+        error: () => undefined,
+      });
+
+    this.channels
+      .getAll()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (list) => {
+          // Inactive gateways are deliberately hidden: naming one rejects the request,
+          // so listing it here would advertise a tag that cannot work.
+          this.labelledChannels.set(list.filter((c) => c.isActive));
+          this.channelsLoading.set(false);
+        },
+        error: () => this.channelsLoading.set(false),
+      });
+  }
+
+  /** The exact tag that routes to one gateway, ready to copy out of the table. */
+  tagFor(c: ChannelConfigDto): string {
+    const prefix =
+      c.channelType === ChannelType.SMS ? 'sms' : c.channelType === ChannelType.WP ? 'wp' : 'call';
+    const body = prefix === 'call' ? 'CAMPAIGN_ID' : 'TEXT';
+    return `[${prefix}:${c.labelSlug}::${body}]`;
+  }
+
 
   /** Live cURL preview that mirrors exactly what the simulator sends. */
   readonly curlPreview = computed(() => {

@@ -68,6 +68,12 @@ export const routes: Routes = [
         canActivate: [roleGuard('SuperAdmin')],
       },
       {
+        path: 'settings/gateway-credentials',
+        loadComponent: () =>
+          import('./features/settings/gateway-credentials/gateway-credentials.component').then((m) => m.GatewayCredentialsComponent),
+        canActivate: [roleGuard('SuperAdmin')],
+      },
+      {
         path: 'settings/fallback',
         loadComponent: () =>
           import('./features/fallback-policies/fallback-policies.component').then((m) => m.FallbackPoliciesComponent),

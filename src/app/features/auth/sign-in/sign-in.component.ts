@@ -50,8 +50,25 @@ export class SignInComponent {
       },
       error: (err: HttpErrorResponse) => {
         this.loading.set(false);
-        this.errorMessage.set(err.status === 401 ? 'Invalid username or password.' : 'Sign in failed. Please try again.');
+        this.errorMessage.set(this.describe(err.status));
       },
     });
+  }
+
+  /**
+   * Separates "your password is wrong" from "the API is not answering yet". Everything
+   * that was not a 401 used to read as a failed sign-in, which is what made a 502 during
+   * startup look like lost seed data: right after a pull the web container serves this
+   * page while the API is still migrating, and nginx answers 502 until it finishes.
+   */
+  private describe(status: number): string {
+    if (status === 401) return 'Invalid username or password.';
+
+    // status 0 is a connection failure — the browser never got a response at all.
+    if (status === 0 || status === 502 || status === 503 || status === 504) {
+      return 'The gateway is still starting up. Give it a moment and try again.';
+    }
+
+    return 'Sign in failed. Please try again.';
   }
 }
