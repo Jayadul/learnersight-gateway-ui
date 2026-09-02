@@ -18,6 +18,7 @@ export const ApiEndpoints = {
     failureReasons:   `${BASE}/dashboard/failure-reasons`,
   },
   adminUsers:       `${BASE}/admin/users`,
+  gatewayCredentials: `${BASE}/gateway-credentials`,
   channelConfigs:   `${BASE}/channel-configs`,
   fallbackPolicies: `${BASE}/fallback-policies`,
   messageRequests:  `${BASE}/message-requests`,

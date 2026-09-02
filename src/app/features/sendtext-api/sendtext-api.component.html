@@ -25,7 +25,7 @@
             <tr><th>Content-Type</th><td><code>application/x-www-form-urlencoded</code></td></tr>
             <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> form fields (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
             <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
-            <tr><th>Gateways</th><td>Each channel type may have several gateways configured. A message goes to that type's default gateway unless its tag names one</td></tr>
+            <tr><th>Gateways</th><td>Each channel type may have several gateways configured. Every tag names the one it uses by label &mdash; only an untagged message falls back to a default</td></tr>
             <tr><th>Pacing</th><td>A WhatsApp gateway may be given a send delay to stay under provider rate limits, so its deliveries arrive spaced out rather than all at once. A long recipient list takes proportionally longer</td></tr>
           </tbody>
         </table>
@@ -68,8 +68,14 @@
         <p>
           Compose <code>messageContent</code> from one or more <code>[tag::content]</code> blocks.
           Each tag creates one delivery, and several tags may be combined in a single request.
-          There are three channels — SMS, WhatsApp and Voice — and an unrecognised tag
-          rejects the whole request rather than being skipped.
+          There are three channels &mdash; SMS, WhatsApp and Voice.
+        </p>
+        <p class="callout">
+          <strong>Every tag names its gateway.</strong> A tag is
+          <code>type:label</code>, where <code>label</code> is the slug of the gateway that
+          should carry it &mdash; for example <code>[sms:revemain::…]</code>. The labels
+          configured for this installation are listed below. Sending no tag at all is the
+          one exception: that goes out as a plain SMS on the default SMS gateway.
         </p>
         <table class="doc-table">
           <thead>
@@ -77,73 +83,71 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>[sms::TEXT]</code></td>
+              <td><code>[sms:LABEL::TEXT]</code></td>
               <td>SMS</td>
-              <td><code>[sms::Your OTP is 123456]</code></td>
+              <td><code>[sms:revemain::Your OTP is 123456]</code></td>
             </tr>
             <tr>
-              <td><code>[wp::TEXT]</code></td>
+              <td><code>[wp:LABEL::TEXT]</code></td>
               <td>WhatsApp</td>
-              <td><code>[wp::Hello, your appointment is confirmed.]</code></td>
+              <td><code>[wp:waprimary::Your appointment is confirmed.]</code></td>
             </tr>
             <tr>
-              <td><code>[wp::TEXT||URL]</code></td>
-              <td>WhatsApp with media — the same tag; the URL is what makes it a media message</td>
-              <td><code>[wp::Please review the invoice.||https://example.com/invoice.pdf]</code></td>
+              <td><code>[wp:LABEL::TEXT||URL]</code></td>
+              <td>WhatsApp with media &mdash; the same tag; the URL is what makes it a media message</td>
+              <td><code>[wp:waprimary::See invoice||https://example.com/invoice.pdf]</code></td>
             </tr>
             <tr>
-              <td><code>[sms-wp::TEXT]</code></td>
-              <td>SMS <em>and</em> WhatsApp (same text, two deliveries)</td>
-              <td><code>[sms-wp::Big sale this weekend!]</code></td>
+              <td><code>[sms:LABEL-wp:LABEL::TEXT]</code></td>
+              <td>SMS <em>and</em> WhatsApp (same text, two deliveries, one gateway named per leg).
+                Media works here too: append <code>||URL</code> and it goes on the WhatsApp leg</td>
+              <td><code>[sms:revemain-wp:waprimary::Big sale this weekend!]</code></td>
             </tr>
             <tr>
-              <td><code>[call::CAMPAIGN_ID]</code></td>
-              <td>Voice call using the campaign's configured lot</td>
-              <td><code>[call::due-bill-api]</code></td>
-            </tr>
-            <tr>
-              <td><code>[call::CAMPAIGN_ID||LOT]</code></td>
-              <td>Voice call for a specific lot within the campaign</td>
-              <td><code>[call::due-bill-api||lot-42]</code></td>
+              <td><code>[call:LABEL::CAMPAIGN_ID||LOT]</code></td>
+              <td>Voice call &mdash; the campaign to dial, then the lot within it</td>
+              <td><code>[call:voicemain::due-bill-api||1]</code></td>
             </tr>
             <tr>
               <td><em>(no tag)</em></td>
-              <td>Plain SMS with the full content</td>
+              <td>Plain SMS with the full content, on the default SMS gateway</td>
               <td><code>Hello without any tag</code></td>
-            </tr>
-            <tr class="section-row">
-              <td colspan="3"><strong>Choosing a specific gateway</strong> — each channel type
-                may have several gateways configured. Without a label a message goes to that
-                type's <strong>default</strong> gateway; add a label to name one exactly. Labels
-                are shown against each channel in Settings &rsaquo; Channels.</td>
-            </tr>
-            <tr>
-              <td><code>[sms_label:SLUG::TEXT]</code></td>
-              <td>SMS through the gateway with this label</td>
-              <td><code>[sms_label:revemain::Your OTP is 123456]</code></td>
-            </tr>
-            <tr>
-              <td><code>[wp_label:SLUG::TEXT]</code></td>
-              <td>WhatsApp through the gateway with this label (media works the same: <code>||URL</code>)</td>
-              <td><code>[wp_label:watrendmain::Your appointment is confirmed.]</code></td>
-            </tr>
-            <tr>
-              <td><code>[call_label:SLUG::CAMPAIGN_ID]</code></td>
-              <td>Voice call through the gateway with this label</td>
-              <td><code>[call_label:voicemain::due-bill-api||lot-42]</code></td>
-            </tr>
-            <tr>
-              <td><code>[sms_label:A-wp_label:B::TEXT]</code></td>
-              <td>The combined send, with each leg on a named gateway. Either leg may be
-                labelled on its own — the unlabelled one uses its type's default</td>
-              <td><code>[sms_label:revemain-wp::Big sale this weekend!]</code></td>
             </tr>
           </tbody>
         </table>
         <p class="muted">
           <code>||</code> means the same thing everywhere: it separates a media URL from its
-          caption, and a lot number from its campaign id.
+          caption, and a lot number from its campaign id. Labels are lowercase letters and
+          digits only. Tags are case-insensitive.
         </p>
+
+        <h3 class="doc-section">Gateway Labels</h3>
+        <p>
+          The labels below are the ones configured right now. A tag naming anything else
+          &mdash; or naming a gateway that has been deactivated &mdash; rejects the whole
+          request with <code>101 REJECTD</code>, so nothing is sent twice or silently dropped.
+        </p>
+        @if (channelsLoading()) {
+          <p class="muted">Loading gateways…</p>
+        } @else if (labelledChannels().length === 0) {
+          <p class="muted">No active gateways are configured yet. Add one in Settings &rsaquo; Channels.</p>
+        } @else {
+          <table class="doc-table">
+            <thead>
+              <tr><th>Channel</th><th>Gateway</th><th>Label</th><th>Tag</th></tr>
+            </thead>
+            <tbody>
+              @for (c of labelledChannels(); track c.id) {
+                <tr>
+                  <td>{{ c.channelType | channelType }}</td>
+                  <td>{{ c.label }}@if (c.isDefault) { <span class="muted"> (default)</span> }</td>
+                  <td><code>{{ c.labelSlug }}</code></td>
+                  <td><code>{{ tagFor(c) }}</code></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
 
         <h3 class="doc-section">Automatic Fallback</h3>
         <p>
@@ -162,8 +166,8 @@
             <tr>
               <th>One tag only</th>
               <td>A request that asks for <strong>more than one delivery</strong> never gets a
-                fallback — for example <code>[sms::…][wp::…]</code> or any
-                <code>[sms-wp::…]</code> form. The second channel is already
+                fallback — for example <code>[sms:a::…][wp:b::…]</code> or any
+                <code>[sms:a-wp:b::…]</code> combined tag. The second channel is already
                 the redundancy, so no third message is generated and nothing extra is charged.</td>
             </tr>
             <tr>
@@ -204,13 +208,19 @@
           <mat-icon class="sim-icon">play_circle</mat-icon>
           <span>Try It (Live)</span>
         </div>
-        <p class="sim-sub">Sends a real request to <code>POST /sendtext</code>. The apikey/secretkey are the ones from
-          <strong>Configuration → Channels → SMS</strong>; they are never pre-filled here.</p>
+        <p class="sim-sub">Sends a real request to <code>POST /sendtext</code>. The credentials below are
+          pre-filled from <strong>Configuration &rsaquo; Gateway Credentials</strong> &mdash; the same pair
+          your integrators use. Edit them to test a rejection.</p>
 
         <form [formGroup]="form" (ngSubmit)="submit()">
           <mat-form-field appearance="outline" class="full">
             <mat-label>apikey</mat-label>
-            <input matInput formControlName="apikey" placeholder="your API key" autocomplete="off" />
+            <input matInput [type]="hideApiKey() ? 'password' : 'text'" formControlName="apikey"
+                   placeholder="your API key" autocomplete="off" />
+            <button mat-icon-button matSuffix type="button" (click)="hideApiKey.set(!hideApiKey())"
+                    [attr.aria-label]="hideApiKey() ? 'Show API key' : 'Hide API key'">
+              <mat-icon>{{ hideApiKey() ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
             <app-form-field-errors [control]="form.controls.apikey" />
           </mat-form-field>
 
@@ -228,6 +238,7 @@
           <mat-form-field appearance="outline" class="full">
             <mat-label>callerID</mat-label>
             <input matInput formControlName="callerID" placeholder="your sender ID" />
+            <mat-hint>Recorded with the request. Not part of authentication.</mat-hint>
             <app-form-field-errors [control]="form.controls.callerID" />
           </mat-form-field>
 
@@ -242,8 +253,10 @@
           <mat-form-field appearance="outline" class="full">
             <mat-label>messageContent</mat-label>
             <textarea matInput formControlName="messageContent" rows="8"
-                      placeholder="[sms::TEXT] [wp::TEXT] [wp::TEXT||MEDIA_URL] [sms-wp::TEXT] [call::CAMPAIGN_ID||LOT] (combine any of them)"></textarea>
-            <mat-hint>The pre-filled example uses every tag — and because it asks for several deliveries, fallback does not apply to it. Remove the ones you don't need.</mat-hint>
+                      placeholder="[sms:LABEL::TEXT] [wp:LABEL::TEXT] [wp:LABEL::TEXT||MEDIA_URL] [sms:LABEL-wp:LABEL::TEXT] [call:LABEL::CAMPAIGN_ID||LOT]"></textarea>
+            <mat-hint>The pre-filled example uses every tag except <code>call</code> — and because it asks for
+              several deliveries, fallback does not apply to it. Remove the ones you don't need. A
+              <code>call</code> tag places a real outbound call, so it is left out of the example on purpose.</mat-hint>
             <app-form-field-errors [control]="form.controls.messageContent" />
           </mat-form-field>
 

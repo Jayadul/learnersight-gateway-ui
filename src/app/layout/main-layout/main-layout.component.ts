@@ -29,6 +29,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/media-library': 'Media Library',
   '/settings/gateway-simulator': 'Gateway Simulator',
   '/settings/channels': 'Channels',
+  '/settings/gateway-credentials': 'Gateway Credentials',
   '/settings/fallback': 'Fallback Rules',
   '/settings/users': 'Users',
   '/forbidden': 'Access Denied',
@@ -113,6 +114,7 @@ export class MainLayoutComponent implements OnInit {
       items: [
         { label: 'Channels', icon: 'settings_input_antenna', route: '/settings/channels' },
         { label: 'Fallback Rules', icon: 'alt_route', route: '/settings/fallback' },
+        { label: 'Gateway Credentials', icon: 'vpn_key', route: '/settings/gateway-credentials' },
       ],
     },
     {

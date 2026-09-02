@@ -34,6 +34,9 @@ export class ConfigCardComponent {
       this.config().channelType === ChannelType.SMS ? 'sms'
       : this.config().channelType === ChannelType.WP ? 'wp'
       : 'call';
-    return `Send to this channel with [${prefix}_label:${this.config().labelSlug}::your message]`;
+    // Voice tags carry a campaign id, not message text — showing "your message" there
+    // would document a payload the provider never reads.
+    const body = prefix === 'call' ? 'your-campaign-id' : 'your message';
+    return `Send to this channel with [${prefix}:${this.config().labelSlug}::${body}]`;
   });
 }
