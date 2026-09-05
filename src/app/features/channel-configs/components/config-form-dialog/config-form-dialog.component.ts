@@ -103,9 +103,23 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
     },
     {
       value: Provider.NetZeroInbox,
-      label: 'NetZero Inbox',
+      label: 'NetZero Inbox (v1 API)',
       fields: [
         { key: 'token', label: 'Token', password: true },
+        BASE_URL,
+      ],
+    },
+    {
+      // Same vendor and token as above, different API entirely — see the note shown
+      // when it is selected.
+      value: Provider.NetZeroInboxQr,
+      label: 'NetZero Inbox (QR device)',
+      fields: [
+        { key: 'token', label: 'Token', password: true },
+        {
+          key: 'from', label: 'From Number',
+          hint: "The linked device's own WhatsApp number, digits only.",
+        },
         BASE_URL,
       ],
     },
@@ -165,11 +179,20 @@ export class ConfigFormDialogComponent {
    * send on it rather than guessing a request shape. Say so where the choice is made,
    * not after a message has failed.
    */
-  readonly providerNote = computed<string | null>(() =>
-    this.provider() === Provider.NetZeroInbox
-      ? 'This provider sends text only. A message tagged with a media URL will be rejected — use a WaTrend channel for media.'
-      : null,
-  );
+  readonly providerNote = computed<string | null>(() => {
+    switch (this.provider()) {
+      case Provider.NetZeroInbox:
+        return 'Sends text only — a message tagged with a media URL will be rejected. '
+          + 'This is the structured v1 API; pick the QR device option instead if this '
+          + 'number is linked by scanning a QR code.';
+      case Provider.NetZeroInboxQr:
+        return 'Sends text only — a message tagged with a media URL will be rejected. '
+          + 'This is the QR-linked device API and needs the From Number below. It is a '
+          + 'different API from the v1 option, on the same account.';
+      default:
+        return null;
+    }
+  });
 
   /** Tag prefix for this channel type, used in the worked example under the slug field. */
   readonly tagPrefix =
