@@ -132,6 +132,11 @@
         } @else if (labelledChannels().length === 0) {
           <p class="muted">No active gateways are configured yet. Add one in Settings &rsaquo; Channels.</p>
         } @else {
+          <p class="muted">
+            Only active gateways appear here. A newly added one is inactive until it is
+            switched on in Settings &rsaquo; Channels, and its remaining credit is shown
+            there and on the Dashboard.
+          </p>
           <table class="doc-table">
             <thead>
               <tr><th>Channel</th><th>Gateway</th><th>Label</th><th>Tag</th></tr>

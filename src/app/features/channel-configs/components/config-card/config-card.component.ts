@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ChannelConfigDto } from '../../../../core/models/channel-config.model';
+import { ChannelBalanceDto } from '../../../../core/models/channel-balance.model';
 import { ChannelType } from '../../../../core/models/enums';
 import { StatusBadgeComponent } from '../../../../shared/components/status-badge/status-badge.component';
 
@@ -13,7 +14,7 @@ import { StatusBadgeComponent } from '../../../../shared/components/status-badge
   selector: 'app-config-card',
   standalone: true,
   imports: [
-    DatePipe, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule,
+    DatePipe, DecimalPipe, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule,
     MatTooltipModule, StatusBadgeComponent,
   ],
   templateUrl: './config-card.component.html',
@@ -22,6 +23,8 @@ import { StatusBadgeComponent } from '../../../../shared/components/status-badge
 })
 export class ConfigCardComponent {
   readonly config = input.required<ChannelConfigDto>();
+  /** Null for a provider that reports no balance — Voice and WaTrend have none. */
+  readonly balance = input<ChannelBalanceDto | null>(null);
   readonly edit = output<ChannelConfigDto>();
   readonly activate = output<ChannelConfigDto>();
   readonly deactivate = output<ChannelConfigDto>();
@@ -39,4 +42,7 @@ export class ConfigCardComponent {
     const body = prefix === 'call' ? 'your-campaign-id' : 'your message';
     return `Send to this channel with [${prefix}:${this.config().labelSlug}::${body}]`;
   });
+
+  /** A figure exists to show, whether or not the last refresh succeeded. */
+  readonly hasBalance = computed(() => this.balance()?.available != null);
 }

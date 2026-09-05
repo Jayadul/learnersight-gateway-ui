@@ -16,3 +16,26 @@ h4 { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
 
 .delay-line { font-size: 12px; color: var(--nzg-text-muted); margin: 6px 0 0; display: flex; align-items: center; gap: 4px; }
 .delay-icon { font-size: 14px; width: 14px; height: 14px; }
+
+// Cached provider balance. Shown only when there is a figure or a failure to report,
+// so channels whose provider has no balance concept are not left with an empty row.
+.balance-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 13px;
+
+  &.stale, &.error { color: var(--nzg-text-muted); }
+  &.error { color: #dc2626; }
+}
+.balance-icon { font-size: 16px; width: 16px; height: 16px; }
+.balance-amount { font-weight: 600; font-variant-numeric: tabular-nums; }
+.balance-limit { color: var(--nzg-text-muted); font-size: 12px; }
+.balance-stale {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 9px;
+  background: rgba(180, 83, 9, 0.12);
+  color: #92400e;
+}

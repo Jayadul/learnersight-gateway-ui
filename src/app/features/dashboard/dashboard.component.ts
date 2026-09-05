@@ -10,12 +10,15 @@ import {
   ChannelBreakdownDto, DashboardSummaryDto, FailureReasonDto, TimelinePointDto,
 } from '../../core/models/dashboard.model';
 import { MessageRequestDto } from '../../core/models/message-request.model';
+import { ChannelBalanceDto } from '../../core/models/channel-balance.model';
+import { ChannelBalancesService } from '../../core/services/channel-balances.service';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { SummaryCardsComponent } from './components/summary-cards/summary-cards.component';
 import { TimelineChartComponent } from './components/timeline-chart/timeline-chart.component';
 import { ChannelBreakdownChartComponent } from './components/channel-breakdown-chart/channel-breakdown-chart.component';
 import { FailureReasonsChartComponent } from './components/failure-reasons-chart/failure-reasons-chart.component';
 import { RecentActivityComponent } from './components/recent-activity/recent-activity.component';
+import { ChannelBalancesComponent } from './components/channel-balances/channel-balances.component';
 
 const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
 
@@ -26,6 +29,7 @@ const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
     MatButtonModule, MatIconModule, MatTooltipModule,
     PageHeaderComponent, SummaryCardsComponent, TimelineChartComponent,
     ChannelBreakdownChartComponent, FailureReasonsChartComponent, RecentActivityComponent,
+    ChannelBalancesComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -34,6 +38,7 @@ const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
 export class DashboardComponent implements OnInit {
   private readonly dashboardService = inject(DashboardService);
   private readonly messageLogsService = inject(MessageLogsService);
+  private readonly balancesService = inject(ChannelBalancesService);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly loading = signal(true);
@@ -43,6 +48,7 @@ export class DashboardComponent implements OnInit {
   readonly breakdown = signal<ChannelBreakdownDto[]>([]);
   readonly failureReasons = signal<FailureReasonDto[]>([]);
   readonly recent = signal<MessageRequestDto[]>([]);
+  readonly balances = signal<ChannelBalanceDto[]>([]);
   readonly countdown = signal(REFRESH_INTERVAL);
   readonly countdownLabel = computed(() => {
     const s = this.countdown();
@@ -76,6 +82,9 @@ export class DashboardComponent implements OnInit {
       breakdown: this.dashboardService.getChannelBreakdown(),
       failureReasons: this.dashboardService.getFailureReasons(5),
       recent: this.messageLogsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
+      // Cached figures only — this read never calls a provider, so a slow vendor
+      // cannot hold up the dashboard. A background job keeps them current.
+      balances: this.balancesService.getAll(),
     }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (res) => {
         this.summary.set(res.summary);
@@ -83,6 +92,7 @@ export class DashboardComponent implements OnInit {
         this.breakdown.set(res.breakdown);
         this.failureReasons.set(res.failureReasons);
         this.recent.set(res.recent.items);
+        this.balances.set(res.balances);
         this.loading.set(false);
       },
       error: () => this.loading.set(false),

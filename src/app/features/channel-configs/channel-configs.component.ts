@@ -10,6 +10,8 @@ import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm.service';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
+import { ChannelBalanceDto } from '../../core/models/channel-balance.model';
+import { ChannelBalancesService } from '../../core/services/channel-balances.service';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ConfigCardComponent } from './components/config-card/config-card.component';
 import { ConfigFormDialogComponent } from './components/config-form-dialog/config-form-dialog.component';
@@ -29,6 +31,7 @@ interface TabDef { label: string; channelType: ChannelType; }
 })
 export class ChannelConfigsComponent implements OnInit {
   private readonly service = inject(ChannelConfigsService);
+  private readonly balancesService = inject(ChannelBalancesService);
   private readonly dialog = inject(MatDialog);
   private readonly confirm = inject(ConfirmService);
   private readonly notify = inject(NotificationService);
@@ -42,6 +45,12 @@ export class ChannelConfigsComponent implements OnInit {
   readonly activeTab = signal(0);
   readonly loading = signal(false);
   readonly configs = signal<ChannelConfigDto[]>([]);
+  /**
+   * Cached balances keyed by channel, so each card can show its own without a call.
+   * Explicitly optional in the value type: most channels have no balance at all, and
+   * indexing a plain Record would type a missing entry as present.
+   */
+  readonly balances = signal<Record<string, ChannelBalanceDto | undefined>>({});
 
   ngOnInit(): void {
     this.loadTab(0);
@@ -60,6 +69,14 @@ export class ChannelConfigsComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
+    });
+
+    // Balances load alongside rather than blocking the cards: they are cached figures
+    // and a failure here should leave the page working without them.
+    this.balancesService.getAll().subscribe({
+      next: (list) => this.balances.set(
+        Object.fromEntries(list.map((b) => [b.channelConfigId, b]))),
+      error: () => this.balances.set({}),
     });
   }
 

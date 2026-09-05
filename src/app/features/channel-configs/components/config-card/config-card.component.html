@@ -23,6 +23,26 @@
     <code class="slug" [matTooltip]="tagExample()">{{ config().labelSlug }}</code>
   </p>
 
+  @if (hasBalance()) {
+    <!-- Balance is cached; the dashboard card owns refreshing it. Shown here because
+         an admin editing a channel's credentials wants to see the effect. -->
+    <p class="balance-line" [class.stale]="balance()!.isStale">
+      <mat-icon class="balance-icon">account_balance_wallet</mat-icon>
+      <span class="balance-amount">{{ balance()!.available | number: '1.2-2' }}</span>
+      @if (balance()!.creditLimit !== null) {
+        <span class="balance-limit">of {{ balance()!.creditLimit | number: '1.2-2' }}</span>
+      }
+      @if (balance()!.isStale) {
+        <span class="balance-stale" [matTooltip]="balance()!.error!">last known</span>
+      }
+    </p>
+  } @else if (balance()?.error) {
+    <p class="balance-line error" [matTooltip]="balance()!.error!">
+      <mat-icon class="balance-icon">error_outline</mat-icon>
+      Balance check failed
+    </p>
+  }
+
   @if (config().delaySeconds > 0) {
     <p class="delay-line">
       <mat-icon class="delay-icon">schedule</mat-icon>
