@@ -21,6 +21,11 @@ export const ApiEndpoints = {
   gatewayCredentials: `${BASE}/gateway-credentials`,
   channelConfigs:   `${BASE}/channel-configs`,
   channelBalances:  `${BASE}/channel-balances`,
+  statusSync: {
+    channels: `${BASE}/status-sync/channels`,
+    channel:  `${BASE}/status-sync/channels`,
+  },
+  resendRecipients: `${BASE}/dispatch-jobs/recipients/resend`,
   fallbackPolicies: `${BASE}/fallback-policies`,
   messageRequests:  `${BASE}/message-requests`,
   dispatchLogs:     `${BASE}/dispatch-logs`,

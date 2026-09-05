@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>Sync delivery status</h2>
+<mat-dialog-content>
+  <p class="intro">
+    Asks <strong>{{ config.label }}</strong> what became of the messages it accepted in
+    this window, and records the answer against each recipient. This already runs every
+    night for the previous day.
+  </p>
+
+  <form [formGroup]="form" class="sync-form">
+    <mat-form-field appearance="outline">
+      <mat-label>From</mat-label>
+      <input matInput [matDatepicker]="fromPicker" formControlName="from" />
+      <mat-datepicker-toggle matIconSuffix [for]="fromPicker" />
+      <mat-datepicker #fromPicker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To</mat-label>
+      <input matInput [matDatepicker]="toPicker" formControlName="to" />
+      <mat-datepicker-toggle matIconSuffix [for]="toPicker" />
+      <mat-datepicker #toPicker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Maximum recipients</mat-label>
+      <input matInput type="number" formControlName="limit" min="1" max="5000" />
+      <mat-hint>
+        Some providers answer one recipient at a time, so a wide window takes a while.
+      </mat-hint>
+    </mat-form-field>
+  </form>
+
+  @if (result(); as r) {
+    @if (r.success) {
+      <p class="result ok">
+        Resolved {{ r.updated }} recipient(s).
+        @if (r.unmatched > 0) {
+          <span class="muted">
+            {{ r.unmatched }} had no answer yet — normal for a message still in flight.
+          </span>
+        }
+      </p>
+    } @else {
+      <p class="result bad">
+        {{ r.error }}
+        <span class="muted">Nothing was changed, so this window can be retried.</span>
+      </p>
+    }
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-flat-button color="primary" (click)="run()" [disabled]="running()">
+    @if (running()) {
+      <mat-spinner diameter="18" />
+    } @else {
+      Sync now
+    }
+  </button>
+</mat-dialog-actions>

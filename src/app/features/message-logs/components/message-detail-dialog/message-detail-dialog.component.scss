@@ -20,3 +20,40 @@ h3 { margin: 0 0 12px; font-size: 15px; }
   word-break: break-word;
 }
 .loading-text { color: var(--nzg-text-muted); }
+
+// ── Per-recipient breakdown ────────────────────────────────────────────────
+.recipients-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+
+  h3 { margin: 0; }
+}
+
+.recipient-group { margin-top: 10px; }
+.group-label { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+
+.recipient-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  th, td { text-align: left; padding: 6px 8px; }
+  th { font-weight: 600; color: var(--nzg-text-muted); border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+  td { border-bottom: 1px solid rgba(0, 0, 0, 0.04); }
+  .pick { width: 34px; }
+  tr.failed td { background: rgba(220, 38, 38, 0.04); }
+  code { font-size: 12px; }
+}
+
+// Each state carries a word as well as a colour — colour alone is not a label.
+.delivery {
+  font-weight: 600;
+  &.d-1 { color: #16a34a; }  // Delivered
+  &.d-2 { color: #dc2626; }  // Failed
+  &.d-0, &.d-3 { color: var(--nzg-text-muted); }  // Awaiting status / Unknown
+}
+
+.muted { color: var(--nzg-text-muted); }

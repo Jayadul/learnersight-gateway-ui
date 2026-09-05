@@ -30,6 +30,14 @@ export class ConfigCardComponent {
   readonly deactivate = output<ChannelConfigDto>();
   readonly setDefault = output<ChannelConfigDto>();
   readonly delete = output<ChannelConfigDto>();
+  readonly syncStatus = output<ChannelConfigDto>();
+
+  /**
+   * Whether this channel's provider offers a delivery status lookup. GenNet accepts
+   * messages and reports a balance but has no status endpoint, so the action is hidden
+   * rather than shown and then refused.
+   */
+  readonly canSyncStatus = input(false);
 
   /** Shows the exact tag that routes to this channel, so the slug is self-explanatory. */
   readonly tagExample = computed(() => {
