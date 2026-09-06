@@ -1,4 +1,5 @@
 import { ChannelType, JobStatus } from './enums';
+import { DispatchJobRecipientDto } from './dispatch-job-recipient.model';
 
 export interface DispatchJobDto {
   readonly id: string;
@@ -17,4 +18,9 @@ export interface DispatchJobDto {
   readonly isFallback: boolean;
   readonly fallbackFromJobId?: string;
   readonly createdAt: string;
+  /**
+   * Per-recipient outcomes. Populated on the detail view only — a batched job can
+   * carry hundreds of rows the list view has no reason to load.
+   */
+  readonly recipients?: readonly DispatchJobRecipientDto[];
 }

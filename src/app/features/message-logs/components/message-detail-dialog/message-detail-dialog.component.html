@@ -27,6 +27,81 @@
         @if (row.isFallback) { <mat-chip class="fallback" [disableRipple]="true">Fallback</mat-chip> } @else { — }
       </ng-template>
     </app-data-table>
+
+    <!-- Per-recipient breakdown. A drill-down beneath each job's own status, not a
+         replacement: SMS and Voice batch every number into one job, so this is the
+         only place a partly delivered batch can be read. -->
+    <div class="recipients-header">
+      <h3>Recipients</h3>
+      @if (selectedCount() > 0) {
+        <button mat-flat-button color="primary" (click)="resendSelected()"
+                [disabled]="resending()">
+          <mat-icon>replay</mat-icon>
+          Resend {{ selectedCount() }} selected
+        </button>
+      }
+    </div>
+
+    @for (job of d.jobs; track job.id) {
+      @if (job.recipients?.length) {
+        <div class="recipient-group">
+          <p class="group-label">
+            {{ job.channelLabel ?? (job.channelType | channelType) }}
+            <span class="muted">· {{ job.recipients!.length }} recipient(s)</span>
+          </p>
+          <table class="recipient-table">
+            <thead>
+              <tr>
+                <th class="pick"></th>
+                <th>Number</th>
+                <th>Delivery</th>
+                <th>Provider Reference</th>
+                <th>Last Checked</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of job.recipients; track r.id) {
+                <tr [class.failed]="r.deliveryStatus === DeliveryStatus.Failed">
+                  <td class="pick">
+                    @if (isResendable(r)) {
+                      <mat-checkbox [checked]="isSelected(r.id)" (change)="toggle(r.id)"
+                                    [attr.aria-label]="'Select ' + r.recipient + ' to resend'" />
+                    }
+                  </td>
+                  <td>{{ r.recipient }}</td>
+                  <td>
+                    <span class="delivery" [class]="'d-' + r.deliveryStatus">
+                      {{ deliveryLabel(r.deliveryStatus) }}
+                    </span>
+                  </td>
+                  <td>
+                    @if (r.providerReferenceId) {
+                      <code>{{ r.providerReferenceId }}</code>
+                    } @else {
+                      <span class="muted" matTooltip="This provider returns no per-recipient id">—</span>
+                    }
+                  </td>
+                  <td>
+                    @if (r.lastCheckedAt) {
+                      {{ r.lastCheckedAt | date: 'dd MMM, HH:mm' }}
+                    } @else {
+                      <span class="muted">not synced</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    }
+
+    @if (!hasAnyRecipients(d)) {
+      <p class="muted">
+        No per-recipient detail. Recipient tracking started in Release 3 — messages sent
+        before it show delivery at the job level only.
+      </p>
+    }
   } @else if (loading()) {
     <p class="loading-text">Loading…</p>
   }

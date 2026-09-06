@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { MatChipsModule } from '@angular/material/chips';
 import { DispatchLogsService } from './dispatch-logs.service';
 import { DispatchJobDto } from '../../core/models/dispatch-job.model';
-import { ChannelType, JobStatus } from '../../core/models/enums';
+import { ChannelType, JobStatus, DeliveryStatus } from '../../core/models/enums';
 import { ListState } from '../../core/state/list-state';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { FilterBarComponent, FilterControl } from '../../shared/components/filter-bar/filter-bar.component';
@@ -41,6 +41,19 @@ export class DispatchLogsComponent implements OnInit {
         { label: 'Pending', value: JobStatus.Pending },
         { label: 'Sent', value: JobStatus.Sent },
         { label: 'Failed', value: JobStatus.Failed },
+      ],
+    },
+    {
+      // Related to Status but not the same thing: Status is what the provider said at
+      // hand-off, this is what became of the recipients afterwards. A Sent job can hold
+      // a mix, so this matches a job with ANY recipient in the chosen state.
+      kind: 'select', key: 'deliveryStatus', label: 'Delivery',
+      options: [
+        { label: 'All', value: null },
+        { label: 'Delivered', value: DeliveryStatus.Delivered },
+        { label: 'Failed', value: DeliveryStatus.Failed },
+        { label: 'Awaiting status', value: DeliveryStatus.Pending },
+        { label: 'Unknown', value: DeliveryStatus.Unknown },
       ],
     },
     { kind: 'text', key: 'toNumber', label: 'Number', placeholder: '8801700000001' },

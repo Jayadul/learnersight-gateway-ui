@@ -12,6 +12,8 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { ChannelBalanceDto } from '../../core/models/channel-balance.model';
 import { ChannelBalancesService } from '../../core/services/channel-balances.service';
+import { StatusSyncService } from '../../core/services/status-sync.service';
+import { StatusSyncDialogComponent } from './components/status-sync-dialog/status-sync-dialog.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
 import { ConfigCardComponent } from './components/config-card/config-card.component';
 import { ConfigFormDialogComponent } from './components/config-form-dialog/config-form-dialog.component';
@@ -32,6 +34,7 @@ interface TabDef { label: string; channelType: ChannelType; }
 export class ChannelConfigsComponent implements OnInit {
   private readonly service = inject(ChannelConfigsService);
   private readonly balancesService = inject(ChannelBalancesService);
+  private readonly statusSyncService = inject(StatusSyncService);
   private readonly dialog = inject(MatDialog);
   private readonly confirm = inject(ConfirmService);
   private readonly notify = inject(NotificationService);
@@ -51,6 +54,8 @@ export class ChannelConfigsComponent implements OnInit {
    * indexing a plain Record would type a missing entry as present.
    */
   readonly balances = signal<Record<string, ChannelBalanceDto | undefined>>({});
+  /** Channel ids whose provider offers a delivery status lookup. */
+  readonly syncableChannelIds = signal<ReadonlySet<string>>(new Set());
 
   ngOnInit(): void {
     this.loadTab(0);
@@ -59,6 +64,10 @@ export class ChannelConfigsComponent implements OnInit {
   onTabChange(index: number): void {
     this.activeTab.set(index);
     this.loadTab(index);
+  }
+
+  onSyncStatus(config: ChannelConfigDto): void {
+    this.dialog.open(StatusSyncDialogComponent, { data: config, width: '460px' });
   }
 
   private loadTab(index: number): void {
@@ -77,6 +86,12 @@ export class ChannelConfigsComponent implements OnInit {
       next: (list) => this.balances.set(
         Object.fromEntries(list.map((b) => [b.channelConfigId, b]))),
       error: () => this.balances.set({}),
+    });
+
+    this.statusSyncService.getSyncableChannels().subscribe({
+      next: (list) => this.syncableChannelIds.set(
+        new Set(list.map((c) => c.channelConfigId))),
+      error: () => this.syncableChannelIds.set(new Set()),
     });
   }
 

@@ -18,6 +18,8 @@
         <div class="cards-grid">
           @for (config of configs(); track config.id) {
             <app-config-card [config]="config" [balance]="balances()[config.id] ?? null"
+                             [canSyncStatus]="syncableChannelIds().has(config.id)"
+                             (syncStatus)="onSyncStatus($event)"
                              (edit)="onEdit($event)" (activate)="onActivate($event)"
                              (deactivate)="onDeactivate($event)" (setDefault)="onSetDefault($event)"
                              (delete)="onDelete($event)" />

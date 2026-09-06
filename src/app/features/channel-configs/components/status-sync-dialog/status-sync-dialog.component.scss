@@ -1,0 +1,16 @@
+.intro { margin: 0 0 14px; font-size: 13px; line-height: 1.5; }
+
+.sync-form { display: flex; flex-direction: column; gap: 4px; }
+
+.result {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+
+  &.ok { background: rgba(22, 163, 74, 0.08); color: #15803d; }
+  &.bad { background: rgba(220, 38, 38, 0.08); color: #b91c1c; }
+}
+
+.muted { display: block; color: var(--nzg-text-muted); margin-top: 2px; }
