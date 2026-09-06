@@ -1,0 +1,71 @@
+<mat-card class="balance-card">
+  <mat-card-header>
+    <mat-card-title>Channel Balances</mat-card-title>
+    <mat-card-subtitle>Remaining credit on each SMS gateway</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (isEmpty()) {
+      <p class="empty">
+        No channel reports a balance. Balances are available on REVE, GenNet and Chithi
+        SMS channels once their credentials are set.
+      </p>
+    } @else {
+      <div class="balance-rows">
+        @for (row of rows(); track row.channelConfigId) {
+          <div class="balance-row" [class.inactive]="!row.isActive">
+            <div class="identity">
+              <span class="label">{{ row.label }}</span>
+              <span class="provider">{{ row.providerName }}</span>
+              @if (!row.isActive) {
+                <span class="chip chip-inactive">Inactive</span>
+              }
+            </div>
+
+            <div class="figures">
+              @if (row.available !== null) {
+                <span class="amount" [class.stale]="row.isStale">
+                  {{ row.available | number: '1.2-2' }}
+                </span>
+                @if (row.creditLimit !== null) {
+                  <!-- Blank, not zero, when the provider has no credit-limit concept. -->
+                  <span class="limit">of {{ row.creditLimit | number: '1.2-2' }}</span>
+                }
+              } @else {
+                <span class="amount none">Not checked yet</span>
+              }
+            </div>
+
+            <div class="meta">
+              @if (row.isStale) {
+                <span class="stale-flag" [matTooltip]="row.error!">
+                  <mat-icon inline>warning_amber</mat-icon>
+                  Last known
+                </span>
+              } @else if (row.error) {
+                <span class="error-flag" [matTooltip]="row.error">
+                  <mat-icon inline>error_outline</mat-icon>
+                  Check failed
+                </span>
+              }
+              @if (row.checkedAt) {
+                <span class="checked">{{ row.checkedAt | date: 'dd MMM, HH:mm' }}</span>
+              }
+            </div>
+
+            <button mat-icon-button (click)="refresh(row)"
+                    [disabled]="refreshing() === row.channelConfigId"
+                    [matTooltip]="'Refresh ' + row.label"
+                    [attr.aria-label]="'Refresh balance for ' + row.label">
+              @if (refreshing() === row.channelConfigId) {
+                <mat-spinner diameter="18" />
+              } @else {
+                <mat-icon>refresh</mat-icon>
+              }
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

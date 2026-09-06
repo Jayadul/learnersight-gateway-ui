@@ -1,0 +1,74 @@
+.balance-card { padding: 18px; height: 100%; }
+
+.empty { color: var(--nzg-text-muted); margin: 8px 0 0; }
+
+.balance-rows { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+
+.balance-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--nzg-border, rgba(0, 0, 0, 0.06));
+
+  &:last-child { border-bottom: none; }
+  // An inactive channel still shows its balance — an admin topping up before
+  // switching it on needs to see the figure — but it should not read as live.
+  &.inactive { opacity: 0.62; }
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  flex: 1;
+
+  .label { font-weight: 600; font-size: 14px; }
+  .provider { font-size: 12px; color: var(--nzg-text-muted); }
+}
+
+.chip {
+  align-self: flex-start;
+  margin-top: 3px;
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+.chip-inactive { background: rgba(100, 116, 139, 0.15); color: #475569; }
+
+.figures {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 130px;
+  justify-content: flex-end;
+
+  .amount {
+    font-size: 17px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  // Still legible, visibly not current. Paired with the "Last known" flag rather
+  // than carrying the whole meaning on colour alone.
+  .amount.stale { color: var(--nzg-text-muted); }
+  .amount.none { font-size: 13px; font-weight: 400; color: var(--nzg-text-muted); }
+  .limit { font-size: 12px; color: var(--nzg-text-muted); }
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 108px;
+  font-size: 12px;
+
+  .checked { color: var(--nzg-text-muted); }
+  .stale-flag { color: #b45309; display: flex; align-items: center; gap: 3px; }
+  .error-flag { color: #dc2626; display: flex; align-items: center; gap: 3px; }
+}
+
+@media (max-width: 700px) {
+  .balance-row { flex-wrap: wrap; }
+  .figures { justify-content: flex-start; min-width: 0; }
+  .meta { align-items: flex-start; min-width: 0; }
+}

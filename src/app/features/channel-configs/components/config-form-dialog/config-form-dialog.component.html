@@ -42,6 +42,10 @@
       <mat-hint>Decides which vendor sends on this channel, and which credentials it needs.</mat-hint>
     </mat-form-field>
 
+    @if (providerNote(); as note) {
+      <p class="provider-note">{{ note }}</p>
+    }
+
     <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
       <mat-label>Display Name for Provider</mat-label>
       <input matInput formControlName="providerName" />

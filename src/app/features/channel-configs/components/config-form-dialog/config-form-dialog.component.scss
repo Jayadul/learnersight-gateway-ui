@@ -27,3 +27,15 @@
 }
 
 @media (max-width: 600px) { .config-form { min-width: auto; } }
+
+// Caveats about the selected provider, sat directly under the dropdown so the
+// constraint is read before the credentials are filled in.
+.provider-note {
+  margin: -4px 0 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(180, 83, 9, 0.08);
+  color: #92400e;
+  font-size: 12px;
+  line-height: 1.45;
+}

@@ -54,6 +54,40 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
         { key: 'secretkey', label: 'Secret Key', password: true },
         { key: 'callerID', label: 'Caller ID' },
         BASE_URL,
+        // REVE's balance lives on a different host and port from its send endpoint,
+        // so it cannot reuse Base URL above. Optional: a channel used only for
+        // sending needs none of this.
+        {
+          key: 'balanceBaseUrl', label: 'Balance Base URL', optional: true,
+          hint: 'REVE serves balance from a different host than sending.',
+        },
+        {
+          key: 'balanceClientId', label: 'Balance Client ID', optional: true,
+          hint: 'The client name REVE bills, exactly as they wrote it.',
+        },
+        {
+          key: 'balanceSessionCookie', label: 'Balance Session Cookie',
+          password: true, optional: true,
+          hint: 'JSESSIONID value. REVE gives no refresh endpoint, so paste a fresh one when balance checks start failing.',
+        },
+      ],
+    },
+    {
+      value: Provider.GenNet,
+      label: 'GenNet SMS',
+      fields: [
+        { key: 'api_token', label: 'API Token', password: true },
+        { key: 'sid', label: 'Sender ID (sid)' },
+        BASE_URL,
+      ],
+    },
+    {
+      value: Provider.Chithi,
+      label: 'Chithi SMS',
+      fields: [
+        { key: 'api_token', label: 'API Token', password: true },
+        { key: 'sid', label: 'Sender ID (sid)' },
+        BASE_URL,
       ],
     },
   ],
@@ -64,6 +98,28 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       fields: [
         { key: 'instance_id', label: 'Instance ID' },
         { key: 'access_token', label: 'Access Token', password: true },
+        BASE_URL,
+      ],
+    },
+    {
+      value: Provider.NetZeroInbox,
+      label: 'NetZero Inbox (v1 API)',
+      fields: [
+        { key: 'token', label: 'Token', password: true },
+        BASE_URL,
+      ],
+    },
+    {
+      // Same vendor and token as above, different API entirely — see the note shown
+      // when it is selected.
+      value: Provider.NetZeroInboxQr,
+      label: 'NetZero Inbox (QR device)',
+      fields: [
+        { key: 'token', label: 'Token', password: true },
+        {
+          key: 'from', label: 'From Number',
+          hint: "The linked device's own WhatsApp number, digits only.",
+        },
         BASE_URL,
       ],
     },
@@ -117,6 +173,26 @@ export class ConfigFormDialogComponent {
   readonly providerFields = computed<FieldDef[]>(
     () => this.providers.find((p) => p.value === this.provider())?.fields ?? [],
   );
+
+  /**
+   * NetZero Inbox has no documented media contract, so the backend rejects a media
+   * send on it rather than guessing a request shape. Say so where the choice is made,
+   * not after a message has failed.
+   */
+  readonly providerNote = computed<string | null>(() => {
+    switch (this.provider()) {
+      case Provider.NetZeroInbox:
+        return 'Sends text only — a message tagged with a media URL will be rejected. '
+          + 'This is the structured v1 API; pick the QR device option instead if this '
+          + 'number is linked by scanning a QR code.';
+      case Provider.NetZeroInboxQr:
+        return 'Sends text only — a message tagged with a media URL will be rejected. '
+          + 'This is the QR-linked device API and needs the From Number below. It is a '
+          + 'different API from the v1 option, on the same account.';
+      default:
+        return null;
+    }
+  });
 
   /** Tag prefix for this channel type, used in the worked example under the slug field. */
   readonly tagPrefix =

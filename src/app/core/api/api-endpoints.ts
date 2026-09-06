@@ -20,6 +20,7 @@ export const ApiEndpoints = {
   adminUsers:       `${BASE}/admin/users`,
   gatewayCredentials: `${BASE}/gateway-credentials`,
   channelConfigs:   `${BASE}/channel-configs`,
+  channelBalances:  `${BASE}/channel-balances`,
   fallbackPolicies: `${BASE}/fallback-policies`,
   messageRequests:  `${BASE}/message-requests`,
   dispatchLogs:     `${BASE}/dispatch-logs`,
