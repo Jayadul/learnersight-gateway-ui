@@ -9,3 +9,12 @@ export enum JobStatus     { Pending = 0, Sent = 1, Failed = 2 }
 export enum AdminRole     { SuperAdmin = 0, Admin = 1 }
 export enum MessageSource { XSoft = 0, AdminPanel = 1 }
 export enum MediaStatus   { Active = 0, Deleted = 1 }
+
+// Which vendor serves a channel. Part of the sender-resolution key since Release 3 — a
+// channel type no longer implies one provider (backend ADR 0008). Numeric like every
+// other enum here: the API has no string-enum converter, so these cross the wire as
+// integers. Never renumber a shipped member.
+export enum Provider { Reve = 0, WaTrend = 1, NetZeroVoice = 2, GenNet = 3, NetZeroInbox = 4, Chithi = 5 }
+// Per-recipient delivery outcome, synced back from the provider after a send. Distinct
+// from JobStatus: a Sent job can hold a mix of Delivered and Failed recipients.
+export enum DeliveryStatus { Pending = 0, Delivered = 1, Failed = 2, Unknown = 3 }

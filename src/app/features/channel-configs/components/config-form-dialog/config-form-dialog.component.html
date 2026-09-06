@@ -19,7 +19,7 @@
     <!-- Kept outside the field so the example has room to wrap on its own. -->
     <p class="tag-example">
       Send to this channel with
-      <code>[{{ tagPrefix }}_label:{{ slugPreview }}::your message]</code>
+      <code>[{{ tagPrefix }}:{{ slugPreview }}::your message]</code>
     </p>
 
     @if (isWhatsApp) {
@@ -32,20 +32,34 @@
       <p class="delay-note">Use this to stay under WhatsApp rate limits. It applies per recipient, so a long list takes proportionally longer.</p>
     }
 
-    <mat-form-field appearance="outline" class="full">
-      <mat-label>Provider Name</mat-label>
+    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+      <mat-label>Provider</mat-label>
+      <mat-select [value]="provider()" (valueChange)="onProviderChange($event)">
+        @for (p of providers; track p.value) {
+          <mat-option [value]="p.value">{{ p.label }}</mat-option>
+        }
+      </mat-select>
+      <mat-hint>Decides which vendor sends on this channel, and which credentials it needs.</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+      <mat-label>Display Name for Provider</mat-label>
       <input matInput formControlName="providerName" />
+      <mat-hint>Shown on the channel card. Useful when two channels use the same vendor.</mat-hint>
       <app-form-field-errors [control]="control('providerName')" />
     </mat-form-field>
 
-    @for (field of providerFields; track field.key) {
-      <mat-form-field appearance="outline" class="full">
+    @for (field of providerFields(); track field.key) {
+      <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
         <mat-label>{{ field.label }}</mat-label>
         <input matInput [type]="inputType(field)" [formControlName]="field.key" />
         @if (field.password) {
           <button mat-icon-button matSuffix type="button" (click)="toggleReveal(field.key)">
             <mat-icon>{{ revealed()[field.key] ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
+        }
+        @if (field.hint) {
+          <mat-hint>{{ field.hint }}</mat-hint>
         }
         <app-form-field-errors [control]="control(field.key)" />
       </mat-form-field>
