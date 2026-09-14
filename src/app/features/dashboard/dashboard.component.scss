@@ -2,11 +2,19 @@
 
 .chart-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  // minmax(0, 1fr), not plain 1fr: a bare 1fr track has an implicit min-width:auto, so a
+  // child wider than its share (an ApexCharts SVG, a wide balance row) forces the whole
+  // grid — and the page — wider than the viewport instead of being constrained to it.
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
   margin-bottom: 16px;
 }
-@media (max-width: 1024px) { .chart-row { grid-template-columns: 1fr; } }
+@media (max-width: 1024px) { .chart-row { grid-template-columns: minmax(0, 1fr); } }
+
+// Channel Balances sits alone in its own chart-row (see dashboard.component.html) — it
+// was only ever getting the first of two columns, squeezing its per-row content
+// (label, figures, meta, refresh button) into half the width it needed.
+.chart-row app-channel-balances { grid-column: 1 / -1; }
 
 // Auto-refresh indicator
 .refresh-indicator {
@@ -41,7 +49,7 @@
 }
 .skel-charts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
 }
 .skel-chart-block {
