@@ -17,20 +17,21 @@
         <h3 class="doc-section">Endpoint</h3>
         <div class="endpoint-line">
           <span class="method-chip">POST</span>
+          <span class="method-chip">GET</span>
           <code class="endpoint-url">{{ baseUrl }}/sendtext</code>
           <app-copy-button [value]="baseUrl + '/sendtext'" />
         </div>
         <table class="doc-table">
           <tbody>
-            <tr><th>Content-Type</th><td><code>application/x-www-form-urlencoded</code></td></tr>
-            <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> form fields (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
+            <tr><th>Content-Type</th><td>POST: <code>application/x-www-form-urlencoded</code>. GET: same fields as query-string params &mdash; use it only where the integrator's platform cannot easily do POST, since POST keeps credentials off the URL</td></tr>
+            <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
             <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
             <tr><th>Gateways</th><td>Each channel type may have several gateways configured. Every tag names the one it uses by label &mdash; only an untagged message falls back to a default</td></tr>
             <tr><th>Pacing</th><td>A WhatsApp gateway may be given a send delay to stay under provider rate limits, so its deliveries arrive spaced out rather than all at once. A long recipient list takes proportionally longer</td></tr>
           </tbody>
         </table>
 
-        <h3 class="doc-section">Request Parameters <span class="muted">(form fields)</span></h3>
+        <h3 class="doc-section">Request Parameters <span class="muted">(form fields, or the same names as query params on GET)</span></h3>
         <table class="doc-table">
           <thead>
             <tr><th>Field</th><th>Required</th><th>Description</th></tr>
@@ -203,6 +204,27 @@
           <app-copy-button class="code-copy" [value]="curlPreview()" />
         </div>
         <p class="muted">The example above updates live with the simulator values on the right.</p>
+
+        <h3 class="doc-section">Balance Lookup <span class="muted">(read-only, no credentials)</span></h3>
+        <div class="endpoint-line">
+          <span class="method-chip">GET</span>
+          <code class="endpoint-url">{{ baseUrl }}/balance?LABEL=yourlabel</code>
+          <app-copy-button [value]="baseUrl + '/balance?LABEL=yourlabel'" />
+        </div>
+        <p>
+          A separate, unauthenticated endpoint for checking a gateway's remaining credit —
+          currently SMS labels only. Calls the provider live on every request; a failed
+          live read falls back to the last known cached figure rather than an error. Returns
+          <code>{{ '{' }} "label", "balance", "creditLimit", "lastCheckedAt" {{ '}' }}</code>,
+          or a <code>404</code> with <code>{{ '{' }} "status": "error", "message" {{ '}' }}</code>
+          for an unknown label, an inactive channel, or a channel type with no balance.
+        </p>
+        <p class="callout">
+          No <code>apikey</code>/<code>secretkey</code> required &mdash; the label alone is
+          enough, and it triggers a real provider call each time. Deliberate trade-offs:
+          anyone who can guess or learn a label can read its balance, with no rate limit on
+          how often they can ask.
+        </p>
       </mat-card>
     </div>
 
@@ -213,12 +235,21 @@
           <mat-icon class="sim-icon">play_circle</mat-icon>
           <span>Try It (Live)</span>
         </div>
-        <p class="sim-sub">Sends a real request to <code>POST /sendtext</code>. The credentials below are
+        <p class="sim-sub">Sends a real request to <code>{{ verb() }} /sendtext</code>. The credentials below are
           pre-filled from <strong>Configuration &rsaquo; Gateway Credentials</strong> &mdash; the same pair
           your integrators use. Edit them to test a rejection.</p>
 
+        <mat-button-toggle-group class="verb-toggle" [value]="verb()" (change)="verb.set($event.value)" aria-label="HTTP method">
+          <mat-button-toggle value="POST">POST</mat-button-toggle>
+          <mat-button-toggle value="GET">GET</mat-button-toggle>
+        </mat-button-toggle-group>
+        <p class="muted verb-hint">
+          Use GET only where the integrator's platform can't easily do POST &mdash; POST keeps
+          credentials out of the URL and GET does not.
+        </p>
+
         <form [formGroup]="form" (ngSubmit)="submit()">
-          <mat-form-field appearance="outline" class="full">
+          <mat-form-field appearance="outline" class="full" floatLabel="always">
             <mat-label>apikey</mat-label>
             <input matInput [type]="hideApiKey() ? 'password' : 'text'" formControlName="apikey"
                    placeholder="your API key" autocomplete="off" />
@@ -229,7 +260,7 @@
             <app-form-field-errors [control]="form.controls.apikey" />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full">
+          <mat-form-field appearance="outline" class="full" floatLabel="always">
             <mat-label>secretkey</mat-label>
             <input matInput [type]="hideSecret() ? 'password' : 'text'" formControlName="secretkey"
                    placeholder="your secret key" autocomplete="off" />
@@ -240,14 +271,14 @@
             <app-form-field-errors [control]="form.controls.secretkey" />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full">
+          <mat-form-field appearance="outline" class="full" floatLabel="always">
             <mat-label>callerID</mat-label>
             <input matInput formControlName="callerID" placeholder="your sender ID" />
             <mat-hint>Recorded with the request. Not part of authentication.</mat-hint>
             <app-form-field-errors [control]="form.controls.callerID" />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full">
+          <mat-form-field appearance="outline" class="full" floatLabel="always">
             <mat-label>toUser</mat-label>
             <input matInput formControlName="toUser"
                    placeholder="8801700000001,8801700000002,8801700000003" />
@@ -255,7 +286,7 @@
             <app-form-field-errors [control]="form.controls.toUser" />
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full">
+          <mat-form-field appearance="outline" class="full" floatLabel="always">
             <mat-label>messageContent</mat-label>
             <textarea matInput formControlName="messageContent" rows="8"
                       placeholder="[sms:LABEL::TEXT] [wp:LABEL::TEXT] [wp:LABEL::TEXT||MEDIA_URL] [sms:LABEL-wp:LABEL::TEXT] [call:LABEL::CAMPAIGN_ID||LOT]"></textarea>
@@ -293,6 +324,54 @@
           @if (accepted()) {
             <p class="muted">Track delivery in <strong>Message Logs</strong> using the <code>Message_ID</code>.</p>
           }
+        }
+      </mat-card>
+
+      <mat-card class="sim-card balance-card">
+        <div class="sim-heading">
+          <mat-icon class="sim-icon">account_balance_wallet</mat-icon>
+          <span>Check a Balance</span>
+        </div>
+        <p class="sim-sub">Tests <code>GET /balance</code> &mdash; no credentials needed.
+          Use any label from the Gateway Labels table above.</p>
+
+        <form [formGroup]="balanceForm" (ngSubmit)="checkBalance()">
+          <mat-form-field appearance="outline" class="full" floatLabel="always">
+            <mat-label>LABEL</mat-label>
+            <input matInput formControlName="label" [placeholder]="balancePlaceholder()" />
+          </mat-form-field>
+          <p class="muted balance-curl">{{ balanceCurlPreview() }}</p>
+          <button mat-flat-button color="primary" type="submit" class="sim-btn"
+                  [disabled]="balanceLoading() || balanceLabelEmpty()">
+            @if (balanceLoading()) {
+              <ng-container>
+                <mat-spinner diameter="18"></mat-spinner>
+                <span>Checking…</span>
+              </ng-container>
+            } @else {
+              <ng-container>
+                <mat-icon>account_balance_wallet</mat-icon>
+                <span>Check Balance</span>
+              </ng-container>
+            }
+          </button>
+        </form>
+
+        @if (balanceResult(); as bal) {
+          <mat-divider class="sim-divider"></mat-divider>
+          <div class="resp-heading resp-ok">
+            <mat-icon>check_circle</mat-icon>
+            <span>{{ bal.label }}</span>
+          </div>
+          <div class="code-wrap">
+            <pre class="code-block resp-block">{{ bal | json }}</pre>
+          </div>
+        } @else if (balanceError()) {
+          <mat-divider class="sim-divider"></mat-divider>
+          <div class="resp-heading resp-fail">
+            <mat-icon>error</mat-icon>
+            <span>{{ balanceError() }}</span>
+          </div>
         }
       </mat-card>
     </aside>
