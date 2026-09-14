@@ -73,15 +73,6 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       ],
     },
     {
-      value: Provider.GenNet,
-      label: 'GenNet SMS',
-      fields: [
-        { key: 'api_token', label: 'API Token', password: true },
-        { key: 'sid', label: 'Sender ID (sid)' },
-        BASE_URL,
-      ],
-    },
-    {
       value: Provider.Chithi,
       label: 'Chithi SMS',
       fields: [
@@ -175,9 +166,10 @@ export class ConfigFormDialogComponent {
   );
 
   /**
-   * NetZero Inbox has no documented media contract, so the backend rejects a media
-   * send on it rather than guessing a request shape. Say so where the choice is made,
-   * not after a message has failed.
+   * NetZero Inbox v1 has no documented media contract, so the backend rejects a media
+   * send on it rather than guessing a request shape. The QR device API does accept
+   * image media (confirmed working) but nothing else yet. Say so where the choice is
+   * made, not after a message has failed.
    */
   readonly providerNote = computed<string | null>(() => {
     switch (this.provider()) {
@@ -186,9 +178,8 @@ export class ConfigFormDialogComponent {
           + 'This is the structured v1 API; pick the QR device option instead if this '
           + 'number is linked by scanning a QR code.';
       case Provider.NetZeroInboxQr:
-        return 'Sends text only — a message tagged with a media URL will be rejected. '
-          + 'This is the QR-linked device API and needs the From Number below. It is a '
-          + 'different API from the v1 option, on the same account.';
+        return 'This is the QR-linked device API and needs the From Number below. It '
+          + 'is a different API from the v1 option, on the same account.';
       default:
         return null;
     }
