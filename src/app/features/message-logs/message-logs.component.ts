@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { MatDialog } from '@angular/material/dialog';
 import { MessageLogsService } from './message-logs.service';
 import { MessageRequestDto } from '../../core/models/message-request.model';
-import { ChannelConfigDto } from '../../core/models/channel-config.model';
+import { ChannelOptionDto } from '../../core/models/channel-config.model';
 import { MessageStatus } from '../../core/models/enums';
 import { ListState } from '../../core/state/list-state';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
@@ -10,7 +10,7 @@ import { FilterBarComponent, FilterControl } from '../../shared/components/filte
 import { ColumnDef, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
 import { MessageDetailDialogComponent } from './components/message-detail-dialog/message-detail-dialog.component';
 import { channelNameLabel } from '../../shared/pipes/channel-name.pipe';
-import { ChannelConfigsService } from '../channel-configs/channel-configs.service';
+import { ChannelOptionsService } from '../../core/services/channel-options.service';
 import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
 
 type Row = MessageRequestDto;
@@ -24,7 +24,7 @@ type Row = MessageRequestDto;
 })
 export class MessageLogsComponent implements OnInit {
   private readonly service = inject(MessageLogsService);
-  private readonly channelsService = inject(ChannelConfigsService);
+  private readonly channelsService = inject(ChannelOptionsService);
   private readonly dialog = inject(MatDialog);
 
   readonly state = new ListState<Row>((p) => this.service.getPaged(p), 'receivedAt');
@@ -53,7 +53,7 @@ export class MessageLogsComponent implements OnInit {
          + this.state.data().indexOf(row) + 1;
   }
 
-  private buildFilters(channels: ChannelConfigDto[]): FilterControl[] {
+  private buildFilters(channels: ChannelOptionDto[]): FilterControl[] {
     return [
       { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date Range' },
       { kind: 'text', key: 'toUser', label: 'Phone', placeholder: '8801700000001' },
