@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -7,10 +8,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from '../../core/services/notification.service';
-import { SendTextGatewayResponse } from '../../core/models/sendtext.model';
+import { BalanceLookupError, BalanceLookupResponse, SendTextGatewayResponse } from '../../core/models/sendtext.model';
+import { HttpErrorResponse } from '@angular/common/http';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 import { FormFieldErrorsComponent } from '../../shared/components/form-field-errors/form-field-errors.component';
 import { CopyButtonComponent } from '../../shared/components/copy-button/copy-button.component';
@@ -39,6 +42,7 @@ const EXAMPLE_MESSAGE =
   imports: [
     ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatIconModule, MatDividerModule, MatProgressSpinnerModule,
+    MatButtonToggleModule, JsonPipe,
     PageHeaderComponent, FormFieldErrorsComponent, CopyButtonComponent, ChannelTypePipe,
   ],
   templateUrl: './sendtext-api.component.html',
@@ -61,6 +65,13 @@ export class SendTextApiComponent {
 
   readonly hideSecret = signal(true);
   readonly hideApiKey = signal(true);
+
+  /**
+   * Which verb the simulator sends. GET exists for integrators whose platform cannot
+   * easily do POST; POST stays the recommended default since it keeps credentials off
+   * the URL.
+   */
+  readonly verb = signal<'POST' | 'GET'>('POST');
 
   /**
    * The gateways an integrator can actually name. Every tag carries a label now, so the
@@ -129,9 +140,19 @@ export class SendTextApiComponent {
   }
 
 
-  /** Live cURL preview that mirrors exactly what the simulator sends. */
+  /** Live cURL preview that mirrors exactly what the simulator sends, either verb. */
   readonly curlPreview = computed(() => {
     const v = this.formValue();
+    if (this.verb() === 'GET') {
+      const q = new URLSearchParams({
+        apikey: v.apikey || 'YOUR_API_KEY',
+        secretkey: v.secretkey || 'YOUR_SECRET_KEY',
+        callerID: v.callerID || 'YOUR_CALLER_ID',
+        toUser: v.toUser ?? '',
+        messageContent: v.messageContent ?? '',
+      });
+      return `curl "${this.baseUrl}/sendtext?${q}"`;
+    }
     return [
       `curl -X POST "${this.baseUrl}/sendtext" \\`,
       `  -H "Content-Type: application/x-www-form-urlencoded" \\`,
@@ -149,6 +170,55 @@ export class SendTextApiComponent {
   });
   readonly accepted = computed(() => this.response()?.Status === '0');
 
+  // ── Balance lookup (GET /balance?LABEL=) ──────────────────────────────────
+  // A FormGroup, not a bare FormControl: (ngSubmit) is an output of FormGroupDirective
+  // ([formGroup]) or NgForm — this page only imports ReactiveFormsModule, so a <form>
+  // without [formGroup] has no directive supplying ngSubmit at all, and the click falls
+  // through to the browser's native form submit (a full page reload).
+  readonly balanceForm = this.fb.nonNullable.group({ label: [''] });
+  readonly balanceLoading = signal(false);
+  readonly balanceResult = signal<BalanceLookupResponse | null>(null);
+  readonly balanceError = signal<string | null>(null);
+
+  private readonly balanceFormValue = toSignal(this.balanceForm.valueChanges, {
+    initialValue: this.balanceForm.getRawValue(),
+  });
+
+  readonly balanceCurlPreview = computed(
+    () => `curl "${this.baseUrl}/balance?LABEL=${this.balanceFormValue().label || 'yourlabel'}"`,
+  );
+  readonly balanceLabelEmpty = computed(() => !(this.balanceFormValue().label ?? '').trim());
+
+  /**
+   * A real, currently-active SMS label from this deployment — "revemain" was a
+   * generic doc example that does not exist as an actual label here (or on most
+   * installations), which made a first-time balance check fail on the placeholder
+   * text itself rather than a typo.
+   */
+  readonly balancePlaceholder = computed(() => {
+    const sms = this.labelledChannels().find((c) => c.channelType === ChannelType.SMS);
+    return sms?.labelSlug ?? 'yourlabel';
+  });
+
+  checkBalance(): void {
+    const label = this.balanceForm.getRawValue().label.trim();
+    if (!label) return;
+    this.balanceLoading.set(true);
+    this.balanceResult.set(null);
+    this.balanceError.set(null);
+    this.service.checkBalance(label).subscribe({
+      next: (res) => {
+        this.balanceLoading.set(false);
+        this.balanceResult.set(res);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.balanceLoading.set(false);
+        const body = err.error as BalanceLookupError | undefined;
+        this.balanceError.set(body?.message ?? 'Unknown or unsupported label');
+      },
+    });
+  }
+
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -157,7 +227,7 @@ export class SendTextApiComponent {
     this.loading.set(true);
     this.response.set(null);
     const v = this.form.getRawValue();
-    this.service.send(v)
+    this.service.send(v, this.verb())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (res) => {

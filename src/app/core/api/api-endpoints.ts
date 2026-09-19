@@ -31,8 +31,10 @@ export const ApiEndpoints = {
   dispatchLogs:     `${BASE}/dispatch-logs`,
   apiLogs:          `${BASE}/api-logs`,
   manualSend:       `${BASE}/manual-send`,
+  manualSendChannels: `${BASE}/manual-send/channels`,
   media:            `${BASE}/media`,
   backupExport:     `${BASE}/backup/export`,
-  // Gateway endpoint — lives at the API root, NOT under /api
+  // Gateway endpoints — live at the API root, NOT under /api
   sendText:         '/sendtext',
+  balance:          '/balance',
 } as const;

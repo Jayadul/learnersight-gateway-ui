@@ -53,7 +53,10 @@ export class ApiLogsComponent implements OnInit {
 
   readonly columns: ColumnDef<Row>[] = [
     { key: 'requestedAt', header: 'Time', type: 'datetime', sortable: true },
-    { key: 'toUser', header: 'To', value: (r) => r.toUser ?? '—' },
+    // A batched SMS/Voice send comma-joins every recipient into one string — truncated
+    // in the cell, same as Message Logs' Content column; the shared table shows the
+    // rest on hover.
+    { key: 'toUser', header: 'To', truncate: 60, value: (r) => r.toUser ?? '—' },
     // What the tags asked for. Blank when the request was rejected before parsing.
     { key: 'requestedChannels', header: 'Channels', value: (r) => this.channelsCell(r) },
     { key: 'responseStatus', header: 'Status', type: 'chip' },

@@ -14,8 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SendMessageService } from './send-message.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChannelType } from '../../core/models/enums';
-import { ChannelConfigDto } from '../../core/models/channel-config.model';
-import { ChannelConfigsService } from '../channel-configs/channel-configs.service';
+import { ChannelOptionDto } from '../../core/models/channel-config.model';
+import { ChannelOptionsService } from '../../core/services/channel-options.service';
 import { ManualSendRequest } from '../../core/models/manual-send.model';
 import { phoneListValidator, urlValidator } from '../../core/forms/validators';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
@@ -37,14 +37,14 @@ import { FormFieldErrorsComponent } from '../../shared/components/form-field-err
 export class SendMessageComponent {
   private readonly fb      = inject(FormBuilder);
   private readonly service = inject(SendMessageService);
-  private readonly channelsService = inject(ChannelConfigsService);
+  private readonly channelsService = inject(ChannelOptionsService);
   private readonly notify  = inject(NotificationService);
 
   readonly ChannelType = ChannelType;
   readonly loading = signal(false);
 
   /** Active channels of the selected type — several gateways may be live at once. */
-  readonly channelOptions = signal<ChannelConfigDto[]>([]);
+  readonly channelOptions = signal<ChannelOptionDto[]>([]);
 
   readonly form = this.fb.nonNullable.group({
     channelType: [ChannelType.SMS, Validators.required],

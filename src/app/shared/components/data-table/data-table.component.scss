@@ -26,6 +26,18 @@ td.mat-mdc-cell {
   font-size: 13.5px;
 }
 
+// Backstop so one long, untruncated value (a comma-joined recipient list, a raw
+// provider reply) can never push the table wider than its container — truncate/tooltip
+// on the column (ColumnDef.truncate) is still the primary fix; this just guarantees the
+// layout survives a column that doesn't opt into it. Actions column is exempt: it packs
+// icon buttons, never free text, and already manages its own width.
+td.mat-mdc-cell:not(.actions-cell) {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 // Actions column — always one line, right-aligned
 .actions-header {
   text-align: right !important;

@@ -138,10 +138,12 @@ code {
 }
 
 /* ── Simulator column ── */
+// Not position:sticky: with two cards stacked in this column, a sticky first card stays
+// pinned over the page as it scrolls and visually overlaps the second card scrolling up
+// underneath it — the actual cause of the reported "text over input" glitch, which was
+// two cards' content bleeding together, not a Material floating-label state bug.
 .sim-card {
   padding: 20px;
-  position: sticky;
-  top: 12px;
 }
 
 .sim-heading {
@@ -165,6 +167,14 @@ code {
 .full {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.verb-toggle {
+  margin-bottom: 6px;
+}
+
+.verb-hint {
+  margin: 0 0 16px;
 }
 
 // Material reserves a fixed-height, absolutely-positioned strip for hints/errors,
@@ -194,6 +204,16 @@ code {
 
 .sim-divider {
   margin: 18px 0 14px;
+}
+
+.balance-card {
+  margin-top: 20px;
+}
+
+.balance-curl {
+  margin: -4px 0 10px;
+  font-family: monospace;
+  word-break: break-all;
 }
 
 .resp-heading {

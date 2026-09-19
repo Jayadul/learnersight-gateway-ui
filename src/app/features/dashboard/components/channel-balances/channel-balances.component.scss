@@ -2,7 +2,10 @@
 
 .empty { color: var(--nzg-text-muted); margin: 8px 0 0; }
 
-.balance-rows { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
+// A safety net, not the primary fix: if a row's fixed-min-width sections (identity/
+// figures/meta) still can't fit at some extreme viewport width, this contains the
+// overflow to the card instead of letting it widen the whole dashboard page.
+.balance-rows { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; overflow-x: auto; }
 
 .balance-row {
   display: flex;

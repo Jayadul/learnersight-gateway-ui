@@ -1,5 +1,20 @@
 import { ChannelType, Provider } from './enums';
 
+/**
+ * Minimal, non-sensitive channel identity — id/label/labelSlug/default only. Served from
+ * `/api/manual-send/channels`, not the SuperAdmin-only ChannelConfig endpoints, so any
+ * Admin-role page (Send Message's gateway picker, Message Logs' gateway filter) can read
+ * it without needing SuperAdmin.
+ */
+export interface ChannelOptionDto {
+  readonly id: string;
+  readonly label: string;
+  readonly labelSlug: string;
+  readonly channelType: ChannelType;
+  readonly isActive: boolean;
+  readonly isDefault: boolean;
+}
+
 export interface ChannelConfigDto {
   readonly id: string;
   readonly channelType: ChannelType;

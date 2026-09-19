@@ -15,7 +15,8 @@ export enum MediaStatus   { Active = 0, Deleted = 1 }
 // other enum here: the API has no string-enum converter, so these cross the wire as
 // integers. Never renumber a shipped member.
 export enum Provider {
-  Reve = 0, WaTrend = 1, NetZeroVoice = 2, GenNet = 3,
+  Reve = 0, WaTrend = 1, NetZeroVoice = 2,
+  // 3 was GenNet SMS — retired (folded into Chithi, same vendor account). Never reuse.
   // NetZero Inbox exposes two unrelated WhatsApp APIs on one host: the structured v1
   // endpoint and the QR-linked device endpoint. They differ in verb, scheme, credentials
   // and recipient format, so they are separate providers rather than a mode.
