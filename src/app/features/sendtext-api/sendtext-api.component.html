@@ -208,8 +208,8 @@
         <h3 class="doc-section">Balance Lookup <span class="muted">(read-only, no credentials)</span></h3>
         <div class="endpoint-line">
           <span class="method-chip">GET</span>
-          <code class="endpoint-url">{{ baseUrl }}/balance?LABEL=yourlabel</code>
-          <app-copy-button [value]="baseUrl + '/balance?LABEL=yourlabel'" />
+          <code class="endpoint-url">{{ baseUrl }}/balance?callerID=yourlabel</code>
+          <app-copy-button [value]="baseUrl + '/balance?callerID=yourlabel'" />
         </div>
         <p>
           A separate, unauthenticated endpoint for checking a gateway's remaining credit —
@@ -337,7 +337,7 @@
 
         <form [formGroup]="balanceForm" (ngSubmit)="checkBalance()">
           <mat-form-field appearance="outline" class="full" floatLabel="always">
-            <mat-label>LABEL</mat-label>
+            <mat-label>callerID</mat-label>
             <input matInput formControlName="label" [placeholder]="balancePlaceholder()" />
           </mat-form-field>
           <p class="muted balance-curl">{{ balanceCurlPreview() }}</p>

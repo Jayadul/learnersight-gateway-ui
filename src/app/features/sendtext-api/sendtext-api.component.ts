@@ -170,7 +170,7 @@ export class SendTextApiComponent {
   });
   readonly accepted = computed(() => this.response()?.Status === '0');
 
-  // ── Balance lookup (GET /balance?LABEL=) ──────────────────────────────────
+  // ── Balance lookup (GET /balance?callerID=) ───────────────────────────────
   // A FormGroup, not a bare FormControl: (ngSubmit) is an output of FormGroupDirective
   // ([formGroup]) or NgForm — this page only imports ReactiveFormsModule, so a <form>
   // without [formGroup] has no directive supplying ngSubmit at all, and the click falls
@@ -185,7 +185,7 @@ export class SendTextApiComponent {
   });
 
   readonly balanceCurlPreview = computed(
-    () => `curl "${this.baseUrl}/balance?LABEL=${this.balanceFormValue().label || 'yourlabel'}"`,
+    () => `curl "${this.baseUrl}/balance?callerID=${this.balanceFormValue().label || 'yourlabel'}"`,
   );
   readonly balanceLabelEmpty = computed(() => !(this.balanceFormValue().label ?? '').trim());
 
