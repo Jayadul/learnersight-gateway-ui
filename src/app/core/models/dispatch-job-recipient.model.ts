@@ -1,10 +1,14 @@
-import { DeliveryStatus } from './enums';
+import { ChannelType, DeliveryStatus } from './enums';
 
 /**
  * One recipient's outcome within a dispatch job. Sits alongside the job's own status
  * rather than replacing it: the job records what the provider answered when the message
  * was handed over, this records what happened to this number afterwards, and the two
  * can legitimately disagree.
+ *
+ * Since hotfix batch 3 this is also the row shape for the merged, per-recipient Message
+ * Logs page (GET /api/dispatch-jobs/recipients) — it carries channel/content/date so the
+ * page and its detail view need no second call.
  */
 export interface DispatchJobRecipientDto {
   readonly id: string;
@@ -15,6 +19,22 @@ export interface DispatchJobRecipientDto {
   readonly deliveryStatus: DeliveryStatus;
   readonly lastCheckedAt: string | null;
   readonly createdAt: string;
+
+  readonly channelType: ChannelType;
+  readonly channelLabel: string | null;
+  readonly messageContent: string;
+  /** Campaign dialled, on voice jobs only. */
+  readonly campaignId: string | null;
+  readonly sentAt: string | null;
+  readonly isFallback: boolean;
+  /** The row this one was created to retry, when it came from a resend. */
+  readonly resentFromRecipientId: string | null;
+  /**
+   * The exact raw provider response for this recipient's own send — its own synced
+   * response once available, falling back to the job-level response written at dispatch
+   * time so this is never blank just because a status sync hasn't run yet.
+   */
+  readonly rawProviderResponse: string | null;
 }
 
 /** Retries specific recipients, optionally through another channel of the same type. */

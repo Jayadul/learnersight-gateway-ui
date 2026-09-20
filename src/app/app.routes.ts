@@ -33,11 +33,6 @@ export const routes: Routes = [
           import('./features/message-logs/message-logs.component').then((m) => m.MessageLogsComponent),
       },
       {
-        path: 'logs/dispatch',
-        loadComponent: () =>
-          import('./features/dispatch-logs/dispatch-logs.component').then((m) => m.DispatchLogsComponent),
-      },
-      {
         path: 'logs/api',
         loadComponent: () =>
           import('./features/api-logs/api-logs.component').then((m) => m.ApiLogsComponent),

@@ -29,7 +29,7 @@ export interface ColumnDef<T> {
   sortable?: boolean;
   type?: 'text' | 'date' | 'datetime' | 'chip' | 'chips' | 'badge' | 'custom';
   value?: (row: T) => unknown;
-  badgeType?: 'message' | 'job' | 'call';
+  badgeType?: 'message' | 'job' | 'call' | 'delivery';
   /** Cut the cell to this many characters; the full text stays available on hover. */
   truncate?: number;
   width?: string;

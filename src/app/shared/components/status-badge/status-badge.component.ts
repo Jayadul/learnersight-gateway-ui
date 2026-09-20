@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
-import { JobStatus, MessageStatus } from '../../../core/models/enums';
+import { DeliveryStatus, JobStatus, MessageStatus } from '../../../core/models/enums';
 import { MessageStatusPipe } from '../../pipes/message-status.pipe';
 
-type BadgeType = 'message' | 'job' | 'call';
+type BadgeType = 'message' | 'job' | 'call' | 'delivery';
 type BadgeColor = 'green' | 'red' | 'orange' | 'amber' | 'grey';
 
 @Component({
@@ -26,6 +26,11 @@ export class StatusBadgeComponent {
     }
     if (t === 'job') {
       return JobStatus[s] ?? 'Unknown';
+    }
+    if (t === 'delivery') {
+      // "Pending" reads as stuck on a per-recipient row; the provider simply has not
+      // answered yet.
+      return s === DeliveryStatus.Pending ? 'Awaiting Status' : (DeliveryStatus[s] ?? 'Unknown');
     }
     // The pipe owns the wording, so the badge cannot drift from the rest of the UI —
     // the raw enum name renders as "PartialSuccess", one word.
@@ -53,6 +58,17 @@ export class StatusBadgeComponent {
         case JobStatus.Sent: return 'green';
         case JobStatus.Failed: return 'red';
         case JobStatus.Pending: return 'orange';
+        default: return 'grey';
+      }
+    }
+    if (t === 'delivery') {
+      switch (s as DeliveryStatus) {
+        case DeliveryStatus.Delivered: return 'green';
+        case DeliveryStatus.Failed: return 'red';
+        case DeliveryStatus.Pending: return 'orange';
+        // Delivered, but only because the primary channel failed first — amber rather
+        // than green, so something worth a look does not read as fully fine.
+        case DeliveryStatus.Fallback: return 'amber';
         default: return 'grey';
       }
     }

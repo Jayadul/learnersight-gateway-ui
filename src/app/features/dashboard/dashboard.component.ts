@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { forkJoin, interval } from 'rxjs';
 import { DashboardService } from './dashboard.service';
-import { MessageLogsService } from '../message-logs/message-logs.service';
+import { MessageRequestsService } from '../../core/services/message-requests.service';
 import {
   ChannelBreakdownDto, DashboardSummaryDto, FailureReasonDto, TimelinePointDto,
 } from '../../core/models/dashboard.model';
@@ -37,7 +37,7 @@ const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
 })
 export class DashboardComponent implements OnInit {
   private readonly dashboardService = inject(DashboardService);
-  private readonly messageLogsService = inject(MessageLogsService);
+  private readonly messageRequestsService = inject(MessageRequestsService);
   private readonly balancesService = inject(ChannelBalancesService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
       timeline: this.dashboardService.getTimeline(7),
       breakdown: this.dashboardService.getChannelBreakdown(),
       failureReasons: this.dashboardService.getFailureReasons(5),
-      recent: this.messageLogsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
+      recent: this.messageRequestsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
       // Cached figures only — this read never calls a provider, so a slow vendor
       // cannot hold up the dashboard. A background job keeps them current.
       balances: this.balancesService.getAll(),
