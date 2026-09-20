@@ -22,4 +22,9 @@ export class ChannelConfigsService extends BaseCrudService<ChannelConfigDto, Cre
   setDefault(id: string): Observable<void> {
     return this.patch(id, 'set-default');
   }
+
+  /** Real value of one partially-masked config field, for the reveal-on-click action. */
+  revealField(id: string, field: string): Observable<{ value: string }> {
+    return this.http.get<{ value: string }>(`${this.baseUrl}/${id}/reveal`, { params: { field } });
+  }
 }

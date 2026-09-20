@@ -58,7 +58,9 @@
         <mat-label>{{ field.label }}</mat-label>
         <input matInput [type]="inputType(field)" [formControlName]="field.key" />
         @if (field.password) {
-          <button mat-icon-button matSuffix type="button" (click)="toggleReveal(field.key)">
+          <button mat-icon-button matSuffix type="button" [disabled]="revealing()[field.key]"
+                  (click)="toggleReveal(field.key)"
+                  [attr.aria-label]="revealed()[field.key] ? 'Hide ' + field.label : 'Reveal ' + field.label">
             <mat-icon>{{ revealed()[field.key] ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         }
