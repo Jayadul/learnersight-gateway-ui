@@ -56,6 +56,21 @@ export interface ResendRecipientOutcome {
   readonly recipientId: string;
   readonly recipient: string;
   readonly sent: boolean;
-  readonly newRecipientId: string | null;
+  /** Whether a send was actually attempted, vs. skipped before any provider call. */
+  readonly attempted: boolean;
   readonly reason: string | null;
+}
+
+/**
+ * One resend attempt's own record (hotfix batch 4) — the recipient row itself is now
+ * updated in place on every attempt, so this is where an earlier try's own outcome is
+ * recovered.
+ */
+export interface ResendAttemptDto {
+  readonly id: string;
+  readonly deliveryStatus: DeliveryStatus;
+  readonly providerReferenceId: string | null;
+  readonly rawResponse: string | null;
+  readonly channelLabel: string | null;
+  readonly attemptedAt: string;
 }

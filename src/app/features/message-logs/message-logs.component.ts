@@ -12,11 +12,11 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 import { FilterBarComponent, FilterControl } from '../../shared/components/filter-bar/filter-bar.component';
 import { ColumnDef, ColumnDefDirective, DataTableComponent, RowAction } from '../../shared/components/data-table/data-table.component';
 import { MessageDetailDialogComponent } from './components/message-detail-dialog/message-detail-dialog.component';
+import { ResendDialogComponent, ResendDialogResult } from './components/resend-dialog/resend-dialog.component';
 import { ChannelOptionsService } from '../../core/services/channel-options.service';
 import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
 import { ResendService } from '../../core/services/resend.service';
 import { NotificationService } from '../../core/services/notification.service';
-import { ConfirmService } from '../../shared/components/confirm-dialog/confirm.service';
 
 type Row = DispatchJobRecipientDto;
 
@@ -35,7 +35,6 @@ export class MessageLogsComponent implements OnInit {
   private readonly channelsService = inject(ChannelOptionsService);
   private readonly resendService = inject(ResendService);
   private readonly notify = inject(NotificationService);
-  private readonly confirm = inject(ConfirmService);
   private readonly dialog = inject(MatDialog);
 
   readonly state = new ListState<Row>((p) => this.service.getPaged(p), 'createdAt');
@@ -154,20 +153,17 @@ export class MessageLogsComponent implements OnInit {
     const ids = [...this.selected()];
     if (ids.length === 0) return;
 
-    this.confirm.confirm({
-      title: 'Resend selected recipients?',
-      // States the count and the cost: a resend spends the client's provider credit.
-      message: `${ids.length} recipient${ids.length === 1 ? '' : 's'} will be sent again `
-        + 'through the same gateway. Each one costs a new message.',
-      confirmLabel: 'Resend',
-    }).subscribe((ok) => {
-      if (ok) this.doResend(ids);
+    const selectedRows = this.state.data().filter((r) => ids.includes(r.id));
+    this.dialog.open<ResendDialogComponent, unknown, ResendDialogResult>(ResendDialogComponent, {
+      data: { recipients: selectedRows }, width: '480px', maxWidth: '95vw',
+    }).afterClosed().subscribe((result) => {
+      if (result) this.doResend(ids, result.channelConfigId);
     });
   }
 
-  private doResend(ids: string[]): void {
+  private doResend(ids: string[], channelConfigId?: string): void {
     this.resending.set(true);
-    this.resendService.resend({ recipientIds: ids }).subscribe({
+    this.resendService.resend({ recipientIds: ids, channelConfigId }).subscribe({
       next: (result) => {
         this.resending.set(false);
         this.selected.set(new Set());
@@ -179,7 +175,8 @@ export class MessageLogsComponent implements OnInit {
           this.notify.error(
             `Nothing was resent. ${result.outcomes[0]?.reason ?? 'See the log for details.'}`);
         }
-        // The retries are new rows, so the list has to come from the server again.
+        // Rows are updated in place, not replaced, but the new channel/status/content
+        // still has to come from the server.
         this.state.load();
       },
       error: () => {

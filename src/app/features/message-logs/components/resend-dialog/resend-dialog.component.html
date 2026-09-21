@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Resend {{ count }} Recipient{{ count === 1 ? '' : 's' }}?</h2>
+<mat-dialog-content>
+  <p class="cost-note">
+    Each recipient will be sent again. Every resend costs a new message.
+  </p>
+
+  @if (singleChannelType !== null) {
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+        <mat-label>Resend Through</mat-label>
+        <mat-select formControlName="channelConfigId">
+          <mat-option value="">Same channel as before</mat-option>
+          @for (ch of channelOptions(); track ch.id) {
+            <mat-option [value]="ch.id">{{ ch.label }}</mat-option>
+          }
+        </mat-select>
+        <mat-hint>Choose a different {{ channelTypeLabel }} channel if the one that failed is having trouble.</mat-hint>
+      </mat-form-field>
+    </form>
+  } @else {
+    <p class="mixed-note">
+      The selected recipients use different channel types, so each will resend through
+      the channel it originally used.
+    </p>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="confirm()">Resend</button>
+</mat-dialog-actions>

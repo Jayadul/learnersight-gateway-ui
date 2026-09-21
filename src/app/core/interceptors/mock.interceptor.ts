@@ -180,9 +180,12 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
           skipped: 0,
           outcomes: ids.map((id) => ({
             recipientId: id, recipient: '8801700000000', sent: true,
-            newRecipientId: newGuid(), reason: null,
+            attempted: true, reason: null,
           })),
         });
+      }
+      if (path.endsWith('/attempts') && method === 'GET') {
+        return ok([]);
       }
 
       // ---- API logs ----

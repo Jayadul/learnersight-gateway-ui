@@ -29,6 +29,26 @@
 
   <h3>Raw Provider Response</h3>
   <pre class="raw-content">{{ prettyResponse(row.rawProviderResponse) }}</pre>
+
+  @if (!loadingAttempts() && attempts().length > 0) {
+    <mat-accordion class="history-accordion">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Resend History ({{ attempts().length }})</mat-panel-title>
+        </mat-expansion-panel-header>
+        @for (attempt of attempts(); track attempt.id) {
+          <div class="attempt">
+            <div class="attempt-head">
+              <app-status-badge [status]="attempt.deliveryStatus" type="delivery" />
+              <span class="attempt-when">{{ attempt.attemptedAt | date: 'medium' }}</span>
+              @if (attempt.channelLabel) { <span class="muted">via {{ attempt.channelLabel }}</span> }
+            </div>
+            <pre class="raw-content attempt-response">{{ prettyResponse(attempt.rawResponse) }}</pre>
+          </div>
+        }
+      </mat-expansion-panel>
+    </mat-accordion>
+  }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Close</button>
