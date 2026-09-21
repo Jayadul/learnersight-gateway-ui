@@ -31,7 +31,7 @@
           </tbody>
         </table>
 
-        <h3 class="doc-section">Request Parameters <span class="muted">(form fields, or the same names as query params on GET)</span></h3>
+        <h3 class="doc-section">Request Parameters <span class="muted">(form fields, JSON body keys, or the same names as query params on GET &mdash; identical either way)</span></h3>
         <table class="doc-table">
           <thead>
             <tr><th>Field</th><th>Required</th><th>Description</th></tr>
@@ -204,6 +204,19 @@
           <app-copy-button class="code-copy" [value]="curlPreview()" />
         </div>
         <p class="muted">The example above updates live with the simulator values on the right.</p>
+
+        @if (verb() === 'POST') {
+          <h4 class="doc-subsection">Same request, as JSON</h4>
+          <p class="muted">
+            <code>application/json</code> is accepted on the same POST endpoint, with the
+            same field names and the same response shape &mdash; pick whichever your
+            platform makes easier. This is not a separate endpoint.
+          </p>
+          <div class="code-wrap">
+            <pre class="code-block">{{ curlJsonPreview() }}</pre>
+            <app-copy-button class="code-copy" [value]="curlJsonPreview()" />
+          </div>
+        }
 
         <h3 class="doc-section">Balance Lookup <span class="muted">(read-only, no credentials)</span></h3>
         <div class="endpoint-line">

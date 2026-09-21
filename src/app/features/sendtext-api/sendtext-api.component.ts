@@ -164,6 +164,23 @@ export class SendTextApiComponent {
     ].join('\n');
   });
 
+  /** JSON variant of the same POST — same fields, same endpoint, same response shape. */
+  readonly curlJsonPreview = computed(() => {
+    const v = this.formValue();
+    const body = {
+      apikey: v.apikey || 'YOUR_API_KEY',
+      secretkey: v.secretkey || 'YOUR_SECRET_KEY',
+      callerID: v.callerID || 'YOUR_CALLER_ID',
+      toUser: v.toUser ?? '',
+      messageContent: v.messageContent ?? '',
+    };
+    return [
+      `curl -X POST "${this.baseUrl}/sendtext" \\`,
+      `  -H "Content-Type: application/json" \\`,
+      `  -d '${JSON.stringify(body)}'`,
+    ].join('\n');
+  });
+
   readonly responseJson = computed(() => {
     const r = this.response();
     return r ? JSON.stringify(r, null, 2) : '';
