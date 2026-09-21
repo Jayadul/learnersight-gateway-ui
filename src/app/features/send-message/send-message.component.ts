@@ -59,6 +59,9 @@ export class SendMessageComponent {
     recipient: ['', [Validators.required, phoneListValidator]],
     templateName: ['', Validators.required],
     mediaUrl: ['', urlValidator],
+    // Optional override. Blank means "use the channel's configured Template API Token" —
+    // same pattern as callerId/campaignId/lotNumber on the text/voice path.
+    token: [''],
   });
   /** Count varies per template, so this is a plain add/remove list, not a fixed shape. */
   readonly exampleArr = this.fb.nonNullable.array<FormControl<string>>([]);
@@ -198,6 +201,7 @@ export class SendMessageComponent {
       templateName: v.templateName.trim(),
       exampleArr: this.exampleArr.controls.map((c) => c.value.trim()),
       ...(v.mediaUrl.trim() !== '' && { mediaUrl: v.mediaUrl.trim() }),
+      ...(v.token.trim() !== '' && { token: v.token.trim() }),
     };
 
     this.loading.set(true);

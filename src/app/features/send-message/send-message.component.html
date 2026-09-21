@@ -111,6 +111,12 @@
               <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
               <app-form-field-errors [control]="templateForm.controls.mediaUrl" />
             </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Template API Token (optional)</mat-label>
+              <input matInput type="password" formControlName="token" placeholder="leave empty to use the channel's Template API Token" />
+              <mat-hint>Overrides the channel's configured token, for this send only.</mat-hint>
+            </mat-form-field>
           </div>
         }
 

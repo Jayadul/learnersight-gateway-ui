@@ -31,4 +31,6 @@ export interface SendTemplateRequest {
   /** Ordered template variable values — count varies per template. */
   readonly exampleArr: string[];
   readonly mediaUrl?: string;
+  /** Omitted uses the channel's configured Template API Token; set overrides it for this send only. */
+  readonly token?: string;
 }
