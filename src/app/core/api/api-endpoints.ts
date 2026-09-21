@@ -31,6 +31,7 @@ export const ApiEndpoints = {
   messageRequests:  `${BASE}/message-requests`,
   apiLogs:          `${BASE}/api-logs`,
   manualSend:       `${BASE}/manual-send`,
+  manualSendTemplate: `${BASE}/manual-send/template`,
   manualSendChannels: `${BASE}/manual-send/channels`,
   media:            `${BASE}/media`,
   backupExport:     `${BASE}/backup/export`,

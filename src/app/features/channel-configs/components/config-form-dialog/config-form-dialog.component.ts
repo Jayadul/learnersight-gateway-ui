@@ -99,6 +99,10 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       label: 'NetZero Inbox (v1 API)',
       fields: [
         { key: 'token', label: 'Token', password: true },
+        {
+          key: 'templateToken', label: 'Template API Token', password: true, optional: true,
+          hint: 'A separate token used only for sending Meta-approved WhatsApp templates. Leave empty if this channel does not send templates.',
+        },
         BASE_URL,
       ],
     },
