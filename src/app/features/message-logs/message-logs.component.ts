@@ -87,11 +87,11 @@ export class MessageLogsComponent implements OnInit {
         kind: 'select', key: 'deliveryStatus', label: 'Status',
         options: [
           { label: 'All', value: null },
-          { label: 'Awaiting Status', value: DeliveryStatus.Pending },
+          { label: 'In Progress', value: DeliveryStatus.Pending },
           { label: 'Delivered', value: DeliveryStatus.Delivered },
           { label: 'Failed', value: DeliveryStatus.Failed },
-          { label: 'Delivered via Fallback', value: DeliveryStatus.Fallback },
-          { label: 'Unknown', value: DeliveryStatus.Unknown },
+          { label: 'Delivered (Backup Channel)', value: DeliveryStatus.Fallback },
+          { label: 'Status Unknown', value: DeliveryStatus.Unknown },
         ],
       },
       {

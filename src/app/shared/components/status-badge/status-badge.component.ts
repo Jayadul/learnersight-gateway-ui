@@ -6,6 +6,25 @@ import { MessageStatusPipe } from '../../pipes/message-status.pipe';
 type BadgeType = 'message' | 'job' | 'call' | 'delivery';
 type BadgeColor = 'green' | 'red' | 'orange' | 'amber' | 'grey';
 
+/**
+ * Message Logs' own per-recipient status wording (hotfix batch 4, task 5) — the client
+ * found "Awaiting Status" ambiguous (stuck? still processing?) and "Fallback" read as
+ * dev jargon. Every label reads as a plain outcome, not a raw enum name.
+ */
+function deliveryStatusLabel(status: DeliveryStatus): string {
+  switch (status) {
+    case DeliveryStatus.Pending: return 'In Progress';
+    case DeliveryStatus.Delivered: return 'Delivered';
+    case DeliveryStatus.Failed: return 'Failed';
+    // Delivered, but only because the primary channel failed first — says so plainly
+    // rather than naming the mechanism ("Fallback").
+    case DeliveryStatus.Fallback: return 'Delivered (Backup Channel)';
+    // The provider gave no usable answer, or offers none — plainly "not known", never
+    // styled or worded like an error.
+    default: return 'Status Unknown';
+  }
+}
+
 @Component({
   selector: 'app-status-badge',
   standalone: true,
@@ -28,9 +47,7 @@ export class StatusBadgeComponent {
       return JobStatus[s] ?? 'Unknown';
     }
     if (t === 'delivery') {
-      // "Pending" reads as stuck on a per-recipient row; the provider simply has not
-      // answered yet.
-      return s === DeliveryStatus.Pending ? 'Awaiting Status' : (DeliveryStatus[s] ?? 'Unknown');
+      return deliveryStatusLabel(s as DeliveryStatus);
     }
     // The pipe owns the wording, so the badge cannot drift from the rest of the UI —
     // the raw enum name renders as "PartialSuccess", one word.
