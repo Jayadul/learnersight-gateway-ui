@@ -54,11 +54,22 @@ export class FilterBarComponent implements OnInit {
   onSearch(): void {
     const raw = this.form.value as Record<string, unknown>;
     const out: Record<string, unknown> = {};
+    // A date picker yields midnight at the START of the chosen day. Sent as the range end,
+    // that excluded the whole end day, so a single-day range returned nothing.
+    const rangeEnds = new Set(
+      this.controls().flatMap((c) => (c.kind === 'dateRange' ? [c.keyTo] : [])),
+    );
     for (const [key, value] of Object.entries(raw)) {
       if (value === null || value === undefined || value === '') {
         continue;
       }
-      out[key] = value instanceof Date ? value.toISOString() : value;
+      if (value instanceof Date) {
+        const at = new Date(value);
+        if (rangeEnds.has(key)) at.setHours(23, 59, 59, 999);
+        out[key] = at.toISOString();
+      } else {
+        out[key] = value;
+      }
     }
     this.search.emit(out);
   }
