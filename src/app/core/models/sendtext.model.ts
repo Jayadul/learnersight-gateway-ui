@@ -10,7 +10,7 @@ export interface SendTextGatewayResponse {
 }
 
 /**
- * Response of the public GET /balance?LABEL= endpoint. Its own shape, not REVE's —
+ * Response of the public GET /balance?callerID= endpoint. Its own shape, not REVE's —
  * this endpoint isn't bound to that compatibility contract.
  */
 export interface BalanceLookupResponse {

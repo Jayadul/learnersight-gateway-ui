@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChannelConfigDto, CreateChannelConfigRequest, UpdateChannelConfigRequest } from '../../../../core/models/channel-config.model';
 import { ChannelType, Provider } from '../../../../core/models/enums';
 import { FormFieldErrorsComponent } from '../../../../shared/components/form-field-errors/form-field-errors.component';
+import { ChannelConfigsService } from '../../channel-configs.service';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 export interface ConfigFormDialogData {
   channelType: ChannelType;
@@ -97,6 +99,10 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       label: 'NetZero Inbox (v1 API)',
       fields: [
         { key: 'token', label: 'Token', password: true },
+        {
+          key: 'templateToken', label: 'Template API Token', password: true, optional: true,
+          hint: 'A separate token used only for sending Meta-approved WhatsApp templates. Leave empty if this channel does not send templates.',
+        },
         BASE_URL,
       ],
     },
@@ -146,6 +152,8 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
 })
 export class ConfigFormDialogComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly channelConfigsService = inject(ChannelConfigsService);
+  private readonly notify = inject(NotificationService);
   readonly data = inject<ConfigFormDialogData>(MAT_DIALOG_DATA);
   readonly dialogRef = inject(MatDialogRef<ConfigFormDialogComponent>);
 
@@ -153,6 +161,7 @@ export class ConfigFormDialogComponent {
   /** Pacing is only meaningful for WhatsApp, which sends one job per recipient. */
   readonly isWhatsApp = this.data.channelType === ChannelType.WP;
   readonly revealed = signal<Record<string, boolean>>({});
+  readonly revealing = signal<Record<string, boolean>>({});
 
   readonly providers = PROVIDERS[this.data.channelType] ?? [];
 
@@ -258,15 +267,51 @@ export class ConfigFormDialogComponent {
     }
   }
 
+  /**
+   * On a new, unsaved channel there is nothing to fetch — the field holds whatever the
+   * admin just typed, so this only toggles visibility. On an existing channel the field
+   * starts out holding the partial mask (e.g. "***ay0982"), so the first reveal fetches
+   * the real value from the backend before showing it.
+   */
   toggleReveal(key: string): void {
-    this.revealed.update((r) => ({ ...r, [key]: !r[key] }));
+    if (this.revealed()[key]) {
+      this.revealed.update((r) => ({ ...r, [key]: false }));
+      return;
+    }
+    if (!this.isEdit) {
+      this.revealed.update((r) => ({ ...r, [key]: true }));
+      return;
+    }
+
+    this.revealing.update((r) => ({ ...r, [key]: true }));
+    this.channelConfigsService.revealField(this.data.config!.id, key).subscribe({
+      next: ({ value }) => {
+        this.form.get(key)?.setValue(value);
+        this.revealed.update((r) => ({ ...r, [key]: true }));
+        this.revealing.update((r) => ({ ...r, [key]: false }));
+      },
+      error: () => {
+        this.notify.error('This value could not be revealed.');
+        this.revealing.update((r) => ({ ...r, [key]: false }));
+      },
+    });
   }
 
+  /**
+   * A stored partial mask (starts with "***") is already safe to display as plain text -
+   * hiding it behind password dots too would hide the very tail characters the partial
+   * mask exists to show at a glance. A freshly-typed replacement value (no mask prefix)
+   * still defaults to hidden, same as before this change.
+   */
   inputType(field: FieldDef): string {
-    if (!field.password) {
-      return 'text';
-    }
-    return this.revealed()[field.key] ? 'text' : 'password';
+    if (!field.password) return 'text';
+    if (this.revealed()[field.key]) return 'text';
+    const value = (this.form.get(field.key)?.value as string) ?? '';
+    return this.isMaskedValue(value) ? 'text' : 'password';
+  }
+
+  private isMaskedValue(value: string): boolean {
+    return value.startsWith('***');
   }
 
   control(key: string) {

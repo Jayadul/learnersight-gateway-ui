@@ -23,7 +23,7 @@
         </div>
         <table class="doc-table">
           <tbody>
-            <tr><th>Content-Type</th><td>POST: <code>application/x-www-form-urlencoded</code>. GET: same fields as query-string params &mdash; use it only where the integrator's platform cannot easily do POST, since POST keeps credentials off the URL</td></tr>
+            <tr><th>Content-Type</th><td>POST: <code>application/x-www-form-urlencoded</code> or <code>application/json</code> &mdash; both are accepted with the same fields. GET: same fields as query-string params &mdash; use it only where the integrator's platform cannot easily do POST, since POST keeps credentials off the URL</td></tr>
             <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
             <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
             <tr><th>Gateways</th><td>Each channel type may have several gateways configured. Every tag names the one it uses by label &mdash; only an untagged message falls back to a default</td></tr>
@@ -31,7 +31,7 @@
           </tbody>
         </table>
 
-        <h3 class="doc-section">Request Parameters <span class="muted">(form fields, or the same names as query params on GET)</span></h3>
+        <h3 class="doc-section">Request Parameters <span class="muted">(form fields, JSON body keys, or the same names as query params on GET &mdash; identical either way)</span></h3>
         <table class="doc-table">
           <thead>
             <tr><th>Field</th><th>Required</th><th>Description</th></tr>
@@ -205,11 +205,24 @@
         </div>
         <p class="muted">The example above updates live with the simulator values on the right.</p>
 
+        @if (verb() === 'POST') {
+          <h4 class="doc-subsection">Same request, as JSON</h4>
+          <p class="muted">
+            <code>application/json</code> is accepted on the same POST endpoint, with the
+            same field names and the same response shape &mdash; pick whichever your
+            platform makes easier. This is not a separate endpoint.
+          </p>
+          <div class="code-wrap">
+            <pre class="code-block">{{ curlJsonPreview() }}</pre>
+            <app-copy-button class="code-copy" [value]="curlJsonPreview()" />
+          </div>
+        }
+
         <h3 class="doc-section">Balance Lookup <span class="muted">(read-only, no credentials)</span></h3>
         <div class="endpoint-line">
           <span class="method-chip">GET</span>
-          <code class="endpoint-url">{{ baseUrl }}/balance?LABEL=yourlabel</code>
-          <app-copy-button [value]="baseUrl + '/balance?LABEL=yourlabel'" />
+          <code class="endpoint-url">{{ baseUrl }}/balance?callerID=yourlabel</code>
+          <app-copy-button [value]="baseUrl + '/balance?callerID=yourlabel'" />
         </div>
         <p>
           A separate, unauthenticated endpoint for checking a gateway's remaining credit —
@@ -337,7 +350,7 @@
 
         <form [formGroup]="balanceForm" (ngSubmit)="checkBalance()">
           <mat-form-field appearance="outline" class="full" floatLabel="always">
-            <mat-label>LABEL</mat-label>
+            <mat-label>callerID</mat-label>
             <input matInput formControlName="label" [placeholder]="balancePlaceholder()" />
           </mat-form-field>
           <p class="muted balance-curl">{{ balanceCurlPreview() }}</p>

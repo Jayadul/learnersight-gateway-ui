@@ -35,11 +35,11 @@ export class SendTextApiService {
       : this.http.post<SendTextGatewayResponse>(url, params);
   }
 
-  /** Public, unauthenticated balance lookup — GET /balance?LABEL=. */
+  /** Public, unauthenticated balance lookup — GET /balance?callerID=. */
   checkBalance(label: string): Observable<BalanceLookupResponse> {
     return this.http.get<BalanceLookupResponse>(
       `${environment.apiUrl}${ApiEndpoints.balance}`,
-      { params: new HttpParams().set('LABEL', label) },
+      { params: new HttpParams().set('callerID', label) },
     );
   }
 }

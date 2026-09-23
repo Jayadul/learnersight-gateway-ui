@@ -1501,7 +1501,7 @@
       ]
     }
   },
-  "dispatchLogs": [
+  "dispatchJobRecipients": [
     {
       "id": "dj-2000",
       "channelType": 0,

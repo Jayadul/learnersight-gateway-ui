@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiEndpoints } from '../api/api-endpoints';
-import { ResendRequest, ResendResultDto } from '../models/dispatch-job-recipient.model';
+import { ResendAttemptDto, ResendRequest, ResendResultDto } from '../models/dispatch-job-recipient.model';
 
 /**
  * Retries individual failed recipients. Recipient-level rather than job-level: SMS and
@@ -17,5 +17,11 @@ export class ResendService {
   resend(request: ResendRequest): Observable<ResendResultDto> {
     return this.http.post<ResendResultDto>(
       `${environment.apiUrl}${ApiEndpoints.resendRecipients}`, request);
+  }
+
+  /** A recipient's own resend history, most recent first. */
+  getAttemptHistory(recipientId: string): Observable<ResendAttemptDto[]> {
+    return this.http.get<ResendAttemptDto[]>(
+      `${environment.apiUrl}${ApiEndpoints.dispatchJobRecipients}/${recipientId}/attempts`);
   }
 }

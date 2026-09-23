@@ -212,3 +212,16 @@ form { display: flex; flex-direction: column; }
   margin-left: 8px; font-size: 11px; text-transform: uppercase;
   color: var(--nzg-text-muted);
 }
+
+.variable-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+
+  .full { flex: 1; }
+}
+
+.add-variable-btn {
+  margin: 4px 0 16px;
+  align-self: flex-start;
+}

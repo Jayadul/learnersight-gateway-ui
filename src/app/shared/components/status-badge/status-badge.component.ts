@@ -1,10 +1,29 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
-import { JobStatus, MessageStatus } from '../../../core/models/enums';
+import { DeliveryStatus, JobStatus, MessageStatus } from '../../../core/models/enums';
 import { MessageStatusPipe } from '../../pipes/message-status.pipe';
 
-type BadgeType = 'message' | 'job' | 'call';
+type BadgeType = 'message' | 'job' | 'call' | 'delivery';
 type BadgeColor = 'green' | 'red' | 'orange' | 'amber' | 'grey';
+
+/**
+ * Message Logs' own per-recipient status wording (hotfix batch 4, task 5) — the client
+ * found "Awaiting Status" ambiguous (stuck? still processing?) and "Fallback" read as
+ * dev jargon. Every label reads as a plain outcome, not a raw enum name.
+ */
+function deliveryStatusLabel(status: DeliveryStatus): string {
+  switch (status) {
+    case DeliveryStatus.Pending: return 'In Progress';
+    case DeliveryStatus.Delivered: return 'Delivered';
+    case DeliveryStatus.Failed: return 'Failed';
+    // Delivered, but only because the primary channel failed first — says so plainly
+    // rather than naming the mechanism ("Fallback").
+    case DeliveryStatus.Fallback: return 'Delivered (Backup Channel)';
+    // The provider gave no usable answer, or offers none — plainly "not known", never
+    // styled or worded like an error.
+    default: return 'Status Unknown';
+  }
+}
 
 @Component({
   selector: 'app-status-badge',
@@ -26,6 +45,9 @@ export class StatusBadgeComponent {
     }
     if (t === 'job') {
       return JobStatus[s] ?? 'Unknown';
+    }
+    if (t === 'delivery') {
+      return deliveryStatusLabel(s as DeliveryStatus);
     }
     // The pipe owns the wording, so the badge cannot drift from the rest of the UI —
     // the raw enum name renders as "PartialSuccess", one word.
@@ -53,6 +75,17 @@ export class StatusBadgeComponent {
         case JobStatus.Sent: return 'green';
         case JobStatus.Failed: return 'red';
         case JobStatus.Pending: return 'orange';
+        default: return 'grey';
+      }
+    }
+    if (t === 'delivery') {
+      switch (s as DeliveryStatus) {
+        case DeliveryStatus.Delivered: return 'green';
+        case DeliveryStatus.Failed: return 'red';
+        case DeliveryStatus.Pending: return 'orange';
+        // Delivered, but only because the primary channel failed first — amber rather
+        // than green, so something worth a look does not read as fully fine.
+        case DeliveryStatus.Fallback: return 'amber';
         default: return 'grey';
       }
     }

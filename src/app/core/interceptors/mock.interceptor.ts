@@ -22,7 +22,19 @@ interface MockDb {
   };
   messageRequests: Array<{ id: string }>;
   messageRequestDetails: Record<string, unknown>;
-  dispatchLogs: unknown[];
+  /** Job-shaped fixtures (predates the per-recipient page) — mapped to the recipient DTO shape below. */
+  dispatchJobRecipients: Array<{
+    id: string;
+    channelType: number;
+    toNumber: string;
+    messageContent: string;
+    status: number;
+    providerMessageId: string | null;
+    providerRawResponse: string | null;
+    sentAt: string | null;
+    isFallback: boolean;
+    createdAt: string;
+  }>;
   apiLogs: unknown[];
   channelConfigs: Array<{ channelType: number }>;
   fallbackPolicies: unknown[];
@@ -68,6 +80,28 @@ function getQuery(url: string, key: string): string | null {
     return null;
   }
   return new URLSearchParams(q).get(key);
+}
+
+/** Job-shaped fixture -> DispatchJobRecipientDto shape. JobStatus and DeliveryStatus
+ * happen to share numeric values for Pending/Sent-Delivered/Failed, so status maps as-is. */
+function toRecipientMock(job: MockDb['dispatchJobRecipients'][number]) {
+  return {
+    id: job.id,
+    dispatchJobId: job.id,
+    recipient: job.toNumber,
+    providerReferenceId: job.providerMessageId,
+    deliveryStatus: job.status,
+    lastCheckedAt: job.sentAt,
+    createdAt: job.createdAt,
+    channelType: job.channelType,
+    channelLabel: null,
+    messageContent: job.messageContent,
+    campaignId: null,
+    sentAt: job.sentAt,
+    isFallback: job.isFallback,
+    resentFromRecipientId: null,
+    rawProviderResponse: job.providerRawResponse,
+  };
 }
 
 function page<T>(items: T[], url: string): { items: T[]; totalCount: number; page: number; pageSize: number; totalPages: number } {
@@ -133,9 +167,25 @@ export const mockInterceptor: HttpInterceptorFn = (req, next) => {
         return ok(detail);
       }
 
-      // ---- Dispatch logs ----
-      if (path === ApiEndpoints.dispatchLogs && method === 'GET') {
-        return ok(page(db.dispatchLogs, req.url));
+      // ---- Message Logs (per recipient, R3.4 — replaces the old dispatch-logs page) ----
+      if (path === ApiEndpoints.dispatchJobRecipients && method === 'GET') {
+        return ok(page(db.dispatchJobRecipients.map(toRecipientMock), req.url));
+      }
+      if (path === ApiEndpoints.resendRecipients && method === 'POST') {
+        const ids = ((req.body as { recipientIds?: string[] })?.recipientIds) ?? [];
+        return ok({
+          requested: ids.length,
+          resent: ids.length,
+          failed: 0,
+          skipped: 0,
+          outcomes: ids.map((id) => ({
+            recipientId: id, recipient: '8801700000000', sent: true,
+            attempted: true, reason: null,
+          })),
+        });
+      }
+      if (path.endsWith('/attempts') && method === 'GET') {
+        return ok([]);
       }
 
       // ---- API logs ----

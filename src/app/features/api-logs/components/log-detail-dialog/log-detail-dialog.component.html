@@ -8,8 +8,12 @@
   </div>
   <div class="panes">
     <div class="pane">
-      <h4>Request Body</h4>
-      <pre>{{ pretty(log.rawBody) }}</pre>
+      <div class="pane-head">
+        <h4>Request (curl)</h4>
+        <app-copy-button [value]="curl" />
+      </div>
+      <pre>{{ curl }}</pre>
+      <p class="muted">The API key and secret key stay masked as shown above. The log never stores the real values.</p>
     </div>
     <div class="pane">
       <h4>Response Body</h4>

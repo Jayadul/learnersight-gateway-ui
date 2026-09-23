@@ -13,6 +13,8 @@ export interface ChannelOptionDto {
   readonly channelType: ChannelType;
   readonly isActive: boolean;
   readonly isDefault: boolean;
+  /** Whether this channel has a Template API Token configured — gates "Send Template" mode. */
+  readonly hasTemplateToken: boolean;
 }
 
 export interface ChannelConfigDto {

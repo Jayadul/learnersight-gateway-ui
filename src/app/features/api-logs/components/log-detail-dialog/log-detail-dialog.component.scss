@@ -2,6 +2,9 @@
 .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 768px) { .panes { grid-template-columns: 1fr; } }
 .pane h4 { margin: 0 0 8px; }
+.pane-head { display: flex; align-items: center; justify-content: space-between; }
+.pane-head h4 { margin: 0; }
+.muted { color: var(--nzg-text-muted); font-size: 12px; margin: 8px 0 0; }
 pre {
   background: #0f172a; color: #e2e8f0; padding: 12px; border-radius: 8px;
   font-size: 12px; overflow: auto; max-height: 360px; white-space: pre-wrap; word-break: break-word;

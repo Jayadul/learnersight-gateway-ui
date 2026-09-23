@@ -21,57 +21,142 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
 
+        <!-- WhatsApp only: plain text/media vs a Meta pre-approved template -->
+        @if (isWp()) {
+          <p class="field-label">Send As</p>
+          <mat-button-toggle-group [value]="sendMode()" (change)="sendMode.set($event.value)" class="channel-toggle">
+            <mat-button-toggle value="message">
+              <mat-icon>chat</mat-icon> Text or Media
+            </mat-button-toggle>
+            <mat-button-toggle value="template">
+              <mat-icon>fact_check</mat-icon> Send Template
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        }
+
         <!-- Which gateway of that type. Several may be active, so the default is
              preselected rather than left blank. -->
-        <mat-form-field appearance="outline" class="full gateway-select" subscriptSizing="dynamic">
-          <mat-label>Send Through</mat-label>
-          <mat-select formControlName="channelLabelSlug">
-            @for (ch of channelOptions(); track ch.id) {
-              <mat-option [value]="ch.labelSlug">
-                {{ ch.label }}@if (ch.isDefault) { <span class="default-tag">default</span> }
-              </mat-option>
-            }
-          </mat-select>
-          <mat-hint>Pick a different gateway if you do not want the default one.</mat-hint>
-        </mat-form-field>
-
-        <mat-divider class="divider"></mat-divider>
-
-        <!-- Recipients -->
-        <p class="field-label">
-          Recipients
-          @if (parsedCount() > 0) {
-            <span class="count-pill">{{ parsedCount() }}</span>
-          }
-        </p>
-        <mat-form-field appearance="outline" class="full">
-          <mat-label>Phone Numbers</mat-label>
-          <textarea matInput formControlName="toNumbers" rows="3"
-                    placeholder="8801700000001, 8801700000002"></textarea>
-          <mat-hint>Separate numbers with commas. Digits only, starting with the country code (for example 8801700000001).</mat-hint>
-          <app-form-field-errors [control]="form.controls.toNumbers" />
-        </mat-form-field>
-
-        <!-- Message — not used for Voice (campaign content is pre-configured at the provider) -->
-        @if (!isVoice()) {
-          <p class="field-label">Message</p>
-          <mat-form-field appearance="outline" class="full">
-            <mat-label>Message Text</mat-label>
-            <textarea matInput formControlName="message" rows="5"
-                      placeholder="Type your message here…"></textarea>
-            <app-form-field-errors [control]="form.controls.message" />
+        @if (!isTemplateMode()) {
+          <mat-form-field appearance="outline" class="full gateway-select" subscriptSizing="dynamic">
+            <mat-label>Send Through</mat-label>
+            <mat-select formControlName="channelLabelSlug">
+              @for (ch of channelOptions(); track ch.id) {
+                <mat-option [value]="ch.labelSlug">
+                  {{ ch.label }}@if (ch.isDefault) { <span class="default-tag">default</span> }
+                </mat-option>
+              }
+            </mat-select>
+            <mat-hint>Pick a different gateway if you do not want the default one.</mat-hint>
           </mat-form-field>
         }
 
-        <!-- Media URL — optional on WhatsApp; adding one sends the message as media -->
-        @if (isWp()) {
+        <mat-divider class="divider"></mat-divider>
+
+        @if (isTemplateMode()) {
+          <div [formGroup]="templateForm">
+            <mat-form-field appearance="outline" class="full gateway-select" subscriptSizing="dynamic">
+              <mat-label>Send Through</mat-label>
+              <mat-select formControlName="channelLabelSlug">
+                @for (ch of templateChannelOptions(); track ch.id) {
+                  <mat-option [value]="ch.labelSlug">{{ ch.label }}</mat-option>
+                }
+              </mat-select>
+              <mat-hint>Only channels with a Template API Token configured can send templates.</mat-hint>
+              @if (templateChannelOptions().length === 0) {
+                <mat-error>No WhatsApp channel has a Template API Token configured yet. Add one in Channels.</mat-error>
+              }
+            </mat-form-field>
+
+            <p class="field-label">Recipient</p>
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="recipient" placeholder="8801700000001" />
+              <mat-hint>Digits only, starting with the country code.</mat-hint>
+              <app-form-field-errors [control]="templateForm.controls.recipient" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Template Name</mat-label>
+              <input matInput formControlName="templateName" placeholder="e.g. due_bill_reminder" />
+              <mat-hint>The exact, Meta-approved template name.</mat-hint>
+              <app-form-field-errors [control]="templateForm.controls.templateName" />
+            </mat-form-field>
+
+            <p class="field-label">
+              Template Variables
+              @if (exampleArr.length > 0) {
+                <span class="count-pill">{{ exampleArr.length }}</span>
+              }
+            </p>
+            @for (variable of exampleArr.controls; track $index) {
+              <div class="variable-row">
+                <mat-form-field appearance="outline" class="full">
+                  <mat-label>Variable {{ $index + 1 }}</mat-label>
+                  <input matInput [formControl]="variable" />
+                  <app-form-field-errors [control]="variable" />
+                </mat-form-field>
+                <button mat-icon-button type="button" color="warn" (click)="removeVariable($index)"
+                        [attr.aria-label]="'Remove variable ' + ($index + 1)">
+                  <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+              </div>
+            }
+            <button mat-stroked-button type="button" (click)="addVariable()" class="add-variable-btn">
+              <mat-icon>add</mat-icon> Add Variable
+            </button>
+
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Media URL (optional)</mat-label>
+              <mat-icon matIconPrefix>link</mat-icon>
+              <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
+              <app-form-field-errors [control]="templateForm.controls.mediaUrl" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Template API Token (optional)</mat-label>
+              <input matInput type="password" formControlName="token" placeholder="leave empty to use the channel's Template API Token" />
+              <mat-hint>Overrides the channel's configured token, for this send only.</mat-hint>
+            </mat-form-field>
+          </div>
+        }
+
+        @if (!isTemplateMode()) {
+          <!-- Recipients -->
+          <p class="field-label">
+            Recipients
+            @if (parsedCount() > 0) {
+              <span class="count-pill">{{ parsedCount() }}</span>
+            }
+          </p>
           <mat-form-field appearance="outline" class="full">
-            <mat-label>Media URL (optional)</mat-label>
-            <mat-icon matIconPrefix>link</mat-icon>
-            <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
-            <mat-hint>Leave empty to send a text message. Any link must be publicly accessible.</mat-hint>
-            <app-form-field-errors [control]="form.controls.mediaUrl" />
+            <mat-label>Phone Numbers</mat-label>
+            <textarea matInput formControlName="toNumbers" rows="3"
+                      placeholder="8801700000001, 8801700000002"></textarea>
+            <mat-hint>Separate numbers with commas. Digits only, starting with the country code (for example 8801700000001).</mat-hint>
+            <app-form-field-errors [control]="form.controls.toNumbers" />
           </mat-form-field>
+
+          <!-- Message — not used for Voice (campaign content is pre-configured at the provider) -->
+          @if (!isVoice()) {
+            <p class="field-label">Message</p>
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Message Text</mat-label>
+              <textarea matInput formControlName="message" rows="5"
+                        placeholder="Type your message here…"></textarea>
+              <app-form-field-errors [control]="form.controls.message" />
+            </mat-form-field>
+          }
+
+          <!-- Media URL — optional on WhatsApp; adding one sends the message as media -->
+          @if (isWp()) {
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Media URL (optional)</mat-label>
+              <mat-icon matIconPrefix>link</mat-icon>
+              <input matInput formControlName="mediaUrl" placeholder="https://example.com/image.jpg" />
+              <mat-hint>Leave empty to send a text message. Any link must be publicly accessible.</mat-hint>
+              <app-form-field-errors [control]="form.controls.mediaUrl" />
+            </mat-form-field>
+          }
         }
 
         <!-- Optional per-send overrides. Blank keeps the channel's configured value. -->
@@ -107,7 +192,7 @@
             } @else {
               <ng-container>
                 <mat-icon>send</mat-icon>
-                <span>{{ isVoice() ? 'Start Calls' : 'Send Message' }}</span>
+                <span>{{ isTemplateMode() ? 'Send Template' : isVoice() ? 'Start Calls' : 'Send Message' }}</span>
               </ng-container>
             }
           </button>

@@ -3,6 +3,8 @@ h3 { margin: 0 0 8px; font-size: 16px; }
 .empty { color: var(--nzg-text-muted); font-size: 13px; margin: 24px 0; }
 
 .reason-list { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
+.clickable { cursor: pointer; }
+.reason:hover .reason-text { text-decoration: underline; }
 
 .reason-head { display: flex; align-items: baseline; gap: 12px; }
 // One line with an ellipsis: provider messages run long, and the full text is on hover.

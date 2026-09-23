@@ -1,5 +1,12 @@
 <div class="nzg-page">
-  <app-page-header title="Message Logs" subtitle="Every message received by the gateway, with its delivery details" />
+  <app-page-header title="Message Logs" subtitle="Every recipient of every message sent through the gateway">
+    @if (selectedCount() > 0) {
+      <button mat-flat-button color="primary" (click)="resendSelected()" [disabled]="resending()">
+        <mat-icon>replay</mat-icon>
+        Resend {{ selectedCount() }} selected
+      </button>
+    }
+  </app-page-header>
 
   <app-filter-bar [controls]="filters()"
                   (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
@@ -19,5 +26,14 @@
     (pageChange)="state.setPage($event)"
     (sortChange)="state.setSort($event)"
     (rowClick)="openDetail($event)"
-    (actionClick)="onAction($event)" />
+    (actionClick)="onAction($event)">
+    <ng-template appColumnDef="select" let-row>
+      @if (isResendable(row)) {
+        <mat-checkbox [checked]="isSelected(row.id)"
+                      (click)="$event.stopPropagation()"
+                      (change)="toggle(row.id)"
+                      [attr.aria-label]="'Select ' + row.recipient + ' to resend'" />
+      }
+    </ng-template>
+  </app-data-table>
 </div>

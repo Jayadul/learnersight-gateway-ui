@@ -3,9 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, interval } from 'rxjs';
 import { DashboardService } from './dashboard.service';
-import { MessageLogsService } from '../message-logs/message-logs.service';
+import { MessageRequestsService } from '../../core/services/message-requests.service';
 import {
   ChannelBreakdownDto, DashboardSummaryDto, FailureReasonDto, TimelinePointDto,
 } from '../../core/models/dashboard.model';
@@ -16,7 +17,8 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 import { SummaryCardsComponent } from './components/summary-cards/summary-cards.component';
 import { TimelineChartComponent } from './components/timeline-chart/timeline-chart.component';
 import { ChannelBreakdownChartComponent } from './components/channel-breakdown-chart/channel-breakdown-chart.component';
-import { FailureReasonsChartComponent } from './components/failure-reasons-chart/failure-reasons-chart.component';
+import { FailureReasonsChartComponent, FailureDrilldownRequest } from './components/failure-reasons-chart/failure-reasons-chart.component';
+import { FailureDrilldownDialogComponent } from './components/failure-drilldown-dialog/failure-drilldown-dialog.component';
 import { RecentActivityComponent } from './components/recent-activity/recent-activity.component';
 import { ChannelBalancesComponent } from './components/channel-balances/channel-balances.component';
 
@@ -37,7 +39,8 @@ const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
 })
 export class DashboardComponent implements OnInit {
   private readonly dashboardService = inject(DashboardService);
-  private readonly messageLogsService = inject(MessageLogsService);
+  private readonly messageRequestsService = inject(MessageRequestsService);
+  private readonly dialog = inject(MatDialog);
   private readonly balancesService = inject(ChannelBalancesService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -81,7 +84,7 @@ export class DashboardComponent implements OnInit {
       timeline: this.dashboardService.getTimeline(7),
       breakdown: this.dashboardService.getChannelBreakdown(),
       failureReasons: this.dashboardService.getFailureReasons(5),
-      recent: this.messageLogsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
+      recent: this.messageRequestsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
       // Cached figures only — this read never calls a provider, so a slow vendor
       // cannot hold up the dashboard. A background job keeps them current.
       balances: this.balancesService.getAll(),
@@ -96,6 +99,12 @@ export class DashboardComponent implements OnInit {
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
+    });
+  }
+
+  openFailureDrilldown(request: FailureDrilldownRequest): void {
+    this.dialog.open(FailureDrilldownDialogComponent, {
+      data: request, width: '880px', maxWidth: '95vw', autoFocus: 'dialog',
     });
   }
 }

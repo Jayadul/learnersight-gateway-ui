@@ -33,7 +33,7 @@
     </div>
 
     <div class="chart-row">
-      <app-failure-reasons-chart [reasons]="failureReasons()" />
+      <app-failure-reasons-chart [reasons]="failureReasons()" (drilldown)="openFailureDrilldown($event)" />
       <app-recent-activity [items]="recent()" />
     </div>
 

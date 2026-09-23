@@ -24,4 +24,6 @@ export enum Provider {
 }
 // Per-recipient delivery outcome, synced back from the provider after a send. Distinct
 // from JobStatus: a Sent job can hold a mix of Delivered and Failed recipients.
-export enum DeliveryStatus { Pending = 0, Delivered = 1, Failed = 2, Unknown = 3 }
+// Fallback (R3.4): this recipient's own message only arrived via a fallback job, set at
+// dispatch time — the per-recipient mirror of MessageStatus.Fallback.
+export enum DeliveryStatus { Pending = 0, Delivered = 1, Failed = 2, Unknown = 3, Fallback = 4 }

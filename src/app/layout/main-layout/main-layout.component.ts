@@ -23,7 +23,6 @@ interface NavGroup { title: string; items: NavItem[]; superAdminOnly?: boolean; 
 const ROUTE_TITLES: Record<string, string> = {
   '/dashboard': 'Dashboard',
   '/logs/messages': 'Message Logs',
-  '/logs/dispatch': 'Delivery Logs',
   '/logs/api': 'API Logs',
   '/send': 'Messages & Calls',
   '/media-library': 'Media Library',
@@ -97,7 +96,6 @@ export class MainLayoutComponent implements OnInit {
       items: [
         { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
         { label: 'Message Logs', icon: 'forum', route: '/logs/messages' },
-        { label: 'Delivery Logs', icon: 'send', route: '/logs/dispatch' },
         { label: 'API Logs', icon: 'receipt_long', route: '/logs/api' },
       ],
     },

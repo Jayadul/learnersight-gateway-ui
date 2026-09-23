@@ -6,7 +6,7 @@
   } @else {
     <ul class="reason-list">
       @for (row of rows(); track row.reason) {
-        <li class="reason">
+        <li class="reason clickable" (click)="onReasonClick(row.reason)">
           <div class="reason-head">
             <span class="reason-text" [matTooltip]="row.reason"
                   matTooltipClass="nzg-cell-tooltip">{{ row.reason }}</span>
@@ -15,7 +15,8 @@
           <div class="bar-track"><div class="bar-fill" [style.width.%]="row.widthPercent"></div></div>
           <div class="channel-row">
             @for (ch of row.channels; track ch.label) {
-              <span class="channel-pill" [matTooltip]="ch.type">{{ ch.label }} · {{ ch.count }}</span>
+              <span class="channel-pill clickable" [matTooltip]="ch.type + ', click to see these messages'"
+                    (click)="onChannelClick($event, row.reason, ch.channelType)">{{ ch.label }} · {{ ch.count }}</span>
             }
           </div>
         </li>

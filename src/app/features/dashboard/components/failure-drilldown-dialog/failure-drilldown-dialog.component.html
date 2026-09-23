@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Affected Messages</h2>
+<mat-dialog-content>
+  <p class="reason-line"><span class="label">Reason</span><span>{{ data.reason }}</span></p>
+
+  @if (loading()) {
+    <p class="muted">Loading…</p>
+  } @else if (rows().length === 0) {
+    <p class="muted">No matching messages found.</p>
+  } @else {
+    <table class="drilldown-table">
+      <thead>
+        <tr>
+          <th>Recipient</th>
+          <th>Channel</th>
+          <th>Status</th>
+          <th>Sent At</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.id) {
+          <tr>
+            <td>{{ row.recipient }}</td>
+            <td>{{ row.channelLabel ?? (row.channelType | channelType) }}</td>
+            <td><app-status-badge [status]="row.deliveryStatus" type="delivery" /></td>
+            <td>{{ row.sentAt ? (row.sentAt | date: 'medium') : '—' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    @if (totalCount() > rows().length) {
+      <p class="muted more-note">Showing the first {{ rows().length }} of {{ totalCount() }} matches.</p>
+    }
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

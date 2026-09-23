@@ -1,109 +1,53 @@
 <h2 mat-dialog-title>Message Details</h2>
 <mat-dialog-content>
-  @if (detail(); as d) {
-    <div class="meta">
-      <div><span class="label">To</span><span>{{ d.toUser }}</span></div>
-      <div><span class="label">Status</span><app-status-badge [status]="d.overallStatus" type="message" /></div>
-      <div><span class="label">Received</span><span>{{ d.receivedAt | date: 'medium' }}</span></div>
-      <div><span class="label">Channels</span>
-        <mat-chip-set>
-          @for (ch of d.parsedChannels; track ch) { <mat-chip [disableRipple]="true">{{ ch | channelName }}</mat-chip> }
-        </mat-chip-set>
+  <div class="meta">
+    <div><span class="label">Recipient</span><span>{{ row.recipient }}</span></div>
+    <div><span class="label">Channel</span>
+      <span>{{ row.channelLabel ?? (row.channelType | channelType) }}
+        @if (row.channelLabel) { <span class="muted">({{ row.channelType | channelType }})</span> }
+      </span>
+    </div>
+    <div><span class="label">Status</span><app-status-badge [status]="row.deliveryStatus" type="delivery" /></div>
+    <div><span class="label">Sent</span>
+      <span>{{ row.sentAt ? (row.sentAt | date: 'medium') : 'Not sent yet' }}</span>
+    </div>
+    @if (row.campaignId) {
+      <div><span class="label">Campaign</span><span>{{ row.campaignId }}</span></div>
+    }
+    @if (row.providerReferenceId) {
+      <div><span class="label">Provider Reference</span><code>{{ row.providerReferenceId }}</code></div>
+    }
+    @if (row.resentFromRecipientId) {
+      <div><span class="label">Resent From</span>
+        <span class="muted">A retry of an earlier failed attempt</span>
       </div>
-      @if (d.isMultiChannel) {
-        <div><span class="label">Fallback</span>
-          <span class="skipped">Not applied — the sender tagged more than one channel</span>
-        </div>
-      }
-    </div>
-
-    <h3>Message</h3>
-    <pre class="raw-content">{{ d.rawMessageContent }}</pre>
-
-    <h3>Deliveries ({{ d.jobs.length }})</h3>
-    <app-data-table [columns]="jobColumns" [data]="$any(d.jobs)" [serverSide]="false"
-                    [pageSize]="10" emptyTitle="No deliveries">
-      <ng-template appColumnDef="isFallback" let-row>
-        @if (row.isFallback) { <mat-chip class="fallback" [disableRipple]="true">Fallback</mat-chip> } @else { — }
-      </ng-template>
-    </app-data-table>
-
-    <!-- Per-recipient breakdown. A drill-down beneath each job's own status, not a
-         replacement: SMS and Voice batch every number into one job, so this is the
-         only place a partly delivered batch can be read. -->
-    <div class="recipients-header">
-      <h3>Recipients</h3>
-      @if (selectedCount() > 0) {
-        <button mat-flat-button color="primary" (click)="resendSelected()"
-                [disabled]="resending()">
-          <mat-icon>replay</mat-icon>
-          Resend {{ selectedCount() }} selected
-        </button>
-      }
-    </div>
-
-    @for (job of d.jobs; track job.id) {
-      @if (job.recipients?.length) {
-        <div class="recipient-group">
-          <p class="group-label">
-            {{ job.channelLabel ?? (job.channelType | channelType) }}
-            <span class="muted">· {{ job.recipients!.length }} recipient(s)</span>
-          </p>
-          <table class="recipient-table">
-            <thead>
-              <tr>
-                <th class="pick"></th>
-                <th>Number</th>
-                <th>Delivery</th>
-                <th>Provider Reference</th>
-                <th>Last Checked</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (r of job.recipients; track r.id) {
-                <tr [class.failed]="r.deliveryStatus === DeliveryStatus.Failed">
-                  <td class="pick">
-                    @if (isResendable(r)) {
-                      <mat-checkbox [checked]="isSelected(r.id)" (change)="toggle(r.id)"
-                                    [attr.aria-label]="'Select ' + r.recipient + ' to resend'" />
-                    }
-                  </td>
-                  <td>{{ r.recipient }}</td>
-                  <td>
-                    <span class="delivery" [class]="'d-' + r.deliveryStatus">
-                      {{ deliveryLabel(r.deliveryStatus) }}
-                    </span>
-                  </td>
-                  <td>
-                    @if (r.providerReferenceId) {
-                      <code>{{ r.providerReferenceId }}</code>
-                    } @else {
-                      <span class="muted" matTooltip="This provider returns no per-recipient id">—</span>
-                    }
-                  </td>
-                  <td>
-                    @if (r.lastCheckedAt) {
-                      {{ r.lastCheckedAt | date: 'dd MMM, HH:mm' }}
-                    } @else {
-                      <span class="muted">not synced</span>
-                    }
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      }
     }
+  </div>
 
-    @if (!hasAnyRecipients(d)) {
-      <p class="muted">
-        No per-recipient detail. Recipient tracking started in Release 3 — messages sent
-        before it show delivery at the job level only.
-      </p>
-    }
-  } @else if (loading()) {
-    <p class="loading-text">Loading…</p>
+  <h3>Message</h3>
+  <pre class="raw-content">{{ row.messageContent }}</pre>
+
+  <h3>Raw Provider Response</h3>
+  <pre class="raw-content">{{ prettyResponse(row.rawProviderResponse) }}</pre>
+
+  @if (!loadingAttempts() && attempts().length > 0) {
+    <mat-accordion class="history-accordion">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Resend History ({{ attempts().length }})</mat-panel-title>
+        </mat-expansion-panel-header>
+        @for (attempt of attempts(); track attempt.id) {
+          <div class="attempt">
+            <div class="attempt-head">
+              <app-status-badge [status]="attempt.deliveryStatus" type="delivery" />
+              <span class="attempt-when">{{ attempt.attemptedAt | date: 'medium' }}</span>
+              @if (attempt.channelLabel) { <span class="muted">via {{ attempt.channelLabel }}</span> }
+            </div>
+            <pre class="raw-content attempt-response">{{ prettyResponse(attempt.rawResponse) }}</pre>
+          </div>
+        }
+      </mat-expansion-panel>
+    </mat-accordion>
   }
 </mat-dialog-content>
 <mat-dialog-actions align="end">
