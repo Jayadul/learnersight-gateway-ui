@@ -12,6 +12,8 @@ export interface StatusSyncResultDto {
   /** Rows the provider had nothing to say about — normal for a message in flight. */
   readonly unmatched: number;
   readonly error: string | null;
+  /** One run took its maximum and more recipients are still waiting. */
+  readonly moreWaiting: boolean;
   readonly from: string;
   readonly to: string;
 }
@@ -32,10 +34,7 @@ export class StatusSyncService {
       `${environment.apiUrl}${ApiEndpoints.statusSync.channels}`);
   }
 
-  /**
-   * Omitting the window syncs today's whole day plus anything still waiting from earlier days.
-   * Dates given are snapped to whole days (00:00:00 to 23:59:59, Dhaka) for a backfill.
-   */
+  /** No dates: every recipient of the channel still waiting for a status, whenever it was sent. */
   sync(channelConfigId: string, request: StatusSyncRequest = {}): Observable<StatusSyncResultDto> {
     return this.http.post<StatusSyncResultDto>(
       `${environment.apiUrl}${ApiEndpoints.statusSync.channel}/${channelConfigId}`, request);

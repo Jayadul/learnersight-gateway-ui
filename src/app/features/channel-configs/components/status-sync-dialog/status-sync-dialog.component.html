@@ -1,72 +1,23 @@
 <h2 mat-dialog-title>Sync delivery status</h2>
 <mat-dialog-content>
   <p class="intro">
-    Asks <strong>{{ config.label }}</strong> what became of the messages it accepted, and
-    records the answer against each recipient. This also runs every night. Every sync covers
-    whole days, from 00:00:00 to 23:59:59 Dhaka time.
+    Asks <strong>{{ config.label }}</strong> what became of every message still waiting for a
+    status, whenever it was sent, and records the answer against each recipient. This also runs
+    every night.
   </p>
-
-  <mat-button-toggle-group class="mode-toggle" [value]="mode()" (change)="setMode($event.value)" aria-label="Sync type">
-    <mat-button-toggle value="today">Sync today</mat-button-toggle>
-    <mat-button-toggle value="custom">Custom range</mat-button-toggle>
-  </mat-button-toggle-group>
-
-  @if (mode() === 'today') {
-    <div class="range-box" aria-live="polite">
-      <span class="range-label">Window</span>
-      <code class="range-value">{{ todayRange }}</code>
-      <span class="range-note">
-        Fixed to today so it always covers the whole day. Messages from earlier days that
-        are still waiting for an answer are checked again too.
-      </span>
-    </div>
-  } @else {
-    <p class="custom-note">
-      For filling in history. Pick the first and last day; both are included in full.
-    </p>
-    <form [formGroup]="form" class="sync-form">
-      <mat-form-field appearance="outline">
-        <mat-label>First day</mat-label>
-        <input matInput [matDatepicker]="fromPicker" formControlName="from" />
-        <mat-datepicker-toggle matIconSuffix [for]="fromPicker" />
-        <mat-datepicker #fromPicker />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Last day</mat-label>
-        <input matInput [matDatepicker]="toPicker" formControlName="to" />
-        <mat-datepicker-toggle matIconSuffix [for]="toPicker" />
-        <mat-datepicker #toPicker />
-      </mat-form-field>
-
-      <div class="range-box" aria-live="polite">
-        <span class="range-label">Window</span>
-        <code class="range-value">{{ customRange() }}</code>
-      </div>
-
-      <mat-form-field appearance="outline" subscriptSizing="dynamic">
-        <mat-label>Maximum recipients</mat-label>
-        <input matInput type="number" formControlName="limit" min="1" max="5000" />
-        <mat-hint>
-          Some providers answer one recipient at a time, so a wide window takes a while.
-        </mat-hint>
-      </mat-form-field>
-    </form>
-  }
 
   @if (result(); as r) {
     @if (r.success) {
       <p class="result ok">
         Resolved {{ r.updated }} recipient(s).
-        @if (r.from) {
-          <span class="muted">
-            Covered {{ r.from | date: 'yyyy-MM-dd HH:mm:ss' }} → {{ r.to | date: 'yyyy-MM-dd HH:mm:ss' }}
-          </span>
-        }
         @if (r.unmatched > 0) {
           <span class="muted">
-            {{ r.unmatched }} had no answer yet. That is normal for a message still in flight.
+            {{ r.unmatched }} had no clear answer yet. That is normal for a message still in
+            flight; one with no answer after a day is marked Status Unknown.
           </span>
+        }
+        @if (r.moreWaiting) {
+          <span class="muted">More recipients are still waiting. Press Sync Now again to continue.</span>
         }
       </p>
     } @else {
@@ -83,7 +34,7 @@
     @if (running()) {
       <mat-spinner diameter="18" />
     } @else {
-      {{ mode() === 'today' ? 'Sync today' : 'Sync range' }}
+      Sync Now
     }
   </button>
 </mat-dialog-actions>
