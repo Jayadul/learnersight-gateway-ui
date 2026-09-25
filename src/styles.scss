@@ -96,3 +96,38 @@ body {
     line-height: 1.5;
   }
 }
+
+// --- Form dialogs ------------------------------------------
+// One layout for every form in a dialog (channels, fallback rules, users), so spacing is the same
+// everywhere. Fields size their hint area dynamically (see FORM_DIALOG_FIELD_OPTIONS), which
+// removes the space Material reserves under a field, so the gap between fields is set here, once.
+// Notes and section labels between fields pull toward the element they describe.
+.nzg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 8px;
+  min-width: 420px;
+
+  .full { width: 100%; }
+
+  // Text sitting between two fields, attached to the field above it.
+  .nzg-form-note {
+    margin: -10px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--nzg-text-muted);
+  }
+
+  // A small heading that introduces the fields below it.
+  .nzg-form-section {
+    margin: 4px 0 -8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--nzg-text-muted);
+  }
+
+  @media (max-width: 600px) { min-width: auto; }
+}

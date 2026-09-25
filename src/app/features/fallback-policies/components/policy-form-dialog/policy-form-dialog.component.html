@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ isEdit ? 'Edit' : 'Add' }} Fallback Rule</h2>
 <mat-dialog-content>
-  <form [formGroup]="form" class="policy-form">
+  <form [formGroup]="form" class="nzg-form">
     <mat-form-field appearance="outline" class="full">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" />
@@ -8,7 +8,7 @@
     </mat-form-field>
 
     <!-- ── When this fails ── -->
-    <p class="section-label">When a message fails on</p>
+    <p class="nzg-form-section">When a message fails on</p>
 
     <mat-form-field appearance="outline" class="full">
       <mat-label>Trigger Channel Type</mat-label>
@@ -17,7 +17,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+    <mat-form-field appearance="outline" class="full">
       <mat-label>{{ isSameType ? 'Trigger Channel' : 'Trigger Channel (optional)' }}</mat-label>
       <mat-select formControlName="triggerChannelConfigId">
         @if (!isSameType) { <mat-option [value]="''">Any channel of this type</mat-option> }
@@ -29,9 +29,9 @@
     </mat-form-field>
 
     <!-- ── Retry here ── -->
-    <p class="section-label">Retry it on</p>
+    <p class="nzg-form-section">Retry it on</p>
 
-    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+    <mat-form-field appearance="outline" class="full">
       <mat-label>Fallback Channel Type</mat-label>
       <mat-select formControlName="fallbackChannel">
         @for (c of channels; track c.value) { <mat-option [value]="c.value">{{ c.label }}</mat-option> }
@@ -41,7 +41,7 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full" subscriptSizing="dynamic">
+    <mat-form-field appearance="outline" class="full">
       <mat-label>{{ isSameType ? 'Fallback Channel' : 'Fallback Channel (optional)' }}</mat-label>
       <mat-select formControlName="fallbackChannelConfigId">
         @if (!isSameType) { <mat-option [value]="''">Default channel of this type</mat-option> }
@@ -59,7 +59,7 @@
       Allow fallback to a different channel type
     </mat-slide-toggle>
     @if (!isSameType) {
-      <p class="toggle-note">
+      <p class="nzg-form-note toggle-note">
         <mat-icon class="warn-icon">warning</mat-icon>
         Messages retried on another channel are delivered in that channel's format and
         billed at its rate.
@@ -68,15 +68,15 @@
 
     @if (form.touched) {
       @if (form.errors?.['sameChannel']) {
-        <div class="form-error">A channel cannot fall back to itself. Choose a different channel.</div>
+        <div class="nzg-form-note form-error">A channel cannot fall back to itself. Choose a different channel.</div>
       }
       @if (form.errors?.['sameChannelNeedsBoth']) {
-        <div class="form-error">
+        <div class="nzg-form-note form-error">
           When both sides are the same channel type, name the channel that fails and the channel to retry on.
         </div>
       }
       @if (form.errors?.['crossChannelNotAllowed']) {
-        <div class="form-error">
+        <div class="nzg-form-note form-error">
           This rule falls back to a different channel type. Turn on "Allow fallback to a different channel type" to save it.
         </div>
       }

@@ -1,21 +1,6 @@
-.config-form { display: flex; flex-direction: column; padding-top: 8px; min-width: 420px; }
-.full { width: 100%; }
+// Layout and spacing come from the shared .nzg-form (styles.scss). Only what is specific to this
+// dialog stays here.
 
-/* Worked tag example sits between two fields, so it needs its own breathing room —
-   it is deliberately outside the form field's subscript, which is height-capped. */
-.delay-note {
-  margin: -4px 0 16px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--nzg-text-muted);
-}
-
-.tag-example {
-  margin: -4px 0 16px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--nzg-text-muted);
-}
 .tag-example code {
   font-family: var(--nzg-font-mono, monospace);
   background: var(--nzg-surface-alt, #f2f4f7);
@@ -26,16 +11,12 @@
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 600px) { .config-form { min-width: auto; } }
-
 // Caveats about the selected provider, sat directly under the dropdown so the
 // constraint is read before the credentials are filled in.
 .provider-note {
-  margin: -4px 0 12px;
   padding: 8px 10px;
   border-radius: 6px;
   background: rgba(180, 83, 9, 0.08);
   color: #92400e;
-  font-size: 12px;
   line-height: 1.45;
 }

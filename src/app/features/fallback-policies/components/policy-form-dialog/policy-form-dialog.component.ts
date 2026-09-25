@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FORM_DIALOG_FIELD_OPTIONS } from '../../../../shared/forms/form-dialog';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -31,6 +32,7 @@ export interface PolicyFormDialogData {
   ],
   templateUrl: './policy-form-dialog.component.html',
   styleUrl: './policy-form-dialog.component.scss',
+  providers: [FORM_DIALOG_FIELD_OPTIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolicyFormDialogComponent {

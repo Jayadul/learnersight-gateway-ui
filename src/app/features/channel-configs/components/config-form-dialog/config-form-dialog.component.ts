@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChannelConfigDto, CreateChannelConfigRequest, UpdateChannelConfigRequest } from '../../../../core/models/channel-config.model';
 import { ChannelType, Provider } from '../../../../core/models/enums';
 import { FormFieldErrorsComponent } from '../../../../shared/components/form-field-errors/form-field-errors.component';
+import { FORM_DIALOG_FIELD_OPTIONS } from '../../../../shared/forms/form-dialog';
 import { ChannelConfigsService } from '../../channel-configs.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 
@@ -157,6 +158,7 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
   ],
   templateUrl: './config-form-dialog.component.html',
   styleUrl: './config-form-dialog.component.scss',
+  providers: [FORM_DIALOG_FIELD_OPTIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigFormDialogComponent {

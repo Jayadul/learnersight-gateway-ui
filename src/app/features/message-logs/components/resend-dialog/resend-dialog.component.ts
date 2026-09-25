@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FORM_DIALOG_FIELD_OPTIONS } from '../../../../shared/forms/form-dialog';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +32,7 @@ export interface ResendDialogResult {
   imports: [ReactiveFormsModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatSelectModule],
   templateUrl: './resend-dialog.component.html',
   styleUrl: './resend-dialog.component.scss',
+  providers: [FORM_DIALOG_FIELD_OPTIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResendDialogComponent {
