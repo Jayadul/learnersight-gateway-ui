@@ -9,12 +9,22 @@
   @if (result(); as r) {
     @if (r.success) {
       <p class="result ok">
-        Resolved {{ r.updated }} recipient(s).
-        @if (r.unmatched > 0) {
+        Resolved {{ r.updated }} recipient(s) as Delivered or Failed.
+        @if (r.stillWaiting > 0) {
           <span class="muted">
-            {{ r.unmatched }} had no clear answer yet. That is normal for a message still in
-            flight; one with no answer after a day is marked Status Unknown.
+            {{ r.stillWaiting }} still in flight: the provider reports them as sent but has not
+            sent a delivery report yet. They stay In Progress until it does, and become Status
+            Unknown if there is still no answer after 6 hours.
           </span>
+        }
+        @if (r.markedUnknown > 0) {
+          <span class="muted">
+            {{ r.markedUnknown }} had no answer for too long and are now Status Unknown. A late
+            report is still picked up by the next sync.
+          </span>
+        }
+        @if (r.updated === 0 && r.stillWaiting === 0 && r.markedUnknown === 0) {
+          <span class="muted">Nothing was waiting for a status.</span>
         }
         @if (r.moreWaiting) {
           <span class="muted">More recipients are still waiting. Press Sync Now again to continue.</span>

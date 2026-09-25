@@ -14,8 +14,8 @@ describe('StatusSyncDialogComponent', () => {
 
   function setup() {
     const sync = jasmine.createSpy('sync').and.returnValue(of({
-      channelConfigId: 'cfg-1', label: 'SMS Default', success: true, updated: 4, unmatched: 0,
-      moreWaiting: false, error: null, from: '', to: '',
+      channelConfigId: 'cfg-1', label: 'SMS Default', success: true, updated: 4, stillWaiting: 0,
+      markedUnknown: 0, unmatched: 0, moreWaiting: false, error: null, from: '', to: '',
     }));
     TestBed.configureTestingModule({
       imports: [StatusSyncDialogComponent],
@@ -56,6 +56,20 @@ describe('StatusSyncDialogComponent', () => {
     const { fixture } = setup();
     fixture.componentInstance.run();
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Resolved 4 recipient(s).');
+    expect(fixture.nativeElement.textContent).toContain('Resolved 4 recipient(s) as Delivered or Failed.');
+  });
+
+  it('says plainly when recipients are still in flight instead of calling them resolved', () => {
+    const { fixture, sync } = setup();
+    sync.and.returnValue(of({
+      channelConfigId: 'cfg-1', label: 'SMS Default', success: true, updated: 0, stillWaiting: 27,
+      markedUnknown: 0, unmatched: 0, moreWaiting: false, error: null, from: '', to: '',
+    }));
+    fixture.componentInstance.run();
+    fixture.detectChanges();
+    const text: string = fixture.nativeElement.textContent;
+    expect(text).toContain('Resolved 0 recipient(s)');
+    expect(text).toContain('27 still in flight');
+    expect(text).toContain('6 hours');
   });
 });

@@ -41,6 +41,8 @@ export class StatusSyncDialogComponent {
           label: this.config.label,
           success: false,
           updated: 0,
+          stillWaiting: 0,
+          markedUnknown: 0,
           unmatched: 0,
           moreWaiting: false,
           error: 'The sync could not be started.',

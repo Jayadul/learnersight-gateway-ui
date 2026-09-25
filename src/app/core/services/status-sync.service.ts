@@ -8,7 +8,12 @@ export interface StatusSyncResultDto {
   readonly channelConfigId: string;
   readonly label: string;
   readonly success: boolean;
+  /** Recipients given a final answer this run: Delivered or Failed. */
   readonly updated: number;
+  /** Recipients the provider says are still in flight (sent, no delivery report yet). */
+  readonly stillWaiting: number;
+  /** Recipients that had no clear answer for too long and became Status Unknown. */
+  readonly markedUnknown: number;
   /** Rows the provider had nothing to say about — normal for a message in flight. */
   readonly unmatched: number;
   readonly error: string | null;
