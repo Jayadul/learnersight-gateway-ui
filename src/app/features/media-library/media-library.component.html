@@ -38,6 +38,10 @@
     }
   </mat-card>
 
+  @if (linkWarning(); as warning) {
+    <p class="link-warning" role="alert"><mat-icon>warning</mat-icon><span>{{ warning }}</span></p>
+  }
+
   <app-filter-bar [controls]="filters" (search)="state.setFilters($event)" (reset)="state.setFilters({})" />
 
   <app-data-table
@@ -56,7 +60,7 @@
     (actionClick)="onAction($event)">
     <ng-template appColumnDef="thumbnail" let-row>
       @if (isImage(row) && isAvailable(row)) {
-        <img class="thumb" [src]="row.publicUrl" alt="" loading="lazy" />
+        <img class="thumb" [src]="previewUrl(row)" alt="" loading="lazy" />
       } @else {
         <mat-icon class="thumb-icon">{{ fileIcon(row) }}</mat-icon>
       }

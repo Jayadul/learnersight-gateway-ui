@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MediaLibraryService } from './media-library.service';
 import { MediaFileDto } from '../../core/models/media-file.model';
-import { MediaStatus } from '../../core/models/enums';
+import { environment } from '../../../environments/environment';
 import { ListState } from '../../core/state/list-state';
 import { NotificationService } from '../../core/services/notification.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm.service';
@@ -138,7 +138,7 @@ export class MediaLibraryComponent implements OnInit {
         });
         break;
       case 'preview':
-        window.open(e.row.publicUrl, '_blank', 'noopener');
+        window.open(this.previewUrl(e.row), '_blank', 'noopener');
         break;
       case 'download':
         this.download(e.row);
@@ -165,7 +165,7 @@ export class MediaLibraryComponent implements OnInit {
 
   private download(row: Row): void {
     const a = document.createElement('a');
-    a.href = `${row.publicUrl}?download=true`;
+    a.href = `${this.previewUrl(row)}?download=true`;
     a.download = row.originalFileName;
     a.click();
   }
@@ -180,9 +180,49 @@ export class MediaLibraryComponent implements OnInit {
     return row.contentType.toLowerCase().startsWith('image/');
   }
 
+  /**
+   * Decided by the server (its clock, not this device's): a phone with the wrong date used
+   * to be told a good file had expired.
+   */
   isAvailable(row: Row): boolean {
-    return row.status === MediaStatus.Active && new Date(row.expiresAt) > new Date();
+    return row.isAvailable;
   }
+
+  /**
+   * Where THIS page loads the file from: the same origin it was served from. The public link
+   * is built for message recipients from Media:PublicBaseUrl, and on the shipped default that
+   * is localhost, which on a client's own device is the device itself, so thumbnails, Preview
+   * and Download all broke there. An http link inside an https page is blocked as mixed
+   * content for the same reason. The same origin needs neither setting nor CORS.
+   */
+  previewUrl(row: Row): string {
+    return `${environment.apiUrl}/media/${encodeURIComponent(row.storedFileName)}`;
+  }
+
+  /**
+   * A public link recipients cannot open, or that a provider may refuse. Judged from the links
+   * on this page against where the page itself is served from.
+   */
+  readonly linkWarning = computed<string | null>(() => {
+    const sample = this.state.data().find((r) => r.isAvailable) ?? this.state.data()[0];
+    if (!sample) return null;
+    try {
+      const link = new URL(sample.publicUrl);
+      const loopback = (h: string) => h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+      if (loopback(link.hostname) && !loopback(window.location.hostname)) {
+        return 'These public links point at localhost, so nobody outside this server can open '
+          + 'them, including WhatsApp providers. Ask your administrator to set the media base '
+          + 'URL to this site\'s public address. Previews on this page still work.';
+      }
+      if (link.protocol === 'http:' && window.location.protocol === 'https:') {
+        return 'These public links use http while this site uses https. Some WhatsApp providers '
+          + 'refuse http media links, and browsers block them inside https pages.';
+      }
+    } catch {
+      return null;
+    }
+    return null;
+  });
 
   /** Placeholder icon for the thumbnail column when there is no image to show. */
   fileIcon(row: Row): string {
