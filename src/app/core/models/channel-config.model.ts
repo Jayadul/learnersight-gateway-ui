@@ -15,6 +15,8 @@ export interface ChannelOptionDto {
   readonly isDefault: boolean;
   /** Whether this channel has a Template API Token configured — gates "Send Template" mode. */
   readonly hasTemplateToken: boolean;
+  /** A WhatsApp Template channel: sends templates only, so ordinary send pickers leave it out. */
+  readonly isTemplateOnly: boolean;
 }
 
 export interface ChannelConfigDto {

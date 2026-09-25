@@ -12,7 +12,7 @@ import {
   CreateFallbackPolicyRequest, FallbackPolicyDto, UpdateFallbackPolicyRequest,
 } from '../../../../core/models/fallback-policy.model';
 import { ChannelConfigDto } from '../../../../core/models/channel-config.model';
-import { ChannelType } from '../../../../core/models/enums';
+import { ChannelType, Provider } from '../../../../core/models/enums';
 import { differentChannelsValidator } from '../../../../core/forms/validators';
 import { ChannelConfigsService } from '../../../channel-configs/channel-configs.service';
 import { ConfirmService } from '../../../../shared/components/confirm-dialog/confirm.service';
@@ -103,7 +103,8 @@ export class PolicyFormDialogComponent {
   private loadChannels(side: 'trigger' | 'fallback', type: ChannelType): void {
     this.channelsService.getByChannel(type).subscribe((all) => {
       // Only active channels can receive traffic, so only they are selectable.
-      const active = all.filter((c) => c.isActive);
+      // A template channel cannot carry a retried text or media message.
+      const active = all.filter((c) => c.isActive && c.provider !== Provider.NetZeroInboxTemplate);
       (side === 'trigger' ? this.triggerOptions : this.fallbackOptions).set(active);
     });
   }

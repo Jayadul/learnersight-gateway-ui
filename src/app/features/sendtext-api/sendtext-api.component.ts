@@ -20,7 +20,7 @@ import { CopyButtonComponent } from '../../shared/components/copy-button/copy-bu
 import { SendTextApiService } from './sendtext-api.service';
 import { ChannelConfigsService } from '../channel-configs/channel-configs.service';
 import { ChannelConfigDto } from '../../core/models/channel-config.model';
-import { ChannelType } from '../../core/models/enums';
+import { ChannelType, Provider } from '../../core/models/enums';
 import { ChannelTypePipe } from '../../shared/pipes/channel-type.pipe';
 import { GatewayCredentialsService } from '../settings/gateway-credentials/gateway-credentials.service';
 
@@ -124,7 +124,8 @@ export class SendTextApiComponent {
         next: (list) => {
           // Inactive gateways are deliberately hidden: naming one rejects the request,
           // so listing it here would advertise a tag that cannot work.
-          this.labelledChannels.set(list.filter((c) => c.isActive));
+          // A template channel cannot carry a tag, so it is not a label an integrator can name.
+          this.labelledChannels.set(list.filter((c) => c.isActive && c.provider !== Provider.NetZeroInboxTemplate));
           this.channelsLoading.set(false);
         },
         error: () => this.channelsLoading.set(false),
