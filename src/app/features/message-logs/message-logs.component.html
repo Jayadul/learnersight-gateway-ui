@@ -27,6 +27,14 @@
     (sortChange)="state.setSort($event)"
     (rowClick)="openDetail($event)"
     (actionClick)="onAction($event)">
+    <ng-template appColumnDef="select-header">
+      @if (resendableRows().length > 0) {
+        <mat-checkbox [checked]="allResendableSelected()"
+                      [indeterminate]="someResendableSelected()"
+                      (change)="toggleAllResendable()"
+                      aria-label="Select all failed rows on this page to resend" />
+      }
+    </ng-template>
     <ng-template appColumnDef="select" let-row>
       @if (isResendable(row)) {
         <mat-checkbox [checked]="isSelected(row.id)"

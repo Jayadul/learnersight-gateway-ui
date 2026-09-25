@@ -13,7 +13,11 @@
     <table mat-table [dataSource]="viewData()" matSort (matSortChange)="onSort($event)" class="nzg-table">
       @for (col of columns(); track col.key) {
         <ng-container [matColumnDef]="col.key">
-          @if (col.sortable) {
+          @if (col.customHeader) {
+            <th mat-header-cell *matHeaderCellDef [style.width]="col.width">
+              <ng-container *ngTemplateOutlet="templateFor(col.key + '-header')"></ng-container>
+            </th>
+          } @else if (col.sortable) {
             <th mat-header-cell *matHeaderCellDef mat-sort-header [style.width]="col.width">{{ col.header }}</th>
           } @else {
             <th mat-header-cell *matHeaderCellDef [style.width]="col.width">{{ col.header }}</th>
