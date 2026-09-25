@@ -20,7 +20,7 @@ export enum Provider {
   // NetZero Inbox exposes two unrelated WhatsApp APIs on one host: the structured v1
   // endpoint and the QR-linked device endpoint. They differ in verb, scheme, credentials
   // and recipient format, so they are separate providers rather than a mode.
-  NetZeroInbox = 4, Chithi = 5, NetZeroInboxQr = 6,
+  NetZeroInbox = 4, Chithi = 5, NetZeroInboxQr = 6, NetZeroInboxTemplate = 7,
 }
 // Per-recipient delivery outcome, synced back from the provider after a send. Distinct
 // from JobStatus: a Sent job can hold a mix of Delivered and Failed recipients.

@@ -116,12 +116,8 @@ export class ChannelConfigsComponent implements OnInit {
       width: '480px',
     });
     ref.afterClosed().subscribe((result) => {
-      if (result?.mode === 'update') {
-        this.service.update(result.id, result.body).subscribe(() => {
-          this.notify.success('Channel updated.');
-          this.loadTab(this.activeTab());
-        });
-      }
+      // The dialog saves the edit itself and reports the outcome; the list only reloads.
+      if (result?.mode === 'saved') this.loadTab(this.activeTab());
     });
   }
 

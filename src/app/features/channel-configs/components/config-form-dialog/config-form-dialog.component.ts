@@ -99,9 +99,18 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       label: 'NetZero Inbox (v1 API)',
       fields: [
         { key: 'token', label: 'Token', password: true },
+        BASE_URL,
+      ],
+    },
+    {
+      // Its own channel so it is named and listed as a template channel, not hidden as an
+      // extra field on a regular one.
+      value: Provider.NetZeroInboxTemplate,
+      label: 'NetZero Inbox Template',
+      fields: [
         {
-          key: 'templateToken', label: 'Template API Token', password: true, optional: true,
-          hint: 'A separate token used only for sending Meta-approved WhatsApp templates. Leave empty if this channel does not send templates.',
+          key: 'templateToken', label: 'Template API Token', password: true,
+          hint: 'The token for sending Meta-approved WhatsApp templates.',
         },
         BASE_URL,
       ],
@@ -189,6 +198,9 @@ export class ConfigFormDialogComponent {
       case Provider.NetZeroInboxQr:
         return 'This is the QR-linked device API and needs the From Number below. It '
           + 'is a different API from the v1 option, on the same account.';
+      case Provider.NetZeroInboxTemplate:
+        return 'Sends WhatsApp templates only, from Messages & Calls under Send Template. '
+          + 'It cannot carry text or media tags and cannot be the default channel.';
       default:
         return null;
     }
@@ -286,6 +298,7 @@ export class ConfigFormDialogComponent {
     this.revealing.update((r) => ({ ...r, [key]: true }));
     this.channelConfigsService.revealField(this.data.config!.id, key).subscribe({
       next: ({ value }) => {
+        this.revealedBaseline[key] = value;
         this.form.get(key)?.setValue(value);
         this.revealed.update((r) => ({ ...r, [key]: true }));
         this.revealing.update((r) => ({ ...r, [key]: false }));
@@ -318,6 +331,31 @@ export class ConfigFormDialogComponent {
     return this.form.get(key)!;
   }
 
+  readonly saving = signal(false);
+
+  /** The form as it was opened; an edit is compared against this to decide "nothing changed". */
+  private readonly initial = this.form.getRawValue() as Record<string, unknown>;
+
+  /**
+   * A secret starts as its partial mask. Revealing swaps the real value into the field, which
+   * is not an edit, so the revealed value becomes that field's baseline.
+   */
+  private readonly revealedBaseline: Record<string, string> = {};
+
+  private hasChanges(raw: Record<string, string>): boolean {
+    const saved = this.data.config!;
+    if (this.provider() !== saved.provider) return true;
+
+    const plain = ['label', 'labelSlug', 'providerName'];
+    if (plain.some((k) => (raw[k] ?? '').trim() !== ((this.initial[k] as string) ?? '').trim())) return true;
+    if (this.isWhatsApp && Number(raw['delaySeconds'] ?? 0) !== Number(this.initial['delaySeconds'] ?? 0)) return true;
+
+    return this.providerFields().some((f) => {
+      const baseline = this.revealedBaseline[f.key] ?? (this.initial[f.key] as string) ?? '';
+      return (raw[f.key] ?? '') !== baseline;
+    });
+  }
+
   save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -333,6 +371,12 @@ export class ConfigFormDialogComponent {
     const configJson = JSON.stringify(configFields);
 
     if (this.isEdit) {
+      // Saving without touching anything is answered, not silently sent: say so and close.
+      if (!this.hasChanges(raw)) {
+        this.notify.info('Nothing changed.');
+        this.dialogRef.close({ mode: 'unchanged' });
+        return;
+      }
       const body: UpdateChannelConfigRequest = {
         label: raw['label'],
         ...(raw['labelSlug']?.trim() ? { labelSlug: raw['labelSlug'].trim() } : {}),
@@ -341,7 +385,17 @@ export class ConfigFormDialogComponent {
         delaySeconds: this.isWhatsApp ? Number(raw['delaySeconds'] ?? 0) : 0,
         configJson,
       };
-      this.dialogRef.close({ mode: 'update', id: this.data.config!.id, body });
+      // The dialog does the save itself and closes only once it has succeeded. Closing first
+      // and saving afterwards meant a rejected save (the server's message shows as a toast)
+      // had already thrown the admin's edits away with the dialog.
+      this.saving.set(true);
+      this.channelConfigsService.update(this.data.config!.id, body).subscribe({
+        next: () => {
+          this.notify.success('Changes saved.');
+          this.dialogRef.close({ mode: 'saved' });
+        },
+        error: () => this.saving.set(false),
+      });
     } else {
       const body: CreateChannelConfigRequest = {
         channelType: this.data.channelType,
