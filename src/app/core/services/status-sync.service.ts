@@ -32,7 +32,10 @@ export class StatusSyncService {
       `${environment.apiUrl}${ApiEndpoints.statusSync.channels}`);
   }
 
-  /** Omitting the window syncs the previous full day, as the nightly job does. */
+  /**
+   * Omitting the window syncs today's whole day plus anything still waiting from earlier days.
+   * Dates given are snapped to whole days (00:00:00 to 23:59:59, Dhaka) for a backfill.
+   */
   sync(channelConfigId: string, request: StatusSyncRequest = {}): Observable<StatusSyncResultDto> {
     return this.http.post<StatusSyncResultDto>(
       `${environment.apiUrl}${ApiEndpoints.statusSync.channel}/${channelConfigId}`, request);
