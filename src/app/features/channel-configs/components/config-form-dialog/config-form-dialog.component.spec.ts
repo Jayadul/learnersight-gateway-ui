@@ -61,7 +61,7 @@ const CASES: Case[] = [
     name: 'NetZero Voice', channelType: ChannelType.Voice, provider: Provider.NetZeroVoice, providerName: 'Netzero Voice Provider',
     fields: {
       authUserId: '***ero_IT', owner: 'NetZero_IT', password: '***$%#@56', campaignId: 'due-bill-api',
-      lotNumber: '1', baseUrl: 'http://api.sms.netzero.com.bd:8000',
+      lotNumber: '1', baseUrl: 'http://obd.netzero.com.bd:8000',
     },
     edit: { key: 'campaignId', value: 'other-campaign' },
   },
