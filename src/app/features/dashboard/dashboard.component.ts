@@ -6,11 +6,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, interval } from 'rxjs';
 import { DashboardService } from './dashboard.service';
-import { MessageRequestsService } from '../../core/services/message-requests.service';
+import { MessageLogsService } from '../message-logs/message-logs.service';
 import {
   ChannelBreakdownDto, DashboardSummaryDto, FailureReasonDto, TimelinePointDto,
 } from '../../core/models/dashboard.model';
-import { MessageRequestDto } from '../../core/models/message-request.model';
+import { DispatchJobRecipientDto } from '../../core/models/dispatch-job-recipient.model';
 import { ChannelBalanceDto } from '../../core/models/channel-balance.model';
 import { ChannelBalancesService } from '../../core/services/channel-balances.service';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
@@ -39,7 +39,7 @@ const REFRESH_INTERVAL = 15 * 60; // seconds — auto-refresh every 15 minutes
 })
 export class DashboardComponent implements OnInit {
   private readonly dashboardService = inject(DashboardService);
-  private readonly messageRequestsService = inject(MessageRequestsService);
+  private readonly messageLogsService = inject(MessageLogsService);
   private readonly dialog = inject(MatDialog);
   private readonly balancesService = inject(ChannelBalancesService);
   private readonly destroyRef = inject(DestroyRef);
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
   readonly timeline = signal<TimelinePointDto[]>([]);
   readonly breakdown = signal<ChannelBreakdownDto[]>([]);
   readonly failureReasons = signal<FailureReasonDto[]>([]);
-  readonly recent = signal<MessageRequestDto[]>([]);
+  readonly recent = signal<DispatchJobRecipientDto[]>([]);
   readonly balances = signal<ChannelBalanceDto[]>([]);
   readonly countdown = signal(REFRESH_INTERVAL);
   readonly countdownLabel = computed(() => {
@@ -84,7 +84,8 @@ export class DashboardComponent implements OnInit {
       timeline: this.dashboardService.getTimeline(7),
       breakdown: this.dashboardService.getChannelBreakdown(),
       failureReasons: this.dashboardService.getFailureReasons(5),
-      recent: this.messageRequestsService.getPaged({ page: 1, pageSize: 10, sortBy: 'receivedAt', sortDir: 'desc' }),
+      // One line per recipient, from the same endpoint as Message Logs (newest first).
+      recent: this.messageLogsService.getPaged({ page: 1, pageSize: 10 }),
       // Cached figures only — this read never calls a provider, so a slow vendor
       // cannot hold up the dashboard. A background job keeps them current.
       balances: this.balancesService.getAll(),

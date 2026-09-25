@@ -1,24 +1,22 @@
-﻿<mat-card class="activity-card">
+<mat-card class="activity-card">
   <h3>Recent Activity <span class="scope-badge">Latest 10</span></h3>
   @if (items().length === 0) {
-    <p class="empty">No recent requests.</p>
+    <p class="empty">No recent messages.</p>
   } @else {
     <mat-list>
       @for (item of items(); track item.id) {
         <mat-list-item class="activity-row">
           <div class="row-content">
             <div class="left">
-              <span class="phone">{{ item.toUser }}</span>
-              <span class="time">{{ item.receivedAt | date: 'short' }}</span>
+              <span class="phone">{{ item.recipient }}</span>
+              <span class="time">{{ (item.sentAt ?? item.createdAt) | date: 'short' }}</span>
             </div>
             <div class="middle">
               <mat-chip-set>
-                @for (ch of item.parsedChannels; track ch) {
-                  <mat-chip [disableRipple]="true">{{ ch | channelName }}</mat-chip>
-                }
+                <mat-chip [disableRipple]="true">{{ item.channelLabel ?? (item.channelType | channelType) }}</mat-chip>
               </mat-chip-set>
             </div>
-            <app-status-badge [status]="item.overallStatus" type="message" />
+            <app-status-badge [status]="item.deliveryStatus" type="delivery" />
           </div>
         </mat-list-item>
       }
