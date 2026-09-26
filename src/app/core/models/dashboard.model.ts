@@ -13,6 +13,8 @@ export interface ChannelFailureCountDto {
   readonly channelType: string;
   /** Which gateway, when the job still has one. */
   readonly channelLabel?: string;
+  /** The gateway's id: a pill click lists exactly this gateway's failures. */
+  readonly channelConfigId: string;
   readonly count: number;
 }
 export interface FailureReasonDto {
