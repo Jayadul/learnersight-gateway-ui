@@ -34,7 +34,8 @@ function deliveryStatusLabel(status: DeliveryStatus): string {
 function deliveryStatusHint(status: DeliveryStatus): string {
   switch (status) {
     case DeliveryStatus.Pending:
-      return 'Sent to the provider. Updates after the next sync.';
+      return 'The provider has accepted it and has not reported delivery yet. Updates after the next '
+        + 'sync; with no answer after 6 hours it becomes Status Unknown.';
     case DeliveryStatus.Fallback:
       return 'The first channel failed and the backup channel delivered it.';
     case DeliveryStatus.Delivered:

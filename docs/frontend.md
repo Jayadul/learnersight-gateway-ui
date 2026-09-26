@@ -41,6 +41,16 @@ All view/edit interactions are MatDialog, width `880px` (view) or `480px` (form)
 Cancel + Save. Dialogs whose content loads async: `autoFocus: 'dialog'` (else the
 browser scrolls the bottom button into view). No side drawers.
 
+**Form dialog layout (hotfix batch 7).** Every dialog with form fields puts `class="nzg-form"` on its
+`<form>` (global, `styles.scss`) and adds `FORM_DIALOG_FIELD_OPTIONS` (`shared/forms/form-dialog.ts`)
+to the component's `providers`. Together they give a uniform 20px between fields: fields size their
+hint area dynamically, which removes the space Material reserves under a field, so the spacing has to
+come from the layout, not from each field. Do not add per-dialog gaps, margins or `subscriptSizing`
+attributes. Text that belongs to the field above it uses `nzg-form-note`; a small heading for the
+fields below uses `nzg-form-section`. `shared/forms/form-dialog-spacing.spec.ts` measures the gap in
+each form dialog in a real browser; add a new form dialog to it. Run the specs with
+`ng test --watch=false --browsers=ChromeHeadless`.
+
 ## UX & copy (ClickUp-inspired, established in R1 review)
 
 - Dark navy sidebar, white content, mat-cards with 24px padding, Inter font.

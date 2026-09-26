@@ -1,3 +1,1 @@
-.user-form { display: flex; flex-direction: column; padding-top: 8px; min-width: 420px; gap: 4px; }
-.full { width: 100%; }
-@media (max-width: 600px) { .user-form { min-width: auto; } }
+// Layout and spacing come from the shared .nzg-form (styles.scss).

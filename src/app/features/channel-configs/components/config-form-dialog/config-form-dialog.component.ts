@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChannelConfigDto, CreateChannelConfigRequest, UpdateChannelConfigRequest } from '../../../../core/models/channel-config.model';
 import { ChannelType, Provider } from '../../../../core/models/enums';
 import { FormFieldErrorsComponent } from '../../../../shared/components/form-field-errors/form-field-errors.component';
+import { FORM_DIALOG_FIELD_OPTIONS } from '../../../../shared/forms/form-dialog';
 import { ChannelConfigsService } from '../../channel-configs.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 
@@ -157,6 +158,7 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
   ],
   templateUrl: './config-form-dialog.component.html',
   styleUrl: './config-form-dialog.component.scss',
+  providers: [FORM_DIALOG_FIELD_OPTIONS],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigFormDialogComponent {
@@ -244,12 +246,17 @@ export class ConfigFormDialogComponent {
     };
     // Every provider's fields get a control up front, so switching provider only changes
     // which are shown and validated — anything already typed survives a switch back.
+    // Only the SELECTED provider's required fields are required from the start. Making every
+    // provider's fields required left the hidden ones (empty) invalid, so on any channel type
+    // with more than one provider (SMS, WhatsApp) Save silently did nothing on an edit and a new
+    // channel could never be created; Voice, with one provider, was the only one that worked.
+    const requiredNow = new Set(this.providerFields().filter((f) => !f.optional).map((f) => f.key));
     for (const p of this.providers) {
       for (const f of p.fields) {
         if (f.key in group) continue;
         group[f.key] = [
           this.data.config?.configFields?.[f.key] ?? '',
-          f.optional ? [] : Validators.required,
+          requiredNow.has(f.key) ? Validators.required : [],
         ];
       }
     }
@@ -359,6 +366,8 @@ export class ConfigFormDialogComponent {
   save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      // Say so: a Save that does nothing and shows nothing reads as a dialog that will not close.
+      this.notify.error('Fill in the highlighted fields to save.');
       return;
     }
     const raw = this.form.value as Record<string, string>;
