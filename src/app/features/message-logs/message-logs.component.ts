@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject, signal, untracked } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -47,7 +47,7 @@ export class MessageLogsComponent implements OnInit {
   readonly filters = signal<FilterControl[]>(this.buildFilters([]));
 
   readonly columns: ColumnDef<Row>[] = [
-    { key: 'select', header: '', type: 'custom', width: '44px' },
+    { key: 'select', header: '', type: 'custom', width: '44px', customHeader: true },
     // Position within the current page, not an id — a plain row counter to refer to.
     { key: 'serial', header: '#', width: '56px', value: (r) => this.serialOf(r) },
     { key: 'recipient', header: 'Recipient' },
@@ -111,6 +111,16 @@ export class MessageLogsComponent implements OnInit {
   constructor() {
     // Inactive gateways included: they may still appear in historical messages.
     this.channelsService.getAll().subscribe((all) => this.filters.set(this.buildFilters(all)));
+
+    // A selection only ever means rows on screen: changing page or filters drops ticks for rows
+    // no longer shown, so "Resend N selected" always matches what the admin can see.
+    effect(() => {
+      const shown = new Set(this.state.data().map((r) => r.id));
+      untracked(() => this.selected.update((set) => {
+        const kept = [...set].filter((id) => shown.has(id));
+        return kept.length === set.size ? set : new Set(kept);
+      }));
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {
@@ -145,6 +155,32 @@ export class MessageLogsComponent implements OnInit {
     this.selected.update((set) => {
       const next = new Set(set);
       if (!next.delete(id)) next.add(id);
+      return next;
+    });
+  }
+
+  /** The rows shown right now (after filters, on this page) that a resend can act on. */
+  readonly resendableRows = computed(() => this.state.data().filter((r) => this.isResendable(r)));
+  readonly allResendableSelected = computed(() => {
+    const rows = this.resendableRows();
+    const picked = this.selected();
+    return rows.length > 0 && rows.every((r) => picked.has(r.id));
+  });
+  readonly someResendableSelected = computed(() => {
+    const picked = this.selected();
+    return !this.allResendableSelected() && this.resendableRows().some((r) => picked.has(r.id));
+  });
+
+  /** Header checkbox: ticks every resendable row on this page, or clears them if all are ticked. */
+  toggleAllResendable(): void {
+    const rows = this.resendableRows();
+    const clear = this.allResendableSelected();
+    this.selected.update((set) => {
+      const next = new Set(set);
+      for (const r of rows) {
+        if (clear) next.delete(r.id);
+        else next.add(r.id);
+      }
       return next;
     });
   }

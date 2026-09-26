@@ -73,6 +73,8 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-flat-button color="primary" (click)="save()">Save</button>
+  <button mat-button mat-dialog-close [disabled]="saving()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="saving()">
+    {{ saving() ? 'Saving…' : 'Save' }}
+  </button>
 </mat-dialog-actions>

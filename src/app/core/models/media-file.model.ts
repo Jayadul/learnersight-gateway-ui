@@ -14,4 +14,6 @@ export interface MediaFileDto {
   readonly createdBy: string;
   readonly deletedAt: string | null;
   readonly deletedBy: string | null;
+  /** Active and not expired, judged by the server's clock rather than the device's. */
+  readonly isAvailable: boolean;
 }

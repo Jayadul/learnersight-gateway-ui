@@ -33,6 +33,11 @@ export interface ColumnDef<T> {
   /** Cut the cell to this many characters; the full text stays available on hover. */
   truncate?: number;
   width?: string;
+  /**
+   * Render this column's header from a template named "<key>-header" (an
+   * <ng-template appColumnDef="select-header">), e.g. a select-all checkbox.
+   */
+  customHeader?: boolean;
 }
 
 export interface RowAction<T> {

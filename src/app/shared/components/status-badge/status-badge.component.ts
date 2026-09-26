@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DeliveryStatus, JobStatus, MessageStatus } from '../../../core/models/enums';
 import { MessageStatusPipe } from '../../pipes/message-status.pipe';
 
@@ -25,11 +26,31 @@ function deliveryStatusLabel(status: DeliveryStatus): string {
   }
 }
 
+/**
+ * Plain explanations for the statuses that can read as broken (hotfix batch 6). WhatsApp rows
+ * never sit In Progress: they resolve from the send response. SMS and Voice do, until the
+ * provider's own delivery report is synced.
+ */
+function deliveryStatusHint(status: DeliveryStatus): string {
+  switch (status) {
+    case DeliveryStatus.Pending:
+      return 'Sent to the provider. Updates after the next sync.';
+    case DeliveryStatus.Fallback:
+      return 'The first channel failed and the backup channel delivered it.';
+    case DeliveryStatus.Delivered:
+    case DeliveryStatus.Failed:
+      return '';
+    default:
+      return 'The provider gave no clear answer for this message.';
+  }
+}
+
 @Component({
   selector: 'app-status-badge',
   standalone: true,
-  imports: [MatChipsModule],
-  template: `<mat-chip class="badge badge-{{ color() }}" [disableRipple]="true">{{ label() }}</mat-chip>`,
+  imports: [MatChipsModule, MatTooltipModule],
+  template: `<mat-chip class="badge badge-{{ color() }}" [disableRipple]="true"
+    [matTooltip]="tooltip()" [matTooltipDisabled]="!tooltip()">{{ label() }}</mat-chip>`,
   styleUrl: './status-badge.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -52,6 +73,13 @@ export class StatusBadgeComponent {
     // The pipe owns the wording, so the badge cannot drift from the rest of the UI —
     // the raw enum name renders as "PartialSuccess", one word.
     return new MessageStatusPipe().transform(s);
+  });
+
+  readonly tooltip = computed<string>(() => {
+    const s = this.status();
+    return this.type() === 'delivery' && typeof s === 'number'
+      ? deliveryStatusHint(s as DeliveryStatus)
+      : '';
   });
 
   readonly color = computed<BadgeColor>(() => {

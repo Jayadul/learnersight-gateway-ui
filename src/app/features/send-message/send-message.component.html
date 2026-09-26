@@ -40,7 +40,7 @@
           <mat-form-field appearance="outline" class="full gateway-select" subscriptSizing="dynamic">
             <mat-label>Send Through</mat-label>
             <mat-select formControlName="channelLabelSlug">
-              @for (ch of channelOptions(); track ch.id) {
+              @for (ch of ordinaryChannelOptions(); track ch.id) {
                 <mat-option [value]="ch.labelSlug">
                   {{ ch.label }}@if (ch.isDefault) { <span class="default-tag">default</span> }
                 </mat-option>
@@ -61,9 +61,9 @@
                   <mat-option [value]="ch.labelSlug">{{ ch.label }}</mat-option>
                 }
               </mat-select>
-              <mat-hint>Only channels with a Template API Token configured can send templates.</mat-hint>
+              <mat-hint>Only a WhatsApp Template channel can send templates.</mat-hint>
               @if (templateChannelOptions().length === 0) {
-                <mat-error>No WhatsApp channel has a Template API Token configured yet. Add one in Channels.</mat-error>
+                <mat-error>No WhatsApp Template channel is set up yet. Add one in Channels under WhatsApp.</mat-error>
               }
             </mat-form-field>
 

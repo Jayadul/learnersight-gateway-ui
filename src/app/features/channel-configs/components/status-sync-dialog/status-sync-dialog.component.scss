@@ -2,6 +2,20 @@
 
 .sync-form { display: flex; flex-direction: column; gap: 4px; }
 
+.mode-toggle { margin-bottom: 14px; }
+
+.custom-note { margin: 0 0 12px; font-size: 13px; color: var(--nzg-text-muted); }
+
+// The exact window that will be queried, in a read-only box so it cannot be edited into a partial day.
+.range-box {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 10px 12px; margin-bottom: 14px;
+  border-radius: 6px; background: rgba(127, 127, 127, 0.08);
+}
+.range-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--nzg-text-muted); }
+.range-value { font-size: 14px; font-weight: 600; word-break: break-word; }
+.range-note { font-size: 12px; color: var(--nzg-text-muted); line-height: 1.5; }
+
 .result {
   margin: 14px 0 0;
   padding: 10px 12px;

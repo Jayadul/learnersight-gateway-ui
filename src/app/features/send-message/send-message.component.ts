@@ -50,6 +50,9 @@ export class SendMessageComponent {
 
   /** WhatsApp only: plain text/media vs a Meta pre-approved template. */
   readonly sendMode = signal<WpSendMode>('message');
+  /** Channels for an ordinary text or media send; a template-only channel is not one of them. */
+  readonly ordinaryChannelOptions = computed(() =>
+    this.channelOptions().filter((c) => !c.isTemplateOnly));
   /** Only channels with a Template API Token configured can serve a template send. */
   readonly templateChannelOptions = computed(() =>
     this.channelOptions().filter((c) => c.hasTemplateToken));
@@ -137,7 +140,9 @@ export class SendMessageComponent {
       const active = all.filter((c) => c.isActive);
       this.channelOptions.set(active);
 
-      const preferred = active.find((c) => c.isDefault) ?? active[0];
+      // The plain send picker never offers a template-only channel.
+      const ordinary = active.filter((c) => !c.isTemplateOnly);
+      const preferred = ordinary.find((c) => c.isDefault) ?? ordinary[0];
       this.form.controls.channelLabelSlug.setValue(preferred?.labelSlug ?? '');
 
       const preferredTemplate = active.find((c) => c.hasTemplateToken);
