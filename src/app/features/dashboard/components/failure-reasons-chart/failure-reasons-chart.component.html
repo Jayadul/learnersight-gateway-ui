@@ -14,9 +14,9 @@
           </div>
           <div class="bar-track"><div class="bar-fill" [style.width.%]="row.widthPercent"></div></div>
           <div class="channel-row">
-            @for (ch of row.channels; track ch.label) {
+            @for (ch of row.channels; track ch.channelConfigId) {
               <span class="channel-pill clickable" [matTooltip]="ch.type + ', click to see these messages'"
-                    (click)="onChannelClick($event, row.reason, ch.channelType)">{{ ch.label }} · {{ ch.count }}</span>
+                    (click)="onChannelClick($event, row.reason, ch.channelType, ch.channelConfigId)">{{ ch.label }} · {{ ch.count }}</span>
             }
           </div>
         </li>

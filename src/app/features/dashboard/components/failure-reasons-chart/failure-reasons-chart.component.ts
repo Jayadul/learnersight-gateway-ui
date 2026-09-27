@@ -9,6 +9,8 @@ export interface FailureDrilldownRequest {
   readonly reason: string;
   /** Set when a specific channel pill was clicked rather than the row itself. */
   readonly channelType?: ChannelType;
+  /** The exact gateway behind the pill; several gateways can share a channel type. */
+  readonly channelConfigId?: string;
 }
 
 @Component({
@@ -46,6 +48,7 @@ export class FailureReasonsChartComponent {
         // unlike the numeric wire format used everywhere else — converted back for the
         // drill-down query, which filters on the numeric ChannelType like every other page.
         channelType: ChannelType[c.channelType as keyof typeof ChannelType] as ChannelType | undefined,
+        channelConfigId: c.channelConfigId,
         count: c.count,
       })),
     }));
@@ -55,8 +58,8 @@ export class FailureReasonsChartComponent {
     this.drilldown.emit({ reason });
   }
 
-  onChannelClick(event: MouseEvent, reason: string, channelType: ChannelType | undefined): void {
+  onChannelClick(event: MouseEvent, reason: string, channelType: ChannelType | undefined, channelConfigId: string): void {
     event.stopPropagation();
-    this.drilldown.emit({ reason, channelType });
+    this.drilldown.emit({ reason, channelType, channelConfigId });
   }
 }

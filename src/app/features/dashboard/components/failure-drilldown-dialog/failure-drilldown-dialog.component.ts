@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MessageLogsService } from '../../../message-logs/message-logs.service';
 import { DispatchJobRecipientDto } from '../../../../core/models/dispatch-job-recipient.model';
-import { StatusBadgeComponent } from '../../../../shared/components/status-badge/status-badge.component';
 import { ChannelTypePipe } from '../../../../shared/pipes/channel-type.pipe';
 import { FailureDrilldownRequest } from '../failure-reasons-chart/failure-reasons-chart.component';
 
@@ -16,7 +15,7 @@ import { FailureDrilldownRequest } from '../failure-reasons-chart/failure-reason
 @Component({
   selector: 'app-failure-drilldown-dialog',
   standalone: true,
-  imports: [DatePipe, MatDialogModule, MatButtonModule, StatusBadgeComponent, ChannelTypePipe],
+  imports: [DatePipe, MatDialogModule, MatButtonModule, ChannelTypePipe],
   templateUrl: './failure-drilldown-dialog.component.html',
   styleUrl: './failure-drilldown-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +32,7 @@ export class FailureDrilldownDialogComponent {
     this.service.getPaged({
       failureReason: this.data.reason,
       channelType: this.data.channelType,
+      channelConfigId: this.data.channelConfigId,
       page: 1,
       pageSize: 25,
     }).subscribe({
