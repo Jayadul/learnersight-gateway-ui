@@ -100,7 +100,7 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
     },
     {
       value: Provider.NetZeroInbox,
-      label: 'NetZero Inbox (v1 API)',
+      label: 'WA Meta',
       fields: [
         { key: 'token', label: 'Token', password: true },
         BASE_URL,
@@ -110,7 +110,7 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       // Its own channel so it is named and listed as a template channel, not hidden as an
       // extra field on a regular one.
       value: Provider.NetZeroInboxTemplate,
-      label: 'NetZero Inbox Template',
+      label: 'WA Meta Template',
       fields: [
         {
           key: 'templateToken', label: 'Template API Token', password: true,
@@ -123,7 +123,7 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
       // Same vendor and token as above, different API entirely — see the note shown
       // when it is selected.
       value: Provider.NetZeroInboxQr,
-      label: 'NetZero Inbox (QR device)',
+      label: 'WA Devices QR',
       fields: [
         { key: 'token', label: 'Token', password: true },
         {
@@ -136,10 +136,11 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
   ],
   [ChannelType.Voice]: [
     {
-      // Spelled out in full: the WhatsApp vendor arriving in R3.1 is also NetZero-branded
-      // and unrelated, and the product itself is NetZero Gateway.
+      // Hotfix batch 9, Task 5: renamed from "NetZero Voice" — spelled "Broadcast" per the
+      // team lead's default pending final confirmation (the task flagged "Boardcast" as a
+      // likely typo); flip this one string if "Boardcast" turns out to be the wanted spelling.
       value: Provider.NetZeroVoice,
-      label: 'NetZero Voice',
+      label: 'Net ZerO call Broadcast',
       fields: [
         { key: 'owner', label: 'Owner' },
         { key: 'password', label: 'Password', password: true },
