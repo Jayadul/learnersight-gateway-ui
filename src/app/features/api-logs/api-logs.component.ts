@@ -49,6 +49,9 @@ export class ApiLogsComponent implements OnInit {
       ],
     },
     { kind: 'text', key: 'callerIp', label: 'Caller IP', placeholder: '192.168.1.1' },
+    // Substring match against the comma-joined recipient list (hotfix batch 9, Task 7) —
+    // finds a number whether it was the only recipient or one of several.
+    { kind: 'text', key: 'number', label: 'Number', placeholder: '8801700000001' },
   ];
 
   readonly columns: ColumnDef<Row>[] = [
