@@ -24,7 +24,7 @@
         <table class="doc-table">
           <tbody>
             <tr><th>Content-Type</th><td>POST: <code>application/x-www-form-urlencoded</code> or <code>application/json</code> &mdash; both are accepted with the same fields. GET: same fields as query-string params &mdash; use it only where the integrator's platform cannot easily do POST, since POST keeps credentials off the URL</td></tr>
-            <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> (issued by NetZero). Invalid or missing credentials are rejected</td></tr>
+            <tr><th>Authentication</th><td><code>apikey</code> + <code>secretkey</code> (issued by Net ZerO). Invalid or missing credentials are rejected</td></tr>
             <tr><th>Processing</th><td>Asynchronous. The response confirms queuing, not delivery</td></tr>
             <tr><th>Gateways</th><td>Each channel type may have several gateways configured. Every tag names the one it uses by label &mdash; only an untagged message falls back to a default</td></tr>
             <tr><th>Pacing</th><td>A WhatsApp gateway may be given a send delay to stay under provider rate limits, so its deliveries arrive spaced out rather than all at once. A long recipient list takes proportionally longer</td></tr>
@@ -50,12 +50,12 @@
             <tr>
               <td><code>apikey</code></td>
               <td><span class="req">Required</span></td>
-              <td>API key issued by NetZero. Requests with a wrong or missing key are rejected.</td>
+              <td>API key issued by Net ZerO. Requests with a wrong or missing key are rejected.</td>
             </tr>
             <tr>
               <td><code>secretkey</code></td>
               <td><span class="req">Required</span></td>
-              <td>Secret key issued by NetZero. Keep it confidential. Use it server-side only, never in client-side code.</td>
+              <td>Secret key issued by Net ZerO. Keep it confidential. Use it server-side only, never in client-side code.</td>
             </tr>
             <tr>
               <td><code>callerID</code></td>
@@ -157,8 +157,8 @@
 
         <h3 class="doc-section">Automatic Fallback</h3>
         <p>
-          If a delivery fails at the provider, NetZero can retry it on another channel.
-          Which retries happen is configured by NetZero, not by the request — three rules
+          If a delivery fails at the provider, Net ZerO can retry it on another channel.
+          Which retries happen is configured by Net ZerO, not by the request — three rules
           decide whether one applies:
         </p>
         <table class="doc-table">

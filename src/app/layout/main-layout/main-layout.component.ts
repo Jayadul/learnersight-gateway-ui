@@ -88,7 +88,8 @@ export class MainLayoutComponent implements OnInit {
     { initialValue: this.router.url.split('?')[0] },
   );
 
-  readonly pageTitle = computed(() => ROUTE_TITLES[this.currentUrl()] ?? 'NetZeroGateway');
+  // Hotfix batch 9, Task 6: "NetZero" -> "Net ZerO" in user-facing text.
+  readonly pageTitle = computed(() => ROUTE_TITLES[this.currentUrl()] ?? 'Net ZerO Gateway');
 
   readonly groups: NavGroup[] = [
     {
