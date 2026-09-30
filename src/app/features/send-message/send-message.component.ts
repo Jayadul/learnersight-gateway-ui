@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SendMessageService } from './send-message.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChannelType } from '../../core/models/enums';
-import { ChannelOptionDto } from '../../core/models/channel-config.model';
+import { ChannelOptionDto, ChannelTemplateDto } from '../../core/models/channel-config.model';
 import { ChannelOptionsService } from '../../core/services/channel-options.service';
 import { ManualSendRequest, SendTemplateRequest } from '../../core/models/manual-send.model';
 import { phoneListValidator, urlValidator } from '../../core/forms/validators';
@@ -66,8 +66,27 @@ export class SendMessageComponent {
     // same pattern as callerId/campaignId/lotNumber on the text/voice path.
     token: [''],
   });
-  /** Count varies per template, so this is a plain add/remove list, not a fixed shape. */
+  /**
+   * A known template (hotfix batch 9, Task 1) fixes the count and labels from its
+   * registry entry; an unregistered one (legacy channels with no templates added yet)
+   * falls back to the old plain add/remove list.
+   */
   readonly exampleArr = this.fb.nonNullable.array<FormControl<string>>([]);
+
+  private readonly templateChannelSlug = toSignal(this.templateForm.controls.channelLabelSlug.valueChanges, {
+    initialValue: this.templateForm.controls.channelLabelSlug.value,
+  });
+  private readonly templateNameValue = toSignal(this.templateForm.controls.templateName.valueChanges, {
+    initialValue: this.templateForm.controls.templateName.value,
+  });
+  /** Templates registered on the currently-selected Template channel, if any. */
+  readonly availableTemplates = computed<ChannelTemplateDto[]>(
+    () => this.channelOptions().find((c) => c.labelSlug === this.templateChannelSlug())?.templates ?? [],
+  );
+  /** The chosen template's own variable labels — drives both the dropdown-mode row count and their headings. */
+  readonly selectedTemplate = computed(() =>
+    this.availableTemplates().find((t) => t.name === this.templateNameValue()),
+  );
 
   readonly form = this.fb.nonNullable.group({
     channelType: [ChannelType.SMS, Validators.required],
@@ -128,6 +147,27 @@ export class SendMessageComponent {
 
       media.updateValueAndValidity();
       message.updateValueAndValidity();
+    });
+
+    // Switching the template channel invalidates whatever template/variables were
+    // already picked — its registry (or lack of one) is different.
+    this.templateForm.controls.channelLabelSlug.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.templateForm.controls.templateName.setValue('', { emitEvent: false });
+      this.exampleArr.clear();
+    });
+
+    // A known template fixes the variable count/order from its registry entry — one
+    // control per label, so Manual Send stops guessing how many the vendor expects.
+    this.templateForm.controls.templateName.valueChanges.pipe(takeUntilDestroyed()).subscribe((name) => {
+      // No registry on this channel: templateName is free text and this fires on every
+      // keystroke — leave the manual add/remove list alone, exactly as before Task 1.
+      if (this.availableTemplates().length === 0) return;
+      const template = this.availableTemplates().find((t) => t.name === name);
+      this.exampleArr.clear();
+      if (!template) return;
+      for (const _label of template.variableLabels) {
+        this.exampleArr.push(this.fb.nonNullable.control('', Validators.required));
+      }
     });
   }
 

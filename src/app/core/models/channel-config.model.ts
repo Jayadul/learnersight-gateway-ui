@@ -17,6 +17,28 @@ export interface ChannelOptionDto {
   readonly hasTemplateToken: boolean;
   /** A WhatsApp Template channel: sends templates only, so ordinary send pickers leave it out. */
   readonly isTemplateOnly: boolean;
+  /** Templates registered on this channel (hotfix batch 9) — empty except for a Template channel. */
+  readonly templates: ChannelTemplateDto[];
+}
+
+/** A Meta pre-approved template registered on a Template channel (hotfix batch 9, Task 1). */
+export interface ChannelTemplateDto {
+  readonly id: string;
+  readonly channelConfigId: string;
+  readonly name: string;
+  /** Ordered, human-readable labels for each variable — reference only, count = expected variable count. */
+  readonly variableLabels: string[];
+  readonly variableCount: number;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+}
+export interface CreateChannelTemplateRequest {
+  readonly name: string;
+  readonly variableLabels: string[];
+}
+export interface UpdateChannelTemplateRequest {
+  readonly name: string;
+  readonly variableLabels: string[];
 }
 
 export interface ChannelConfigDto {

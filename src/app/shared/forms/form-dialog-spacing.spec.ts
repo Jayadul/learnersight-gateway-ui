@@ -7,6 +7,7 @@ import { ConfigFormDialogComponent } from '../../features/channel-configs/compon
 import { PolicyFormDialogComponent } from '../../features/fallback-policies/components/policy-form-dialog/policy-form-dialog.component';
 import { UserFormDialogComponent } from '../../features/settings/admin-users/components/user-form-dialog/user-form-dialog.component';
 import { ChannelConfigsService } from '../../features/channel-configs/channel-configs.service';
+import { ChannelTemplatesService } from '../../features/channel-configs/channel-templates.service';
 import { ConfirmService } from '../components/confirm-dialog/confirm.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { ChannelType } from '../../core/models/enums';
@@ -27,6 +28,7 @@ describe('Form dialog spacing', () => {
         { provide: MAT_DIALOG_DATA, useValue: data },
         { provide: MatDialogRef, useValue: { close: () => undefined } },
         { provide: ChannelConfigsService, useValue: { getByChannel: () => of([]), update: () => of({}) } },
+        { provide: ChannelTemplatesService, useValue: { list: () => of([]) } },
         { provide: ConfirmService, useValue: { confirm: () => of(true) } },
         { provide: NotificationService, useValue: { success: () => undefined, error: () => undefined, info: () => undefined } },
       ],

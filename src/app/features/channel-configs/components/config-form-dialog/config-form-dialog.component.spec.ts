@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { of, throwError } from 'rxjs';
 import { ConfigFormDialogComponent } from './config-form-dialog.component';
 import { ChannelConfigsService } from '../../channel-configs.service';
+import { ChannelTemplatesService } from '../../channel-templates.service';
+import { ConfirmService } from '../../../../shared/components/confirm-dialog/confirm.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { ChannelConfigDto } from '../../../../core/models/channel-config.model';
 import { ChannelType, Provider } from '../../../../core/models/enums';
@@ -89,6 +91,8 @@ describe('ConfigFormDialogComponent (edit)', () => {
         { provide: MAT_DIALOG_DATA, useValue: { channelType: c.channelType, config: configFor(c) } },
         { provide: MatDialogRef, useValue: { close } },
         { provide: ChannelConfigsService, useValue: { update, revealField: () => of({ value: 'x' }) } },
+        { provide: ChannelTemplatesService, useValue: { list: () => of([]) } },
+        { provide: ConfirmService, useValue: { confirm: () => of(false) } },
         { provide: NotificationService, useValue: notify },
       ],
     });
@@ -146,6 +150,8 @@ describe('ConfigFormDialogComponent (create)', () => {
         { provide: MAT_DIALOG_DATA, useValue: { channelType } },
         { provide: MatDialogRef, useValue: { close } },
         { provide: ChannelConfigsService, useValue: {} },
+        { provide: ChannelTemplatesService, useValue: { list: () => of([]) } },
+        { provide: ConfirmService, useValue: { confirm: () => of(false) } },
         { provide: NotificationService, useValue: jasmine.createSpyObj('NotificationService', ['success', 'error', 'info']) },
       ],
     });

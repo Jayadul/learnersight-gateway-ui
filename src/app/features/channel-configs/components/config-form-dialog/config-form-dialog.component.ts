@@ -6,12 +6,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ChannelConfigDto, CreateChannelConfigRequest, UpdateChannelConfigRequest } from '../../../../core/models/channel-config.model';
+import { MatDividerModule } from '@angular/material/divider';
+import { ChannelConfigDto, ChannelTemplateDto, CreateChannelConfigRequest, UpdateChannelConfigRequest } from '../../../../core/models/channel-config.model';
 import { ChannelType, Provider } from '../../../../core/models/enums';
 import { FormFieldErrorsComponent } from '../../../../shared/components/form-field-errors/form-field-errors.component';
 import { FORM_DIALOG_FIELD_OPTIONS } from '../../../../shared/forms/form-dialog';
 import { ChannelConfigsService } from '../../channel-configs.service';
+import { ChannelTemplatesService } from '../../channel-templates.service';
 import { NotificationService } from '../../../../core/services/notification.service';
+import { ConfirmService } from '../../../../shared/components/confirm-dialog/confirm.service';
 
 export interface ConfigFormDialogData {
   channelType: ChannelType;
@@ -154,7 +157,7 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
   standalone: true,
   imports: [
     ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule,
-    MatButtonModule, MatIconModule, FormFieldErrorsComponent,
+    MatButtonModule, MatIconModule, MatDividerModule, FormFieldErrorsComponent,
   ],
   templateUrl: './config-form-dialog.component.html',
   styleUrl: './config-form-dialog.component.scss',
@@ -164,7 +167,9 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
 export class ConfigFormDialogComponent {
   private readonly fb = inject(FormBuilder);
   private readonly channelConfigsService = inject(ChannelConfigsService);
+  private readonly templatesService = inject(ChannelTemplatesService);
   private readonly notify = inject(NotificationService);
+  private readonly confirmSvc = inject(ConfirmService);
   readonly data = inject<ConfigFormDialogData>(MAT_DIALOG_DATA);
   readonly dialogRef = inject(MatDialogRef<ConfigFormDialogComponent>);
 
@@ -207,6 +212,70 @@ export class ConfigFormDialogComponent {
         return null;
     }
   });
+
+  /** Whether the currently-selected provider is the Template channel — gates the templates-management section. */
+  readonly isTemplateProvider = computed(() => this.provider() === Provider.NetZeroInboxTemplate);
+
+  /** Registered templates (hotfix batch 9, Task 1) — only ever populated for an existing Template channel. */
+  readonly templates = signal<ChannelTemplateDto[]>([]);
+  readonly loadingTemplates = signal(false);
+  readonly addingTemplate = signal(false);
+
+  readonly newTemplateForm = this.fb.nonNullable.group({
+    name: ['', Validators.required],
+    variableLabelsText: [''],
+  });
+
+  constructor() {
+    if (this.isEdit && this.isTemplateProvider()) {
+      this.loadTemplates();
+    }
+  }
+
+  private loadTemplates(): void {
+    this.loadingTemplates.set(true);
+    this.templatesService.list(this.data.config!.id).subscribe({
+      next: (list) => {
+        this.templates.set(list);
+        this.loadingTemplates.set(false);
+      },
+      error: () => this.loadingTemplates.set(false),
+    });
+  }
+
+  addTemplate(): void {
+    this.newTemplateForm.markAllAsTouched();
+    if (this.newTemplateForm.invalid) return;
+
+    const v = this.newTemplateForm.getRawValue();
+    const variableLabels = v.variableLabelsText
+      .split(',')
+      .map((l) => l.trim())
+      .filter((l) => l.length > 0);
+
+    this.addingTemplate.set(true);
+    this.templatesService.create(this.data.config!.id, { name: v.name.trim(), variableLabels }).subscribe({
+      next: (dto) => {
+        this.templates.update((list) => [...list, dto].sort((a, b) => a.name.localeCompare(b.name)));
+        this.newTemplateForm.reset({ name: '', variableLabelsText: '' });
+        this.addingTemplate.set(false);
+        this.notify.success('Template registered.');
+      },
+      error: () => this.addingTemplate.set(false),
+    });
+  }
+
+  removeTemplate(t: ChannelTemplateDto): void {
+    this.confirmSvc
+      .confirm({ title: 'Remove Template', message: `Remove "${t.name}"? This cannot be undone.`, confirmLabel: 'Remove' })
+      .subscribe((ok) => {
+        if (!ok) return;
+        this.templatesService.remove(this.data.config!.id, t.id).subscribe(() => {
+          this.templates.update((list) => list.filter((x) => x.id !== t.id));
+          this.notify.success('Template removed.');
+        });
+      });
+  }
 
   /** Tag prefix for this channel type, used in the worked example under the slug field. */
   readonly tagPrefix =

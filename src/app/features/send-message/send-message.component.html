@@ -75,12 +75,25 @@
               <app-form-field-errors [control]="templateForm.controls.recipient" />
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full">
-              <mat-label>Template Name</mat-label>
-              <input matInput formControlName="templateName" placeholder="e.g. due_bill_reminder" />
-              <mat-hint>The exact, Meta-approved template name.</mat-hint>
-              <app-form-field-errors [control]="templateForm.controls.templateName" />
-            </mat-form-field>
+            @if (availableTemplates().length > 0) {
+              <mat-form-field appearance="outline" class="full">
+                <mat-label>Template Name</mat-label>
+                <mat-select formControlName="templateName">
+                  @for (t of availableTemplates(); track t.id) {
+                    <mat-option [value]="t.name">{{ t.name }}</mat-option>
+                  }
+                </mat-select>
+                <mat-hint>Registered on this channel under Channels — add more there.</mat-hint>
+                <app-form-field-errors [control]="templateForm.controls.templateName" />
+              </mat-form-field>
+            } @else {
+              <mat-form-field appearance="outline" class="full">
+                <mat-label>Template Name</mat-label>
+                <input matInput formControlName="templateName" placeholder="e.g. due_bill_reminder" />
+                <mat-hint>The exact, Meta-approved template name. Register templates on this channel under Channels to get a dropdown here instead.</mat-hint>
+                <app-form-field-errors [control]="templateForm.controls.templateName" />
+              </mat-form-field>
+            }
 
             <p class="field-label">
               Template Variables
@@ -91,19 +104,23 @@
             @for (variable of exampleArr.controls; track $index) {
               <div class="variable-row">
                 <mat-form-field appearance="outline" class="full">
-                  <mat-label>Variable {{ $index + 1 }}</mat-label>
+                  <mat-label>{{ selectedTemplate()?.variableLabels?.[$index] ?? ('Variable ' + ($index + 1)) }}</mat-label>
                   <input matInput [formControl]="variable" />
                   <app-form-field-errors [control]="variable" />
                 </mat-form-field>
-                <button mat-icon-button type="button" color="warn" (click)="removeVariable($index)"
-                        [attr.aria-label]="'Remove variable ' + ($index + 1)">
-                  <mat-icon>remove_circle_outline</mat-icon>
-                </button>
+                @if (availableTemplates().length === 0) {
+                  <button mat-icon-button type="button" color="warn" (click)="removeVariable($index)"
+                          [attr.aria-label]="'Remove variable ' + ($index + 1)">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                }
               </div>
             }
-            <button mat-stroked-button type="button" (click)="addVariable()" class="add-variable-btn">
-              <mat-icon>add</mat-icon> Add Variable
-            </button>
+            @if (availableTemplates().length === 0) {
+              <button mat-stroked-button type="button" (click)="addVariable()" class="add-variable-btn">
+                <mat-icon>add</mat-icon> Add Variable
+              </button>
+            }
 
             <mat-form-field appearance="outline" class="full">
               <mat-label>Media URL (optional)</mat-label>

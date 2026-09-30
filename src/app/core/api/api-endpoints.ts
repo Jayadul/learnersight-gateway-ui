@@ -20,6 +20,7 @@ export const ApiEndpoints = {
   adminUsers:       `${BASE}/admin/users`,
   gatewayCredentials: `${BASE}/gateway-credentials`,
   channelConfigs:   `${BASE}/channel-configs`,
+  channelTemplates: (channelId: string) => `${BASE}/channel-configs/${channelId}/templates`,
   channelBalances:  `${BASE}/channel-balances`,
   statusSync: {
     channels: `${BASE}/status-sync/channels`,

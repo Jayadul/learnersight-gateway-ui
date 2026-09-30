@@ -70,6 +70,61 @@
         <app-form-field-errors [control]="control(field.key)" />
       </mat-form-field>
     }
+
+    @if (isTemplateProvider()) {
+      <mat-divider />
+      <div class="templates-section">
+        <h3>Registered Templates</h3>
+        <p class="nzg-form-note">
+          Each template's <strong>Name</strong> must exactly match a name already approved by
+          Meta for this WhatsApp Business Account (Meta Business Manager → WhatsApp Manager →
+          Message Templates) — Manual Send can only offer templates registered here. Variable
+          labels are for your own reference only; list them in the order the template expects,
+          e.g. "Customer Name, Order ID".
+        </p>
+
+        @if (!isEdit) {
+          <p class="nzg-form-note">Save this channel first, then reopen it to register templates.</p>
+        } @else {
+          @if (loadingTemplates()) {
+            <p>Loading templates…</p>
+          } @else {
+            @if (templates().length === 0) {
+              <p class="nzg-form-note">No templates registered yet.</p>
+            }
+            @for (t of templates(); track t.id) {
+              <div class="template-row">
+                <div class="template-info">
+                  <strong>{{ t.name }}</strong>
+                  <span class="template-vars">
+                    {{ t.variableCount }} variable{{ t.variableCount === 1 ? '' : 's' }}{{ t.variableLabels.length ? ': ' + t.variableLabels.join(', ') : '' }}
+                  </span>
+                </div>
+                <button mat-icon-button type="button" (click)="removeTemplate(t)" aria-label="Remove template">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            }
+          }
+
+          <form [formGroup]="newTemplateForm" class="new-template-form">
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Template Name</mat-label>
+              <input matInput formControlName="name" placeholder="e.g. order_confirmation" />
+              <app-form-field-errors [control]="newTemplateForm.controls.name" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full">
+              <mat-label>Variable Labels (comma-separated, in order)</mat-label>
+              <input matInput formControlName="variableLabelsText" placeholder="e.g. Customer Name, Order ID" />
+              <mat-hint>Reference only — leave blank for a template with no variables.</mat-hint>
+            </mat-form-field>
+            <button mat-stroked-button type="button" [disabled]="addingTemplate()" (click)="addTemplate()">
+              {{ addingTemplate() ? 'Adding…' : 'Add Template' }}
+            </button>
+          </form>
+        }
+      </div>
+    }
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
