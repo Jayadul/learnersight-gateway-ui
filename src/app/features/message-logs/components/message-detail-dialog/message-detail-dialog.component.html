@@ -14,6 +14,17 @@
     @if (row.campaignId) {
       <div><span class="label">Campaign</span><span>{{ row.campaignId }}</span></div>
     }
+    @if (row.callStartTime) {
+      <div><span class="label">Call Started</span><span>{{ row.callStartTime | date: 'medium' }}</span></div>
+    }
+    @if (row.callConnectTime) {
+      <div><span class="label">Call Connected</span><span>{{ row.callConnectTime | date: 'medium' }}</span></div>
+    } @else if (row.callStartTime) {
+      <div><span class="label">Call Connected</span><span class="muted">Never connected</span></div>
+    }
+    @if (row.callEndTime) {
+      <div><span class="label">Call Ended</span><span>{{ row.callEndTime | date: 'medium' }}</span></div>
+    }
     @if (row.providerReferenceId) {
       <div><span class="label">Provider Reference</span><code>{{ row.providerReferenceId }}</code></div>
     }

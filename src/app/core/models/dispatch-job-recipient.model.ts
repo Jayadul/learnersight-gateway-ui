@@ -20,6 +20,13 @@ export interface DispatchJobRecipientDto {
   readonly lastCheckedAt: string | null;
   readonly createdAt: string;
 
+  /** Voice only (hotfix batch 9, Task 8) — null for every other channel type. */
+  readonly callStartTime: string | null;
+  /** Voice only; null when the call never connected. */
+  readonly callConnectTime: string | null;
+  /** Voice only. */
+  readonly callEndTime: string | null;
+
   readonly channelType: ChannelType;
   readonly channelLabel: string | null;
   readonly messageContent: string;

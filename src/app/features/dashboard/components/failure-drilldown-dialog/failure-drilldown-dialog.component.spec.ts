@@ -15,6 +15,7 @@ describe('FailureDrilldownDialogComponent', () => {
   const row = (id: string, sentAt: string | null): DispatchJobRecipientDto => ({
     id, dispatchJobId: 'j', recipient: `88017000000${id}`, providerReferenceId: null,
     deliveryStatus: DeliveryStatus.Failed, lastCheckedAt: null, createdAt: '2026-09-25T10:00:00Z',
+    callStartTime: null, callConnectTime: null, callEndTime: null,
     channelType: ChannelType.WP, channelLabel: 'WhatsApp Text Default', messageContent: 'hi',
     campaignId: null, sentAt, isFallback: false, resentFromRecipientId: null, rawProviderResponse: null,
   });
