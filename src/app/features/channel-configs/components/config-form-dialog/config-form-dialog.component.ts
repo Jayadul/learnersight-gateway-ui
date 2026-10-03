@@ -74,7 +74,9 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
         {
           key: 'balanceSessionCookie', label: 'Balance Session Cookie',
           password: true, optional: true,
-          hint: 'JSESSIONID value. REVE gives no refresh endpoint, so paste a fresh one when balance checks start failing.',
+          hint: 'Only enables the balance-check feature on this card — leave it blank and the channel '
+            + 'still sends normally. JSESSIONID value; REVE gives no refresh endpoint and the cookie '
+            + 'expires on its own schedule, so paste a fresh one here when balance checks start failing.',
         },
       ],
     },
