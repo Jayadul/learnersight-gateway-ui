@@ -15,6 +15,12 @@ export interface FallbackPolicyDto {
   readonly triggerChannelLabel?: string | null;
   readonly fallbackChannelLabel?: string | null;
   readonly isActive: boolean;
+  /**
+   * Read-only, derived from triggerChannelConfigId being null (hotfix batch 9, Task 9) —
+   * it used to be an admin-set toggle ("Apply this rule to all channels") independent of
+   * scoping, defaulted off, which silently hid a correctly-scoped active policy from
+   * fallback resolution. Not sent on create/update any more.
+   */
   readonly isGlobal: boolean;
   readonly description?: string;
   readonly createdAt: string;
@@ -26,7 +32,6 @@ export interface CreateFallbackPolicyRequest {
   readonly triggerChannelConfigId?: string | null;
   readonly fallbackChannelConfigId?: string | null;
   readonly allowCrossChannel: boolean;
-  readonly isGlobal: boolean;
   readonly description?: string;
 }
 export interface UpdateFallbackPolicyRequest extends CreateFallbackPolicyRequest {

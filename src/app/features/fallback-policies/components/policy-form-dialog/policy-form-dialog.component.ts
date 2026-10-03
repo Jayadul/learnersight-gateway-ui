@@ -64,7 +64,6 @@ export class PolicyFormDialogComponent {
       fallbackChannel: [this.data.policy?.fallbackChannel ?? ChannelType.SMS, Validators.required],
       fallbackChannelConfigId: [this.data.policy?.fallbackChannelConfigId ?? ''],
       allowCrossChannel: [this.data.policy?.allowCrossChannel ?? false],
-      isGlobal: [this.data.policy?.isGlobal ?? false],
       isActive: [this.data.policy?.isActive ?? false],
       description: [this.data.policy?.description ?? ''],
     },
@@ -167,7 +166,6 @@ export class PolicyFormDialogComponent {
       triggerChannelConfigId: v.triggerChannelConfigId || null,
       fallbackChannelConfigId: v.fallbackChannelConfigId || null,
       allowCrossChannel: v.allowCrossChannel,
-      isGlobal: v.isGlobal,
       description: v.description || undefined,
     };
 
