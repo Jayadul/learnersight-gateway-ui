@@ -110,6 +110,14 @@
               <td><code>[call:voicemain::due-bill-api||1]</code></td>
             </tr>
             <tr>
+              <td><code>[template:LABEL::TEMPLATE_NAME||VAR1||VAR2]</code></td>
+              <td>WhatsApp Template &mdash; a Meta pre-approved template, variables in order.
+                Must name a template already registered on that channel under Channels,
+                with the exact same number of variables it was registered with. Text only
+                (no media); not combinable with another tag; never falls back.</td>
+              <td><code>[template:watemplate::order_confirmation||Jane Doe||ORD-123]</code></td>
+            </tr>
+            <tr>
               <td><em>(no tag)</em></td>
               <td>Plain SMS with the full content, on the default SMS gateway</td>
               <td><code>Hello without any tag</code></td>
