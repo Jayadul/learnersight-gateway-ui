@@ -1,5 +1,10 @@
 <mat-card class="chart-card">
   <h3>Top 5 Failure Reasons <span class="scope-badge">All Time</span></h3>
+  <p class="scope-note">
+    Delivery failures per recipient, after a message was accepted and sent to a provider.
+    A different count from API Logs' Rejected total, which is requests the gateway refused
+    before anything was dispatched.
+  </p>
 
   @if (rows().length === 0) {
     <p class="empty">No failures recorded.</p>

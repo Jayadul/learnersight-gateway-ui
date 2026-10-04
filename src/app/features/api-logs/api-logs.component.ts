@@ -28,6 +28,11 @@ export class ApiLogsComponent implements OnInit {
   readonly filters: FilterControl[] = [
     { kind: 'dateRange', keyFrom: 'dateFrom', keyTo: 'dateTo', label: 'Date Range' },
     {
+      // Every /sendtext call returns HTTP 200 regardless of outcome (the gateway's real
+      // status lives in the response body, not the status line) — this filter only ever
+      // catches a framework-level rejection (bad content-type, a malformed request .NET
+      // itself refuses before the controller runs). Use Result below for a rejected
+      // message.
       kind: 'select', key: 'responseStatus', label: 'HTTP Status',
       options: [
         { label: 'All', value: null },
@@ -35,6 +40,16 @@ export class ApiLogsComponent implements OnInit {
         { label: '400 Bad Request', value: 400 },
         { label: '401 Unauthorized', value: 401 },
         { label: '500 Server Error', value: 500 },
+      ],
+    },
+    {
+      // The gateway-level outcome (hotfix batch 9, Task 12) — this is what actually finds
+      // a rejected request, since HTTP Status above cannot.
+      kind: 'select', key: 'gatewayResult', label: 'Result',
+      options: [
+        { label: 'All', value: null },
+        { label: 'Accepted', value: 'ACCEPTD' },
+        { label: 'Rejected', value: 'REJECTD' },
       ],
     },
     {
@@ -62,7 +77,10 @@ export class ApiLogsComponent implements OnInit {
     { key: 'toUser', header: 'To', truncate: 60, value: (r) => r.toUser ?? '—' },
     // What the tags asked for. Blank when the request was rejected before parsing.
     { key: 'requestedChannels', header: 'Channels', value: (r) => this.channelsCell(r) },
-    { key: 'responseStatus', header: 'Status', type: 'chip' },
+    { key: 'responseStatus', header: 'HTTP Status', type: 'chip' },
+    // The gateway-level outcome (hotfix batch 9, Task 12) — HTTP Status alone cannot
+    // show this, since every /sendtext call returns 200 regardless of outcome.
+    { key: 'gatewayResult', header: 'Result', type: 'chip', value: (r) => r.gatewayResult ?? '—' },
     { key: 'durationMs', header: 'Duration (ms)', sortable: true },
     { key: 'callerIp', header: 'Caller IP' },
   ];
