@@ -23,6 +23,10 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--nzg-bg);
   color: var(--nzg-text);
+  // Hotfix batch 9, Task 13: the page itself must never scroll horizontally on mobile —
+  // only wide content (tables) should, in its own contained area. This is the backstop;
+  // the actual fixes are at the source (data-table's .table-wrap, mat-sidenav-content).
+  overflow-x: hidden;
 }
 
 * { box-sizing: border-box; }

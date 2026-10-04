@@ -3,7 +3,12 @@
   background: var(--nzg-surface);
   border: 1px solid var(--nzg-border);
   border-radius: var(--nzg-radius);
-  overflow: hidden;
+  // Hotfix batch 9, Task 13: was `overflow: hidden`, which clips a table too wide for its
+  // container instead of letting it scroll — the per-cell max-width backstop below only
+  // guards against one long value, not a narrow viewport with many columns (every page's
+  // table, not just one with long values). overflow-x: auto is the same pattern already
+  // used for gateway-credentials, sendtext-api, failure-drilldown and channel-balances.
+  overflow-x: auto;
 }
 
 .nzg-table { width: 100%; }

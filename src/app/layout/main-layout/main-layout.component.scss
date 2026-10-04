@@ -171,6 +171,11 @@
   100% { transform: scaleX(1); opacity: 0; }
 }
 
+// mat-sidenav-content defaults to overflow: auto in both axes (needed for normal page
+// scroll) — hotfix batch 9, Task 13: pin the horizontal axis so no page can scroll the
+// whole content area sideways; only a local wrapper like .table-wrap should ever do that.
+mat-sidenav-content { overflow-x: hidden; }
+
 // ─── Content ──────────────────────────────────────────────
 .content {
   min-height: calc(100vh - var(--nzg-topbar-height));
