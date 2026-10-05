@@ -138,11 +138,10 @@ const PROVIDERS: Readonly<Record<ChannelType, readonly ProviderDef[]>> = {
   ],
   [ChannelType.Voice]: [
     {
-      // Hotfix batch 9, Task 5: renamed from "NetZero Voice" — spelled "Broadcast" per the
-      // team lead's default pending final confirmation (the task flagged "Boardcast" as a
-      // likely typo); flip this one string if "Boardcast" turns out to be the wanted spelling.
+      // Hotfix batch 9, Task 5: renamed from "NetZero Voice". The team lead confirmed the
+      // spelling by setting Seed:ChannelConfigs to "Boardcast", not "Broadcast" — matches here.
       value: Provider.NetZeroVoice,
-      label: 'Net ZerO call Broadcast',
+      label: 'Net ZerO call Boardcast',
       fields: [
         { key: 'owner', label: 'Owner' },
         { key: 'password', label: 'Password', password: true },
